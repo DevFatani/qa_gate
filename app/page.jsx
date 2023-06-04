@@ -264,6 +264,7 @@ const Home = () => {
         
             verifyAndCheck.map((v) => {
                 let newV = v.trim().toLowerCase();
+                
                 let tcNewName = "";
                 if(newV === 'vc') {
                     tcNewName = `Verify ${objectToTest} is clickable`;
@@ -278,7 +279,7 @@ const Home = () => {
                     tcNewName = `Verify ${objectToTest} is not visible`;
                 }
                 if (newV === '') {
-                    tcNewName = "EMPTY";
+                    tcNewName = objectToTest;
                 }
                 newTCS.push(
                     {
