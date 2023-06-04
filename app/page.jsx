@@ -5,6 +5,25 @@ import Link from 'next/link'
 
 import Form from '@components/Form';
 
+const UNIT_TEST = "Unit";
+const INTEGRATION_TEST = "Integration";
+const SYSTEM_TEST = "System";
+const UAT_TEST = "UAT";
+
+const PRIORITY_HIGH = "High";
+const PRIORITY_MEDIUM = "Medium";
+const PRIORITY_LOW = "Low";
+
+const TEST_TYPE_FUNCTIONAL = "Functional";
+const TEST_TYPE_NONFUNCTIONAL = "Non-Functional";
+const TEST_TYPE_REGRESSION = "Regression";
+const TEST_TYPE_USABILITY = "Usability";
+const TEST_TYPE_COMPATIBILITY = "Compatibility";
+
+const TEST_BEHAVIOR_POSITIVE = "Positive";
+const TEST_BEHAVIOR_NEGATIVE = "Negative";
+
+
   // vc, vv | add new button | s,l,n,f
 const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
 
@@ -48,15 +67,15 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
            <thead>
                <tr >
                 <th className='table_h table_h-text'>ID</th>
-                <th className='table_h'>TestCase Name</th>
+                <th className='table_h-text'>TestCase Name</th>
                 <th className='table_h-text_selection'>Test Level</th>
                 <th className='table_h-text_selection'>Test Type</th>
-                <th className='table_h-text_selection'>Is negative</th>
+                <th className='table_h-text_selection'>Test Behavior</th>
                 <th className='table_h-text_selection'>Priority</th>
-                <th className='table_h'>Steps</th>
-                <th className='table_h'>Input Data</th>
-                <th className='table_h'>Expected Result</th>
-                <th className='table_h'>Actual Result</th>
+                <th className='table_h-text'>Steps</th>
+                <th className='table_h-text'>Input Data</th>
+                <th className='table_h-text'>Expected Result</th>
+                <th className='table_h-text'>Actual Result</th>
                </tr>
            </thead>
        <tbody>
@@ -76,10 +95,10 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                     <select name="testLvl" id="testLvl" onChange={(e) => {
                         item.testLvl = e.target.value;
                     }}>
-                        <option value="unit" defaultValue={item.testLvl === "unit"}>Unit</option>
-                        <option value="integration" defaultValue={item.testLvl === "integration"}>Integration</option>
-                        <option value="system" defaultValue={item.testLvl === "system"}>System</option>
-                        <option value="uat" defaultValue={item.testLvl === "uat"}>UAT</option>
+                        <option value={UNIT_TEST} selected={item.testLvl === UNIT_TEST}>{UNIT_TEST}</option>
+                        <option value={INTEGRATION_TEST} selected={item.testLvl === INTEGRATION_TEST}>{INTEGRATION_TEST}</option>
+                        <option value={SYSTEM_TEST} selected={item.testLvl === SYSTEM_TEST}>{SYSTEM_TEST}</option>
+                        <option value={UAT_TEST} selected={item.testLvl === UAT_TEST}>{UAT_TEST}</option>
                     </select>
 
                </td>
@@ -90,8 +109,11 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                     <select name="testType" id="testType" onChange={(e) => {
                         item.testType = e.target.value;
                     }}>
-                        <option value="Function" defaultValue={item.testType === "function"}>Function</option>
-                        <option value="non-function" defaultValue={item.testType === "non-function"}>Non-Function</option>
+                        <option value={TEST_TYPE_FUNCTIONAL} selected={item.testType === TEST_TYPE_FUNCTIONAL}>{TEST_TYPE_FUNCTIONAL}</option>
+                        <option value={TEST_TYPE_NONFUNCTIONAL} selected={item.testType === TEST_TYPE_NONFUNCTIONAL}>{TEST_TYPE_NONFUNCTIONAL}</option>
+                        <option value={TEST_TYPE_REGRESSION} selected={item.testType === TEST_TYPE_REGRESSION}>{TEST_TYPE_REGRESSION}</option>
+                        <option value={TEST_TYPE_USABILITY} selected={item.testType === TEST_TYPE_USABILITY}>{TEST_TYPE_USABILITY}</option>
+                        <option value={TEST_TYPE_COMPATIBILITY} selected={item.testType === TEST_TYPE_COMPATIBILITY}>{TEST_TYPE_COMPATIBILITY}</option>
                     </select>
 
                </td>
@@ -102,8 +124,8 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                     <select name="isPostive" id="isPostive" onChange={(e) => {
                         item.isPostive = e.target.value;
                     }}>
-                        <option value={1} defaultValue={item.isPostive === 1}>true</option>
-                        <option value={0} defaultValue={item.isPostive === 1}>false</option>
+                        <option value={TEST_BEHAVIOR_POSITIVE} selected={item.isPostive === TEST_BEHAVIOR_POSITIVE}>{TEST_BEHAVIOR_POSITIVE}</option>
+                        <option value={TEST_BEHAVIOR_NEGATIVE} selected={item.isPostive === TEST_BEHAVIOR_NEGATIVE}>{TEST_BEHAVIOR_NEGATIVE}</option>
                     </select>
                 </td>
                
@@ -111,16 +133,15 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                     <select name="priority" id="priority" onChange={(e) => {
                         item.priority = e.target.value;
                     }}>
-                        <option value="low" defaultValue={item.priority === "low"}>low</option>
-                        <option value="high" defaultValue={item.priority === "high"}>high</option>
-                        <option value="med" defaultValue={item.priority === "med"}>med</option>
+                        <option value={PRIORITY_HIGH} selected={item.priority === PRIORITY_HIGH}>{PRIORITY_HIGH}</option>
+                        <option value={PRIORITY_MEDIUM} selected={item.priority === PRIORITY_MEDIUM}>{PRIORITY_MEDIUM}</option>
+                        <option value={PRIORITY_LOW} selected={item.priority === PRIORITY_LOW}>{PRIORITY_LOW}</option>
                     </select>
                 
                 </td>
 
                 <td className='table_h-text table_name'>
                     <textarea
-                        
                         className='form_textarea'
                         value={item.steps}
                         onChange={(e) => handleInputStepsChange(index, e)}
@@ -182,12 +203,12 @@ const TestStatistic = ( { data }) => {
             let numberOfUATTest = 0;
             let numberOfHigh = 0;
                 data.map((e) => {
-                    if(e.isPostive === 0) numberOfNegative++;
-                    if(e.testLvl === 'unit') numberOfUnitTest++;
-                    if(e.testLvl === 'integration') numberOfIntegrationTest++;
-                    if(e.testLvl === 'system') numberOfSystemTest++;
-                    if(e.testLvl === 'uat') numberOfUATTest++;
-                    if(e.priority === 'high') numberOfHigh++;
+                    if(e.isPostive === TEST_BEHAVIOR_NEGATIVE) numberOfNegative++;
+                    if(e.testLvl === UNIT_TEST) numberOfUnitTest++;
+                    if(e.testLvl === INTEGRATION_TEST) numberOfIntegrationTest++;
+                    if(e.testLvl === SYSTEM_TEST) numberOfSystemTest++;
+                    if(e.testLvl === UAT_TEST) numberOfUATTest++;
+                    if(e.priority === PRIORITY_HIGH) numberOfHigh++;
                 });
 
             setNumber({
@@ -240,8 +261,6 @@ const Home = () => {
             console.log(verifyAndCheck);
             const objectToTest = tcCode[1];
             const testCategory = tcCode[2].split(',');
-
-            
         
             verifyAndCheck.map((v) => {
                 let newV = v.trim().toLowerCase();
@@ -267,7 +286,7 @@ const Home = () => {
                         name: tcNewName,
                         testLvl: findTestLevel(testCategory),
                         testType: findTestType(testCategory),
-                        isPostive: isPositive(testCategory),
+                        isPostive: testBehavior(testCategory),
                         priority: findTestPriority(testCategory),
                         steps: 'add your steps...',
                         inputData: 'input data',
@@ -285,79 +304,104 @@ const Home = () => {
         setSubmitting(false);
     }
   
-    const isPositive =  (text) => {
-        let newTestDetails = 1
+    const testBehavior =  (text) => {
+        let newTestDetails = "positive";
         text.map((cat) => {
             let newCat = cat.trim().toLowerCase();
             if(newCat === "p") {
-                newTestDetails = 1;
+                newTestDetails = TEST_BEHAVIOR_POSITIVE;
             }
             if(newCat === "n") {
-                newTestDetails = 0;
+                newTestDetails = TEST_BEHAVIOR_NEGATIVE;
             }
             
         });
         return newTestDetails;
     }
     const findTestType =  (text) => {
-        let newTestDetails = "function";
+        let newTestDetails = TEST_TYPE_FUNCTIONAL;
         text.map((cat) => {
             let newCat = cat.trim().toLowerCase();
             if(newCat === "f") {
-                newTestDetails = "function";
+                newTestDetails = TEST_TYPE_FUNCTIONAL;
             }
             if(newCat === "un") {
-                newTestDetails = "non-function";
+                newTestDetails = TEST_TYPE_NONFUNCTIONAL;
             }
-
-            
+            if(newCat === "r") {
+                newTestDetails = TEST_TYPE_REGRESSION;
+            }
+            if(newCat === "us") {
+                newTestDetails = TEST_TYPE_USABILITY;
+            }
+            if(newCat === "com") {
+                newTestDetails = TEST_TYPE_COMPATIBILITY;
+            }
         });
         return newTestDetails;
     }
+
     const findTestPriority =  (text) => {
-        let newTestDetails = "med";
+        let newTestDetails = PRIORITY_MEDIUM;
         text.map((cat) => {
             let newCat = cat.trim().toLowerCase();
             if(newCat === 'h') {
-                newTestDetails = "high";
-            }
-            if(newCat === 'l') {
-                newTestDetails = "low";
+                newTestDetails = PRIORITY_HIGH;
             }
             if(newCat === 'm') {
-                newTestDetails = "med";
+                newTestDetails = PRIORITY_MEDIUM;
             }
-            
+            if(newCat === 'l') {
+                newTestDetails = PRIORITY_LOW;
+            }
         });
         return newTestDetails;
     }
 
     const findTestLevel =  (text) => {
-        let newTestDetails = "unit";
+        let newTestDetails = UNIT_TEST;
         text.map((cat) => {
             let newCat = cat.trim().toLowerCase();
             if(newCat === "c") {
-                newTestDetails = "unit";
+                newTestDetails = UNIT_TEST;
             }
             if(newCat === "i") {
-                newTestDetails = "integration";
+                newTestDetails = INTEGRATION_TEST;
             }
             if(newCat === "s") {
-                newTestDetails = "system";
+                newTestDetails = SYSTEM_TEST;
             }
             if(newCat === "u") {
-                newTestDetails = "uat";
+                newTestDetails = UAT_TEST;
             }
-            
         });
         return newTestDetails;
     }
 
+   const formatOutputDataForQASE = () => {
+        let newTcsFormat = [];
+        tcs.map((tc) => {
+            newTcsFormat.push({
+                id: tc.id,
+                title: tc.name,
+                layer: tc.testLvl,
+                type: tc.testType,
+                behavior: tc.isPostive,
+                priority: tc.priority,
+                steps_actions: tc.steps,
+                input_data: tc.inputData,
+                expectedResult: tc.expectedResult,
+                actualResult: tc.actualResult
+            });
+        });
+        return newTcsFormat;
+   }
+
     const exportToExcel = () => {
-        const worksheet = XLSX.utils.json_to_sheet(tcs);
+        const worksheet = XLSX.utils.json_to_sheet(formatOutputDataForQASE());
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        XLSX.writeFile(workbook, `${taskName.text}.xlsx`);
+        XLSX.writeFile(workbook, `${taskName.text}.csv`);
       };
     return (
         <section className='w-full flex-center flex-col'>

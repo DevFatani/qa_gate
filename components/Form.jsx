@@ -14,23 +14,89 @@ const Form = ({
         <p className='desc text-left max-w-md'>
         Expression Example:
         </p>
-        <p className='desc text-left max-w-md' style={{color: "green"}}>
+        <p className='desc text-left max-w-md' style={{color: "green", fontSize: "30px"}}>
           vc, vv | add new button | s,l,n,f
         </p>
-        <p className='desc text-left max-w-md' style={{color: "red"}}>
+        <p className='desc text-left max-w-md' style={{color: "red", fontSize: "20px"}}>
           VC = Verify add new button is clickable 
           <br />
           VV = Verify add new button is visible
         </p>
+
         <div className='desc text-left max-w-md'>
-          <h1>Last Section</h1><br />
-          <span style={{color: "orange", backgroundColor:"lightgrey"}}> C = Unit Test </span>
-          <span style={{color: "blue", margin:"12px"}}> I = Integration Test </span>
-          <span style={{color: "red"}}> S = System Test </span>
-          <span style={{color: "brown",  margin:"12px"}}> U = UAT </span><br /><br />
-          L = Low Priority, M = MED Priority, H = High Priority <br /><br />
-          N = Negative, P = Postive <br /><br />
-          F = Functional, UN = Non-Functional <br /><br />
+
+              <table>
+              <h1 style={{backgroundColor:"lightcoral",color:'white', height:"50px", textAlign:"center", textJustify:"auto"}}>Test Level</h1>
+
+              <tr>
+                <th className='table_h-text'>Code</th>
+                <th className='table_h-text'>Title</th>
+              </tr>
+              <tr>
+                <td className='table_h-text'>C</td>
+                <td className='table_h-text'>Unit Test</td>
+              </tr>
+              <tr>
+                <td className='table_h-text'>I</td>
+                <td className='table_h-text'>Integration Test</td>
+              </tr>
+              <tr>
+                <td className='table_h-text'>S</td>
+                <td className='table_h-text'>System Test</td>
+              </tr>
+              <tr>
+                <td className='table_h-text'>U</td>
+                <td className='table_h-text'>UAT Test</td>
+              </tr>
+              
+              <h1 style={{backgroundColor:"lightcoral",color:'white', height:"50px", textAlign:"center", textJustify:"auto"}}>Test Priority</h1>
+            
+              <tr>
+                <td className='table_h-text'>L</td>
+                <td className='table_h-text'>Low Proirity</td>
+              </tr>
+              <tr>
+                <td className='table_h-text'>M</td>
+                <td className='table_h-text'>Medium Proirity</td>
+              </tr>
+              <tr>
+                <td className='table_h-text'>H</td>
+                <td className='table_h-text'>High Proirity</td>
+              </tr>
+
+              <h1 style={{backgroundColor:"lightcoral",color:'white', height:"50px", textAlign:"center", textJustify:"auto"}}>Test Type</h1>
+            <tr>
+              <td className='table_h-text'>F</td>
+              <td className='table_h-text'>Functional</td>
+            </tr>
+            <tr>
+              <td className='table_h-text'>UN</td>
+              <td className='table_h-text'>Non-Functional</td>
+            </tr>
+            <tr>
+              <td className='table_h-text'>R</td>
+              <td className='table_h-text'>Regression</td>
+            </tr>
+            <tr>
+              <td className='table_h-text'>US</td>
+              <td className='table_h-text'>Usability</td>
+            </tr>
+            <tr>
+              <td className='table_h-text'>COM</td>
+              <td className='table_h-text'>Compatibility</td>
+            </tr>
+
+            <h1 style={{backgroundColor:"lightcoral",color:'white', height:"50px", textAlign:"center", textJustify:"auto"}}>Test Behavior</h1>
+            
+            <tr>
+              <td className='table_h-text'>P</td>
+              <td className='table_h-text'>Positive</td>
+            </tr>
+            <tr>
+              <td className='table_h-text'>N</td>
+              <td className='table_h-text'>Negative</td>
+            </tr>
+            </table> 
         </div>
         <form
           onSubmit={handleSubmit}

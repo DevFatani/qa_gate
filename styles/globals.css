@@ -169,21 +169,18 @@
   @apply flex justify-between items-center;
 }
 
-.table_h { 
-
-  color: red;
-  background-color: cyan;
-  padding-left: 80px;
-  padding-right: 80px;
-}
 
 .table_h-text { 
   text-align: center;
-  border: #ff0000;
+  color: rgb(177, 77, 207);
+  background-color: rgb(255, 255, 255);
+  padding-left: 50px;
+  padding-right: 80px;
+  text-align: center;
+  border: #43a17f;
 
-  border-width: 2px;
+  border-width: 5px;
   border-style: groove;
-  color: rgb(18, 46, 251);
 }
 
 .table_h-text_selection { 
@@ -213,4 +210,13 @@
 .table_name { 
 padding: 22px;
   background-color: rgb(247, 247, 247);
+}
+
+
+#customers_th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }
