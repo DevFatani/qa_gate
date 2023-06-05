@@ -28,31 +28,45 @@ const page = () => {
     const [submitting, setSubmitting] = useState(false);
     
     const formatPDF = () => { 
-        let finalPdf = `
+        let text = `
         Tester Name: ${testReport.testerName}\n
         Project Name: ${testReport.projectName}\n
         URL: ${testReport.url}\n
         Created Date: ${new Date()}\n
-        No Defect Found: ${testReport.noDefectFound}\n
-        No Defect Solved: ${testReport.noDefectSolved}\n
+        No Defect Found: ${testReport.noDefectFound}\tNo Defect Solved: ${testReport.noDefectSolved}\n
+        Number Of Defect In Block: ${testReport.noOfDefectBlock}\tNumber Of (Major) Defect: ${testReport.noOfDefectMajor}\n
         Number Of Test Case Executed: ${testReport.noOfTCExe}\n
         Number Of Defect In Requirement: ${testReport.noOfDefectInRequirement}\n
-        Number Of Defect In Block: ${testReport.noOfDefectBlock}\n
-        Number Of (Major) Defect: ${testReport.noOfDefectMajor}\n
-        Remark: ${testReport.remark}\n
         Release Date: ${testReport.releaseDate}\n
         Number Of Defect In Release: ${testReport.noOfDefectInRelease}\n
-        Is Requirmenet Changed ?: ${testReport.isRequirmenetChange == 1 ? "YES" : "NO"}
-        Is the PRD file up to date?: ${testReport.isPRDUpdated == 1 ? "YES" : "NO"}
+        Is Requirmenet Changed ?: ${testReport.isRequirmenetChange == 1 ? "YES" : "NO"}\n
+        Is the PRD file up to date?: ${testReport.isPRDUpdated == 1 ? "YES" : "NO"}\n
+        Remark: ${testReport.remark}\n
         `;
        
+        var pageWidth = 8.5,
+        lineHeight = 1.2,
+        margin = 0.11,
+        maxLineWidth = pageWidth - margin * 2,
+        fontSize = 12,
+        ptsPerInch = 72,
+        oneLineHeight = (fontSize * lineHeight) / ptsPerInch,
 
-        const   doc = new jsPDF()
-        doc.setProperties({ title: "String Splitting" });
-        doc.setFontSize(15);
-        doc.text(finalPdf, 10, 10);
-    
-        doc.save("a4.pdf");
+        doc = new jsPDF({
+          unit: "in",
+          lineHeight: lineHeight
+        }).setProperties({ title: "String Splitting" });
+      
+      // splitTextToSize takes your string and turns it in to an array of strings,
+      // each of which can be displayed within the specified maxLineWidth.
+      var textLines = doc
+        .setFont("helvetica")
+        .setFontSize(fontSize)
+        .splitTextToSize(text, maxLineWidth);
+      
+      // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
+        doc.text(textLines, margin, margin + 2 * oneLineHeight);
+        doc.save(`${testReport.projectName}.pdf`);
     } 
     
     const createTestReport = (e) => {

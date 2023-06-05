@@ -124,15 +124,23 @@ const TestPlanForm = ({
           </label>
 
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Is it need mobile Testing</span>
-              <input  type="checkbox"  id="is_mobile" value={1} onChange={(e) => setTestPlan({...testPlan, isMobile: e.target.value})}/>
-              <label style={{color: "white", backgroundColor:"red", fontSize:"20px"}} htmlFor="is_mobile"> yes the project require to test mobile</label>
+            <span className='font-satoshi font-semibold text-base text-gray-700'>Is it need mobile Testing?</span>
+            <br/>
+                <input type="radio" id="is_mobileYES" name="is_mobile" value={1}   onChange={(e) => setTestPlan({...testPlan, isMobile: 1})}/>
+                <label htmlFor="is_mobileYES">Yes</label><br/>
+                <input type="radio" id="is_mobileNO" name="is_mobile" value={0}  onChange={(e) => setTestPlan({...testPlan, isMobile: 0})}/>
+                <label htmlFor="is_mobileNO">NO</label><br />  
           </label>
 
+
+
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Is it api testing</span>
-              <input type="checkbox" id="is_api" value={1} onChange={(e) => setTestPlan({...testPlan, isAPI: e.target.value})}/>
-              <label style={{color: "white", backgroundColor:"red", fontSize:"20px"}} htmlFor="is_api"> yes the project require to test api</label>
+            <span className='font-satoshi font-semibold text-base text-gray-700'>Is the project need to do API Testing?</span>
+            <br/>
+                <input type="radio" id="is_apiYES" name="is_api" value={1} onChange={(e) => setTestPlan({...testPlan, isAPI: 1})}/>
+                <label htmlFor="is_apiYES">Yes</label><br/>
+                <input type="radio" id="is_apiNO" name="is_api" value={0} onChange={(e) => setTestPlan({...testPlan, isAPI: 0})}/>
+                <label htmlFor="is_apiNO">NO</label><br />  
           </label>
 
           <div className='flex-end mx-3 mb-5 gap-4'>

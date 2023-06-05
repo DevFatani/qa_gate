@@ -2,6 +2,7 @@
 import {useState, React, useEffect} from 'react';
 import * as XLSX from 'xlsx';
 import Link from 'next/link'
+import { fakerDE as faker } from '@faker-js/faker';
 
 import Form from '@components/Form';
 
@@ -40,11 +41,19 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
     };
 
 
-    const handleInputInputDataChange = (index, event) => {
+    const handleInputInputDataChange = (index, event, text) => {
         const newInputValues = [...data];
-        newInputValues[index].inputData = event.target.value;
+        newInputValues[index].inputData = event === null ? `${newInputValues[index].inputData} ${text}` : event.target.value;
         setTcs(newInputValues);
     };
+
+    const handleClearInputDataChange = (index, event) => {
+        const newInputValues = [...data];
+        newInputValues[index].inputData = '';
+        setTcs(newInputValues);
+    };
+
+    
 
     const handleInputExpectedResultChange = (index, event) => {
         const newInputValues = [...data];
@@ -60,14 +69,23 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
 
     return(
       <div  className='div_table_body'>
-        <div style={{backgroundColor: "gray"}}>
-            <button style={{width:"150px", height:"50px", backgroundColor: "yellow"}} onClick={exportToExcel}>Export to Excel</button>
+        <div>
+            <button 
+                style={{
+                    width:"100%",
+                    height:"50px",
+                    fontWeight: 900,
+                    fontSize: "20px",
+                    backgroundColor: "lightsalmon"
+                }} 
+                onClick={exportToExcel}
+            >Export to Excel</button>
         </div>
        <table className='table_body'>
            <thead>
                <tr >
-                <th className='table_h table_h-text'>ID</th>
-                <th className='table_h-text'>TestCase Name</th>
+                <th className='table_h-text_id'>#ID</th>
+                <th className='table_h-text'>TestCase Title</th>
                 <th className='table_h-text_selection'>Test Level</th>
                 <th className='table_h-text_selection'>Test Type</th>
                 <th className='table_h-text_selection'>Test Behavior</th>
@@ -81,7 +99,7 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
        <tbody>
            {data.map((item, index) => (
            <tr key={index}>
-               <td className='table_h-text'>{item.id}</td>
+               <td className='table_h-text_id'>{item.id}</td>
                <td className='table_h-text table_name'>
                     <textarea
                         
@@ -90,11 +108,15 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                         onChange={(e) => handleInputNameChange(index, e)}
                     />
                </td>
-               <td className='table_h-text'>
-
-                    <select name="testLvl" id="testLvl" onChange={(e) => {
-                        item.testLvl = e.target.value;
-                    }}>
+               <td className='table_h-text_selection'>
+                    <span className='select_span_text'>Select Test Level</span>
+                    <br />
+                    <select
+                        name="testLvl"
+                        id="testLvl"
+                        onChange={(e) => { item.testLvl = e.target.value;}}
+                        className='select_box'   
+                    >
                         <option value={UNIT_TEST} selected={item.testLvl === UNIT_TEST}>{UNIT_TEST}</option>
                         <option value={INTEGRATION_TEST} selected={item.testLvl === INTEGRATION_TEST}>{INTEGRATION_TEST}</option>
                         <option value={SYSTEM_TEST} selected={item.testLvl === SYSTEM_TEST}>{SYSTEM_TEST}</option>
@@ -105,10 +127,15 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                
                
                
-               <td className='table_h-text'>
-                    <select name="testType" id="testType" onChange={(e) => {
-                        item.testType = e.target.value;
-                    }}>
+               <td className='table_h-text_selection'>
+                    <span className='select_span_text'>Select Test Type</span>
+                    <br />
+                    <select 
+                        name="testType"
+                        id="testType"
+                        onChange={(e) => {item.testType = e.target.value;}}
+                        className='select_box'       
+                    >
                         <option value={TEST_TYPE_FUNCTIONAL} selected={item.testType === TEST_TYPE_FUNCTIONAL}>{TEST_TYPE_FUNCTIONAL}</option>
                         <option value={TEST_TYPE_NONFUNCTIONAL} selected={item.testType === TEST_TYPE_NONFUNCTIONAL}>{TEST_TYPE_NONFUNCTIONAL}</option>
                         <option value={TEST_TYPE_REGRESSION} selected={item.testType === TEST_TYPE_REGRESSION}>{TEST_TYPE_REGRESSION}</option>
@@ -120,19 +147,29 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
               
               
               
-               <td  className='table_h-text'>
-                    <select name="isPostive" id="isPostive" onChange={(e) => {
-                        item.isPostive = e.target.value;
-                    }}>
+               <td className='table_h-text_selection'>
+                    <span className='select_span_text'>Select Test Behavior</span>
+                    <br />
+                    <select 
+                        name="isPostive"
+                        id="isPostive"
+                        onChange={(e) => {item.isPostive = e.target.value;}}
+                        className='select_box'       
+                    >
                         <option value={TEST_BEHAVIOR_POSITIVE} selected={item.isPostive === TEST_BEHAVIOR_POSITIVE}>{TEST_BEHAVIOR_POSITIVE}</option>
                         <option value={TEST_BEHAVIOR_NEGATIVE} selected={item.isPostive === TEST_BEHAVIOR_NEGATIVE}>{TEST_BEHAVIOR_NEGATIVE}</option>
                     </select>
                 </td>
                
                <td  className='table_h-text_selection'>
-                    <select name="priority" id="priority" onChange={(e) => {
-                        item.priority = e.target.value;
-                    }}>
+                    <span className='select_span_text'>Select Test Type</span>
+                    <br />
+                    <select
+                        name="priority" 
+                        id="priority" 
+                        onChange={(e) => {item.priority = e.target.value;}}
+                        className='select_box' 
+                    >
                         <option value={PRIORITY_HIGH} selected={item.priority === PRIORITY_HIGH}>{PRIORITY_HIGH}</option>
                         <option value={PRIORITY_MEDIUM} selected={item.priority === PRIORITY_MEDIUM}>{PRIORITY_MEDIUM}</option>
                         <option value={PRIORITY_LOW} selected={item.priority === PRIORITY_LOW}>{PRIORITY_LOW}</option>
@@ -145,17 +182,84 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                         className='form_textarea'
                         value={item.steps}
                         onChange={(e) => handleInputStepsChange(index, e)}
-                        placeholder='your setps here 🤖'
+                        placeholder='Add your setps here 🤖'
                     />
                </td>
-
                <td className='table_h-text table_name'>
+                    <div>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.lorem.sentence());
+                            }}
+                        >GR Texts</button>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.person.fullName());
+                            }}
+                        >GR Names</button>
+                        <br />
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.internet.email());
+                            }}
+                        >GR Email</button>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.phone.number());
+                            }}
+                        >GR Phone</button>
+                        <br />
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.lorem.paragraphs());
+                            }}
+                        >GR Long Text</button>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.location.streetAddress());
+                            }}
+                        >GR Address</button>
+                        <br />
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, `${faker.internet.emoji()}${faker.internet.emoji()}${faker.internet.emoji()}`);
+                            }}
+                        >GR Emoji</button>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.date.anytime());
+                            }}
+                        >GR Date</button>
+                        <br/>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.number.bigInt().toString());
+                            }}
+                        >GR Numbers</button>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.internet.password());
+                            }}
+                        >GR Password</button>
+                        <br/>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.finance.creditCardNumber());
+                            }}
+                        >GR Credit Card</button>
+                        <button type='button' className='random_button'
+                            onClick={(e) => {
+                                handleInputInputDataChange(index, null, faker.finance.iban());
+                            }}
+                        >GR IBAN</button>
+                    </div>
                     <textarea
                         className='form_textarea'
                         value={item.inputData}
-                        onChange={(e) => handleInputInputDataChange(index, e)}
+                        onChange={(e) => handleInputInputDataChange(index, e, null)}
                         placeholder='add your Input Data 🤖'
                     />
+                    <div><button onClick={(e) => handleClearInputDataChange(index, e)}>Clear</button></div>
                </td>
 
                <td className='table_h-text table_name'>
@@ -195,31 +299,30 @@ const TestStatistic = ( { data }) => {
     });
 
   
-        const getStatistic = () => {
-            let numberOfNegative = 0;
-            let numberOfUnitTest = 0;
-            let numberOfIntegrationTest = 0;
-            let numberOfSystemTest = 0;
-            let numberOfUATTest = 0;
-            let numberOfHigh = 0;
-                data.map((e) => {
-                    if(e.isPostive === TEST_BEHAVIOR_NEGATIVE) numberOfNegative++;
-                    if(e.testLvl === UNIT_TEST) numberOfUnitTest++;
-                    if(e.testLvl === INTEGRATION_TEST) numberOfIntegrationTest++;
-                    if(e.testLvl === SYSTEM_TEST) numberOfSystemTest++;
-                    if(e.testLvl === UAT_TEST) numberOfUATTest++;
-                    if(e.priority === PRIORITY_HIGH) numberOfHigh++;
-                });
-
-            setNumber({
-                negative: numberOfNegative,
-                unitTest: numberOfUnitTest,
-                integrationTest: numberOfIntegrationTest,
-                systemTest: numberOfSystemTest,
-                uatTest: numberOfUATTest,
-                highTest: numberOfHigh
+    const getStatistic = () => {
+        let numberOfNegative = 0;
+        let numberOfUnitTest = 0;
+        let numberOfIntegrationTest = 0;
+        let numberOfSystemTest = 0;
+        let numberOfUATTest = 0;
+        let numberOfHigh = 0;
+            data.map((e) => {
+                if(e.isPostive === TEST_BEHAVIOR_NEGATIVE) numberOfNegative++;
+                if(e.testLvl === UNIT_TEST) numberOfUnitTest++;
+                if(e.testLvl === INTEGRATION_TEST) numberOfIntegrationTest++;
+                if(e.testLvl === SYSTEM_TEST) numberOfSystemTest++;
+                if(e.testLvl === UAT_TEST) numberOfUATTest++;
+                if(e.priority === PRIORITY_HIGH) numberOfHigh++;
             });
-        }
+        setNumber({
+            negative: numberOfNegative,
+            unitTest: numberOfUnitTest,
+            integrationTest: numberOfIntegrationTest,
+            systemTest: numberOfSystemTest,
+            uatTest: numberOfUATTest,
+            highTest: numberOfHigh
+        });
+    }
 
     return (
         <div>
@@ -289,10 +392,10 @@ const Home = () => {
                         testType: findTestType(testCategory),
                         isPostive: testBehavior(testCategory),
                         priority: findTestPriority(testCategory),
-                        steps: 'add your steps...',
-                        inputData: 'input data',
-                        expectedResult: 'expected result',
-                        actualResult: 'actual result',
+                        steps: '',
+                        inputData: '',
+                        expectedResult: '',
+                        actualResult: '',
                     }
 
                 );
