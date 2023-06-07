@@ -344,6 +344,13 @@ const TestStatistic = ( { data }) => {
 
 const Home = () => {
     const [testCase, setTestCase] = useState({ text: '' });
+   
+    const [arrComponents, setArrComponents] = useState({  text: ''});
+
+    const [verifyVisible, setVerifyVisible] = useState(false);
+    const [verifyClickable, setVerifyClickable] = useState(false);
+    const [verifyIsNotVisible, setVerifyIsNotVisible] = useState(false);
+    const [verifyIsNotClickable, setVerifyIsNotClickable] = useState(false);
 
     const [tcs, setTcs] = useState([]);
 
@@ -501,6 +508,30 @@ const Home = () => {
         return newTcsFormat;
    }
 
+   const onGenerateComponent = (e) => {
+        setTestCase({text: arrComponents.text});
+        let finalText = '';
+        arrComponents.text.trim().split(',').map((component) => {
+          
+            if(verifyVisible) { 
+                finalText += 'vv, ';
+            }
+            if(verifyClickable) { 
+                finalText += 'vc, ';
+            }
+            if(verifyIsNotVisible) { 
+                finalText += 'vnv, ';
+            }
+            if(verifyIsNotClickable) { 
+                finalText += 'vnc';
+            }
+            console.log(arrComponents.vv, arrComponents.vc)
+            finalText += `| ${component} | c,m,n,f\n`;
+        })
+        setTestCase({text: finalText});
+        setArrComponents({ text: ''})
+   }
+
     const exportToExcel = () => {
         const worksheet = XLSX.utils.json_to_sheet(formatOutputDataForQASE());
         const workbook = XLSX.utils.book_new();
@@ -521,13 +552,24 @@ const Home = () => {
             <Link href='/test-report' >
                 <button  style={{backgroundColor:"blue", border: "40px solid red", color: "cyan", fontSize: "100px"}}>Add your test report </button>
             </Link>
-            <Form 
+            <Form
+                arrComponents ={arrComponents}
+                setArrComponents={setArrComponents}
                 testCase={testCase}
-                setTextCase={setTestCase}
+                setTestCase={setTestCase}
                 taskName={taskName}
                 setTaskName={setTaskName}
                 submitting={submitting}
+                verifyVisible={verifyVisible}
+                setVerifyVisible={setVerifyVisible}
+                verifyClickable={verifyClickable}
+                setVerifyClickable={setVerifyClickable}
+                verifyIsNotVisible={verifyIsNotVisible}
+                setVerifyIsNotVisible={setVerifyIsNotVisible}
+                verifyIsNotClickable={verifyIsNotClickable}
+                setVerifyIsNotClickable={setVerifyIsNotClickable}
                 handleSubmit={createMyTestCase}
+                onGenerateComponent={onGenerateComponent}
             />
 
            <TestStatistic data={tcs} />

@@ -4,8 +4,19 @@ const Form = ({
     taskName,
     setTaskName,
     testCase,
-    setTextCase,
+    setTestCase,
+    arrComponents,
+    setArrComponents,
     handleSubmit,
+    onGenerateComponent,
+    verifyVisible,
+    setVerifyVisible,
+    verifyClickable,
+    setVerifyClickable,
+    verifyIsNotVisible,
+    setVerifyIsNotVisible,
+    verifyIsNotClickable,
+    setVerifyIsNotClickable,
     submitting}) => {
   
   return (
@@ -107,20 +118,39 @@ const Form = ({
               <span className='font-satoshi font-semibold text-base text-gray-700'>Task Name</span>
               <input 
                 className='search_input'
-                value={taskName.ext}
+                value={taskName.text}
                 onChange={(e) => setTaskName({text: e.target.value})}
                 placeholder='write your task name'
                 required
-               
               />
           </label>
+          <label>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Add Your Components Here like (button, input, form, etc ..)</span>
+              <input 
+                className='search_input'
+                value={arrComponents.text}
+                onChange={(e) => setArrComponents({ text: e.target.value})}
+                placeholder='Add your components here'
+              />
+              <button className='random_button' type='button'
+                onClick={onGenerateComponent}
+              >Generate </button><br />
+              <input type="checkbox" id="genComponentCheckboxAddVV" name="genComponentCheckboxAddVV" value={verifyVisible} onClick ={(e)=> setVerifyVisible(e.target.checked)} />
+              <label for="genComponentCheckboxAddVV">Add VV to each component</label><br/>
+              <input type="checkbox" id="genComponentCheckboxAddVC" name="genComponentCheckboxAddVC"  value={verifyClickable} onClick={(e)=> setVerifyClickable(e.target.checked)}/>
+              <label for="genComponentCheckboxAddVC">Add VC to each component</label><br/>
+              <input type="checkbox" id="genComponentCheckboxAddVNV" name="genComponentCheckboxAddVNV" value={verifyIsNotVisible}  onClick={(e)=> setVerifyIsNotVisible(e.target.checked)}/>
+              <label for="genComponentCheckboxAddVNV">Add VNV to each component</label><br/>
+              <input type="checkbox" id="genComponentCheckboxAddVNC" name="genComponentCheckboxAddVNC"  value={verifyIsNotClickable} onClick={(e)=> setVerifyIsNotClickable(e.target.checked)}/>
+              <label for="genComponentCheckboxAddVNC">Add VNC to each component</label><br/><br/>
+          </label>
+
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Your Test cases here</span>
             <textarea 
               value={testCase.text}
-              onChange={(e) => setTextCase({text: e.target.value})}
+              onChange={(e) => setTestCase({text: e.target.value})}
               placeholder='write your qa test case here'
-              required
               className='form_textarea'
             />
           </label>
