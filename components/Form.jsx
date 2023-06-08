@@ -133,7 +133,10 @@ const Form = ({
                 placeholder='Add your components here'
               />
               <button className='random_button' type='button'
-                onClick={onGenerateComponent}
+                onClick={() => {
+                  if(arrComponents.text)
+                    onGenerateComponent();
+                }}
               >Generate </button><br />
               <input type="checkbox" id="genComponentCheckboxAddVV" name="genComponentCheckboxAddVV" value={verifyVisible} onClick ={(e)=> setVerifyVisible(e.target.checked)} />
               <label for="genComponentCheckboxAddVV">Add VV to each component</label><br/>

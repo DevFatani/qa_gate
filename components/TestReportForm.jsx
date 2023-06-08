@@ -42,6 +42,16 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                 />
           </label>
           <label>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Test Run URL</span>
+                <input 
+                  className='search_input'
+                  value={testReport.testRunURL}
+                  onChange={(e) => setTestReport({...testReport, testRunURL: e.target.value})}
+                  placeholder='Share your Test Run url'
+                  required
+                />
+          </label>
+          <label>
               <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Found</span>
                 <input 
                     className='search_input'
@@ -146,7 +156,17 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                   />
                 <label htmlFor="isRequirmenetChangeNo">NO</label><br />  
           </label>
-          
+          {testReport.isRequirmenetChange == 1 ? 
+          <label>
+          <span className='font-satoshi font-semibold text-base text-gray-700'>Justify why requirement been changed</span>
+            <textarea 
+              className='search_input'
+              required={testReport.isRequirmenetChange}
+              value={testReport.requirmenetChangeRemark}
+              onChange={(e) => setTestReport({...testReport, requirmenetChangeRemark: e.target.value})}
+              placeholder='Justify why requirement been changed'
+            />
+      </label> : <div/ >}
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Is the PRD file up to date?</span>
             <br/>
@@ -155,7 +175,18 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                 <input type="radio" id="isPRDUpdatedNo" name="isPRDUpdated" value={0}  onChange={(e) => setTestReport({...testReport, isPRDUpdated: 0})}/>
                 <label htmlFor="isPRDUpdatedNo">NO</label><br />  
           </label>
-           <label>
+          {testReport.isPRDUpdated == 0 ? 
+          <label>
+          <span className='font-satoshi font-semibold text-base text-gray-700'>Justify why PRD not up to date</span>
+            <textarea 
+              className='search_input'
+              required={testReport.isPRDUpdated == 0}
+              value={testReport.prdUpdatedRemark}
+              onChange={(e) => setTestReport({...testReport, prdUpdatedRemark: e.target.value})}
+              placeholder='Justify why PRD not up to date?'
+            />
+      </label> : <div/ >}
+          <label>
               <span className='font-satoshi font-semibold text-base text-gray-700'>Remark</span>
                 <textarea 
                   className='search_input'

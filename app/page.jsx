@@ -509,7 +509,7 @@ const Home = () => {
    }
 
    const onGenerateComponent = (e) => {
-        setTestCase({text: arrComponents.text});
+        // setTestCase({text: arrComponents.text});
         let finalText = '';
         arrComponents.text.trim().split(',').map((component) => {
           
@@ -528,6 +528,11 @@ const Home = () => {
             console.log(arrComponents.vv, arrComponents.vc)
             finalText += `| ${component} | c,m,n,f\n`;
         })
+        setVerifyVisible(false);
+        setVerifyClickable(false);
+        setVerifyIsNotClickable(false);
+        setVerifyIsNotVisible(false);
+        finalText += `${testCase.text}\n`
         setTestCase({text: finalText});
         setArrComponents({ text: ''})
    }

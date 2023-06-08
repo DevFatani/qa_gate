@@ -10,6 +10,7 @@ const page = () => {
     const [testReport, setTestReport] = useState({
         testerName: '',
         url: '',
+        testRunURL: '',
         projectName:  '',
         noDefectFound: 0,
         noDefectSolved: 0,
@@ -17,7 +18,9 @@ const page = () => {
         noOfDefectInRequirement: 0,
         createdDate: '',
         isRequirmenetChange: 0,
-        isPRDUpdated: 0,
+        requirmenetChangeRemark:'',
+        isPRDUpdated: 1,
+        prdUpdatedRemark:'',
         remark:'',
         noOfDefectBlock: 0,
         noOfDefectMajor: 0,
@@ -32,6 +35,7 @@ const page = () => {
         Tester Name: ${testReport.testerName}\n
         Project Name: ${testReport.projectName}\n
         URL: ${testReport.url}\n
+        Test Run URL: ${testReport.url}\n
         Created Date: ${new Date()}\n
         No Defect Found: ${testReport.noDefectFound}\tNo Defect Solved: ${testReport.noDefectSolved}\n
         Number Of Defect In Block: ${testReport.noOfDefectBlock}\tNumber Of (Major) Defect: ${testReport.noOfDefectMajor}\n
@@ -40,7 +44,9 @@ const page = () => {
         Release Date: ${testReport.releaseDate}\n
         Number Of Defect In Release: ${testReport.noOfDefectInRelease}\n
         Is Requirmenet Changed ?: ${testReport.isRequirmenetChange == 1 ? "YES" : "NO"}\n
+        Requirmenet Change Remark: ${testReport.requirmenetChangeRemark}\n
         Is the PRD file up to date?: ${testReport.isPRDUpdated == 1 ? "YES" : "NO"}\n
+        PRD Remark: ${testReport.prdUpdatedRemark}\n
         Remark: ${testReport.remark}\n
         `;
        
@@ -48,7 +54,7 @@ const page = () => {
         lineHeight = 1.2,
         margin = 0.11,
         maxLineWidth = pageWidth - margin * 2,
-        fontSize = 12,
+        fontSize = 8,
         ptsPerInch = 72,
         oneLineHeight = (fontSize * lineHeight) / ptsPerInch,
 
