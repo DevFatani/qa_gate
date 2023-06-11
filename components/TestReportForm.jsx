@@ -8,7 +8,15 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           onSubmit={handleSubmit}
           className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
         >
-
+          <label>
+            <span className='font-satoshi font-semibold text-base text-gray-700'>What type of test report?</span>
+            <br/>
+                <input type="radio" checked={testReport.testReportType == 0} id="testReportTypeDev" name="testReportType" value={0}  onChange={(e) => setTestReport({...testReport, testReportType: e.target.value})}/>
+                <label htmlFor="testReportTypeDev">Development Environment 🤖</label><br />  
+                <br />
+                <input type="radio"  checked={testReport.testReportType == 1} id="testReportTypeLive" name="testReportType" value={1}   onChange={(e) => setTestReport({...testReport, testReportType: e.target.value})}/>
+                <label htmlFor="testReportTypeLive">Live Environment 🚀</label><br/>
+          </label>
           <label>
               <span className='font-satoshi font-semibold text-base text-gray-700'>Tester Name</span>
                 <input 
@@ -117,17 +125,6 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                     placeholder='Number Of (Major) Defect'
                     type='number'
                 />
-          </label>
-
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect In (Live)</span>
-                <input 
-                    className='search_input'
-                    value={testReport.noOfDefectInRelease  === 0 ? '' : testReport.noOfDefectInRelease}
-                    onChange={(e) => setTestReport({...testReport, noOfDefectInRelease: e.target.value})}
-                    placeholder='Number Of Defect In Live'
-                    type='number'
-              />
           </label>
 
           <label>

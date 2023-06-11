@@ -8,6 +8,7 @@ import TestReportForm from '@components/TestReportForm';
 const page = () => {
 
     const [testReport, setTestReport] = useState({
+        testReportType: 0,
         testerName: '',
         url: '',
         testRunURL: '',
@@ -24,14 +25,14 @@ const page = () => {
         remark:'',
         noOfDefectBlock: 0,
         noOfDefectMajor: 0,
-        releaseDate: '',
-        noOfDefectInRelease: 0,
+        releaseDate: ''
     });
 
     const [submitting, setSubmitting] = useState(false);
     
     const formatPDF = () => { 
         let text = `
+        Report Type: ${testReport.testReportType == 1 ? "Live Environment": "Development Environment"}\n
         Tester Name: ${testReport.testerName}\n
         Project Name: ${testReport.projectName}\n
         URL: ${testReport.url}\n
@@ -42,7 +43,6 @@ const page = () => {
         Number Of Test Case Executed: ${testReport.noOfTCExe}\n
         Number Of Defect In Requirement: ${testReport.noOfDefectInRequirement}\n
         Release Date: ${testReport.releaseDate}\n
-        Number Of Defect In Release: ${testReport.noOfDefectInRelease}\n
         Is Requirmenet Changed ?: ${testReport.isRequirmenetChange == 1 ? "YES" : "NO"}\n
         Requirmenet Change Remark: ${testReport.requirmenetChangeRemark}\n
         Is the PRD file up to date?: ${testReport.isPRDUpdated == 1 ? "YES" : "NO"}\n
