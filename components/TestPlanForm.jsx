@@ -5,6 +5,24 @@ const TestPlanForm = ({
     setTestPlan,
     handleSubmit,
     submitting}) => {
+
+      function handleTestTypeCheckboxChange(event) {
+        const value = event.target.value;
+        if (event.target.checked) {
+          setTestPlan({ ...testPlan, testType: [...testPlan.testType, value] });
+        } else {
+          setTestPlan({ ...testPlan, testType: [...testPlan.testType].filter(item => item != value) });
+        }
+      }
+
+      function handleTestLevelCheckboxChange(event) {
+        const value = event.target.value;
+        if (event.target.checked) {
+          setTestPlan({ ...testPlan, testLevel: [...testPlan.testLevel, value] });
+        } else {
+          setTestPlan({ ...testPlan, testType: [...testPlan.testLevel].filter(item => item != value) });
+        }
+      }
   
   return (
     <section className='w-full max-w-full flex-start flex-col'>
@@ -13,7 +31,7 @@ const TestPlanForm = ({
           className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
         >
 
-<label>
+        <label>
               <span className='font-satoshi font-semibold text-base text-gray-700'>Tester Name</span>
                 <input 
                   className='search_input'
@@ -59,9 +77,11 @@ const TestPlanForm = ({
           </label>
 
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>scope In</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Scope In</span>
               <textarea 
-                className='search_input'
+                className='form_textarea numbered'
+                cols="50"
+                rows="10"
                 value={testPlan.scopeIn}
                 onChange={(e) => setTestPlan({...testPlan, scopeIn: e.target.value})}
                 placeholder='write your task name'
@@ -71,9 +91,11 @@ const TestPlanForm = ({
           </label>
 
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>scope Out</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Scope Out</span>
               <textarea 
-                className='search_input'
+                className='form_textarea numbered'
+                cols="50"
+                rows="10"
                 value={testPlan.scopeOut}
                 onChange={(e) => setTestPlan({...testPlan, scopeOut: e.target.value})}
                 placeholder='write your task name'
@@ -84,38 +106,53 @@ const TestPlanForm = ({
 
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Select Test Level</span>
-            <select    className='search_input' name="testLevel" id="testLevel" multiple onChange={(e) => {
-                setTestPlan({...testPlan, testLevel: Array.from(e.target.selectedOptions, option => option.value)})
-            }}>
-              <option value="Unit">Unit</option>
-              <option value="Inegration">Inegration</option>
-              <option value="System">System</option>
-              <option value="UAT">UAT</option>
-            </select>
+    
+              <br />
+              <input  className='input_checkbox_input' type="checkbox" id="testLevelUnit" name="testLevelUnit"  value="Unit" onChange={handleTestLevelCheckboxChange} />
+              <label   className='input_checbox_label' for="testLevelUnit">Unit</label><br/>
+          
+              <input  className='input_checkbox_input' type="checkbox" id="testLevelIntegration" name="testLevelIntegration"  value="Integration" onChange={handleTestLevelCheckboxChange}/>
+              <label className='input_checbox_label' for="testLevelIntegration">Integration</label><br/>
+             
+              <input className='input_checkbox_input'  type="checkbox" id="testLevelSystem" name="testLevelSystem" value="System" onChange={handleTestLevelCheckboxChange} />
+              <label  className='input_checbox_label' for="testLevelSystem">System</label><br/>
+          
+              <input className='input_checkbox_input'  type="checkbox" id="testLevelUAT" name="testLevelUAT"  value="UAT" onChange={handleTestLevelCheckboxChange} />
+              <label  className='input_checbox_label' for="testLevelUAT">UAT</label><br/>
           </label>
           
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Select Test Type</span>
-            <select   className='search_input' name="testLevel" id="testLevel" multiple onChange={(e) => {
-                setTestPlan({...testPlan, testType: Array.from(e.target.selectedOptions, option => option.value)})
-            }}>
-              <option value="function">Function</option>
-              <option value="non-function">Non Function</option>
-              <option value="api">API Testing</option>
-              <option value="postive negative">Postive and Negative</option>
-              <option value="usability">Usability Testing</option>
-              <option value="compatibility">Compatibility Testing</option>
-              <option value="static">Static Testing</option>
-              <option value="dynamic">Dynamic Testing</option>
-              <option value="smoke">Smoke Testing</option>
-              <option value="sanity">Sanity Testing</option>
-            </select>
+          
+              <br />
+              <input  className='input_checkbox_input' type="checkbox" id="testTypeFunction" name="testTypeFunction" value="Function" onChange={handleTestTypeCheckboxChange} />
+              <label   className='input_checbox_label' for="testTypeFunction">Function</label><br/>
+          
+              <input  className='input_checkbox_input' type="checkbox" id="testTypeFunctionNonFunction" name="testTypeFunctionNonFunction"  value="Non-Function" onChange={handleTestTypeCheckboxChange}/>
+              <label className='input_checbox_label' for="testTypeFunctionNonFunction">Non-Function</label><br/>
+             
+              <input className='input_checkbox_input'  type="checkbox" id="testTypeAPI" name="testTypeAPI" value="API" onChange={handleTestTypeCheckboxChange} />
+              <label  className='input_checbox_label' for="testTypeAPI">Api</label><br/>
+          
+              <input className='input_checkbox_input'  type="checkbox" id="testTypeUsability" name="testTypeUsability"  value="Usability" onChange={handleTestTypeCheckboxChange} />
+              <label  className='input_checbox_label' for="testTypeUsability">Usability</label><br/>
+
+              <input className='input_checkbox_input'  type="checkbox" id="mobileTesting" name="mobileTesting"  value="Mobile Testing" onChange={handleTestTypeCheckboxChange} />
+              <label  className='input_checbox_label' for="mobileTesting">Mobile Testing</label><br/>
+
+              <input className='input_checkbox_input'  type="checkbox" id="smokeTesting" name="smokeTesting"  value="Smoke Testing" onChange={handleTestTypeCheckboxChange} />
+              <label  className='input_checbox_label' for="smokeTesting">Smoke Testing</label><br/>
+             
+              <input className='input_checkbox_input' type="checkbox" id="staticDynamicTesting" name="staticDynamicTesting"  value="Static and Dynamic Testing" onChange={handleTestTypeCheckboxChange} />
+              <label  className='input_checbox_label' for="staticDynamicTesting">Static and Dynamic Testing</label><br/><br/>
           </label>
 
           <label>
               <span className='font-satoshi font-semibold text-base text-gray-700'>Exit Criteria</span>
               <textarea 
-                className='search_input'
+                className='form_textarea numbered'
+                cols="50"
+                rows="10"
                 value={testPlan.exitCriteria}
                 onChange={(e) => setTestPlan({ ...testPlan, exitCriteria: e.target.value})}
                 placeholder='write your Exit Criteria'
@@ -123,26 +160,7 @@ const TestPlanForm = ({
               />
           </label>
 
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Is it need mobile Testing?</span>
-            <br/>
-                <input type="radio" id="is_mobileYES" name="is_mobile" value={1}   onChange={(e) => setTestPlan({...testPlan, isMobile: 1})}/>
-                <label htmlFor="is_mobileYES">Yes</label><br/>
-                <input type="radio" id="is_mobileNO" name="is_mobile" value={0}  onChange={(e) => setTestPlan({...testPlan, isMobile: 0})}/>
-                <label htmlFor="is_mobileNO">NO</label><br />  
-          </label>
-
-
-
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Is the project need to do API Testing?</span>
-            <br/>
-                <input type="radio" id="is_apiYES" name="is_api" value={1} onChange={(e) => setTestPlan({...testPlan, isAPI: 1})}/>
-                <label htmlFor="is_apiYES">Yes</label><br/>
-                <input type="radio" id="is_apiNO" name="is_api" value={0} onChange={(e) => setTestPlan({...testPlan, isAPI: 0})}/>
-                <label htmlFor="is_apiNO">NO</label><br />  
-          </label>
-
+ 
           <div className='flex-end mx-3 mb-5 gap-4'>
             <Link href='/' className='text-gray-500 text-sm'>Cancel</Link>
             <button

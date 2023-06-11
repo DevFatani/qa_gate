@@ -9,15 +9,10 @@ const Form = ({
     setArrComponents,
     handleSubmit,
     onGenerateComponent,
-    verifyVisible,
-    setVerifyVisible,
-    verifyClickable,
-    setVerifyClickable,
-    verifyIsNotVisible,
-    setVerifyIsNotVisible,
-    verifyIsNotClickable,
-    setVerifyIsNotClickable,
-    submitting}) => {
+    assertion,
+    setAssertion,
+    submitting
+  }) => {
   
   return (
     <section className='w-full max-w-full flex-start flex-col'>
@@ -126,9 +121,10 @@ const Form = ({
           </label>
           <label>
               <span className='font-satoshi font-semibold text-base text-gray-700'>Add Your Components Here like (button, input, form, etc ..)</span>
-              <input 
+              <textarea 
                 className='search_input'
                 value={arrComponents.text}
+                
                 onChange={(e) => setArrComponents({ text: e.target.value})}
                 placeholder='Add your components here'
               />
@@ -138,13 +134,13 @@ const Form = ({
                     onGenerateComponent();
                 }}
               >Generate </button><br />
-              <input type="checkbox" id="genComponentCheckboxAddVV" name="genComponentCheckboxAddVV" value={verifyVisible} onClick ={(e)=> setVerifyVisible(e.target.checked)} />
+              <input type="checkbox" id="genComponentCheckboxAddVV" name="genComponentCheckboxAddVV" value={assertion.verifyVisible} onClick ={(e)=> setAssertion({...assertion, verifyVisible : e.target.checked})} />
               <label for="genComponentCheckboxAddVV">Add VV to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVC" name="genComponentCheckboxAddVC"  value={verifyClickable} onClick={(e)=> setVerifyClickable(e.target.checked)}/>
+              <input type="checkbox" id="genComponentCheckboxAddVC" name="genComponentCheckboxAddVC"  value={assertion.verifyClickable} onClick={(e)=> setAssertion({...assertion, verifyClickable : e.target.checked})}/>
               <label for="genComponentCheckboxAddVC">Add VC to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVNV" name="genComponentCheckboxAddVNV" value={verifyIsNotVisible}  onClick={(e)=> setVerifyIsNotVisible(e.target.checked)}/>
+              <input type="checkbox" id="genComponentCheckboxAddVNV" name="genComponentCheckboxAddVNV" value={assertion.verifyIsNotVisible}  onClick={(e)=> setAssertion({...assertion, verifyIsNotVisible : e.target.checked})}/>
               <label for="genComponentCheckboxAddVNV">Add VNV to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVNC" name="genComponentCheckboxAddVNC"  value={verifyIsNotClickable} onClick={(e)=> setVerifyIsNotClickable(e.target.checked)}/>
+              <input type="checkbox" id="genComponentCheckboxAddVNC" name="genComponentCheckboxAddVNC"  value={assertion.verifyIsNotClickable} onClick={(e)=> setAssertion({...assertion, verifyIsNotClickable : e.target.checked})}/>
               <label for="genComponentCheckboxAddVNC">Add VNC to each component</label><br/><br/>
           </label>
 
@@ -152,12 +148,25 @@ const Form = ({
             <span className='font-satoshi font-semibold text-base text-gray-700'>Your Test cases here</span>
             <textarea 
               value={testCase.text}
-              onChange={(e) => setTestCase({text: e.target.value})}
+              onChange={(e) => setTestCase({...testCase, text: e.target.value})}
               placeholder='write your qa test case here'
-              className='form_textarea'
+              className='form_textarea numbered'
+              cols="50"
+              rows="10"
             />
           </label>
 
+          <label>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>General Steps (Steps will be in all the test cases)</span>
+              <textarea 
+                className='form_textarea numbered'
+                cols="50"
+                rows="10"
+                value={testCase.steps}
+                onChange={(e) => setTestCase({...testCase , steps: e.target.value})}
+                placeholder='General Steps (Steps will be in all the test cases)'
+              />
+          </label>
   
 
           <div className='flex-end mx-3 mb-5 gap-4'>

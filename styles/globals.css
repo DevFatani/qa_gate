@@ -192,7 +192,7 @@
 }
 
 .table_h-text_selection { 
-  padding: 5px;
+  padding: 3px;
   border: 2px solid black;
   height: auto;
   font-weight: 800;
@@ -231,7 +231,7 @@
 }
 
 .select_box {
-  height: 45px;
+  height: 34px;
   border: 2px solid rgb(133, 232, 241);
   border-radius: 10px;
   text-align: center;
@@ -256,4 +256,30 @@
   padding: 2px;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+textarea.numbered {
+  background: url(http://i.imgur.com/2cOaJ.png);
+  background-attachment: local;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  padding-top: 10px;
+  font-size: medium;
+  border-color:#ccc;
+  background-color: #ccc;
+  color: #000;
+  
+}
+
+.input_checbox_label {
+  color: #414846;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.input_checkbox_input {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  background-color: #04AA6D;
 }

@@ -35,7 +35,7 @@ const page = () => {
         Tester Name: ${testReport.testerName}\n
         Project Name: ${testReport.projectName}\n
         URL: ${testReport.url}\n
-        Test Run URL: ${testReport.url}\n
+        Test Run URL: ${testReport.testRunURL}\n
         Created Date: ${new Date()}\n
         No Defect Found: ${testReport.noDefectFound}\tNo Defect Solved: ${testReport.noDefectSolved}\n
         Number Of Defect In Block: ${testReport.noOfDefectBlock}\tNumber Of (Major) Defect: ${testReport.noOfDefectMajor}\n

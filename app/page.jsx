@@ -343,14 +343,19 @@ const TestStatistic = ( { data }) => {
 
 
 const Home = () => {
-    const [testCase, setTestCase] = useState({ text: '' });
+    const [testCase, setTestCase] = useState({ 
+        text: '',
+        steps: ''
+    });
    
     const [arrComponents, setArrComponents] = useState({  text: ''});
 
-    const [verifyVisible, setVerifyVisible] = useState(false);
-    const [verifyClickable, setVerifyClickable] = useState(false);
-    const [verifyIsNotVisible, setVerifyIsNotVisible] = useState(false);
-    const [verifyIsNotClickable, setVerifyIsNotClickable] = useState(false);
+    const [assertion, setAssertion] = useState({ 
+            verifyVisible: false,
+            verifyClickable: false,
+            verifyIsNotVisible: false,
+            verifyIsNotClickable: false
+    });
 
     const [tcs, setTcs] = useState([]);
 
@@ -361,56 +366,59 @@ const Home = () => {
     const createMyTestCase =  (e) => {
         e.preventDefault();
         setSubmitting(true);
-        
-        console.log(testCase.text);
         let counter = 0;
         let newTCS = [];
         testCase.text.trim().split("\n").map((allTCCode) => {
-            const tcCode = allTCCode.trim().split('|');
-            const verifyAndCheck = tcCode[0].split(',');
-            console.log(verifyAndCheck);
-            const objectToTest = tcCode[1];
-            const testCategory = tcCode[2].split(',');
-        
-            verifyAndCheck.map((v) => {
-                let newV = v.trim().toLowerCase();
-                
-                let tcNewName = "";
-                if(newV === 'vc') {
-                    tcNewName = `Verify ${objectToTest} is clickable`;
-                }
-                if (newV === 'vv') {
-                    tcNewName = `Verify ${objectToTest} is visible`;
-                }
-                if (newV === 'vnc') {
-                    tcNewName = `Verify ${objectToTest} is not clickable`;
-                }
-                if (newV === 'vnv') {
-                    tcNewName = `Verify ${objectToTest} is not visible`;
-                }
-                if (newV === '') {
-                    tcNewName = objectToTest;
-                }
-                newTCS.push(
-                    {
-                        id: counter + 1,
-                        name: tcNewName,
-                        testLvl: findTestLevel(testCategory),
-                        testType: findTestType(testCategory),
-                        isPostive: testBehavior(testCategory),
-                        priority: findTestPriority(testCategory),
-                        steps: '',
-                        inputData: '',
-                        expectedResult: '',
-                        actualResult: '',
+            if(allTCCode) {
+                const tcCode = allTCCode.trim().split('|');
+                const verifyAndCheck = tcCode[0].split(',');
+                const objectToTest = tcCode[1];
+                const testCategory = tcCode[2].split(',');
+            
+                verifyAndCheck.map((v, index) => {
+                    let newV = v.trim().toLowerCase();
+                    
+                    let tcNewName = "";
+                    if(newV === 'vc') {
+                        tcNewName = `Verify${objectToTest}is clickable`;
                     }
+                    if (newV === 'vv') {
+                        tcNewName = `Verify${objectToTest}is visible`;
+                    }
+                    if (newV === 'vnc') {
+                        tcNewName = `Verify${objectToTest}is not clickable`;
+                    }
+                    if (newV === 'vnv') {
+                        tcNewName = `Verify${objectToTest}is not visible`;
+                    }
+                    if (newV === '') {
+                        console.log(index);
+                        if(index  >= 1) return
+                        else tcNewName = objectToTest;
+                    }
+                    
+                    newTCS.push(
+                        {
+                            id: counter + 1,
+                            name: tcNewName,
+                            testLvl: findTestLevel(testCategory),
+                            testType: findTestType(testCategory),
+                            isPostive: testBehavior(testCategory),
+                            priority: findTestPriority(testCategory),
+                            steps: '',
+                            inputData: '',
+                            expectedResult: '',
+                            actualResult: '',
+                            steps: testCase.steps
+                        }
 
-                );
-                counter++;
-        });
+                    );
+                    counter++;
+                });
         
-        console.table(newTCS);
-        })
+                console.table(newTCS);
+            }       
+        });
         setTcs(newTCS)
         setSubmitting(false);
     }
@@ -509,32 +517,27 @@ const Home = () => {
    }
 
    const onGenerateComponent = (e) => {
-        // setTestCase({text: arrComponents.text});
         let finalText = '';
         arrComponents.text.trim().split(',').map((component) => {
-          
-            if(verifyVisible) { 
-                finalText += 'vv, ';
-            }
-            if(verifyClickable) { 
-                finalText += 'vc, ';
-            }
-            if(verifyIsNotVisible) { 
-                finalText += 'vnv, ';
-            }
-            if(verifyIsNotClickable) { 
-                finalText += 'vnc';
-            }
-            console.log(arrComponents.vv, arrComponents.vc)
-            finalText += `| ${component} | c,m,n,f\n`;
+            if(component) {
+                if(assertion.verifyVisible) { 
+                    finalText += 'vv,';
+                }
+                if(assertion.verifyClickable) { 
+                    finalText += 'vc,';
+                }
+                if(assertion.verifyIsNotVisible) { 
+                    finalText += 'vnv,';
+                }
+                if(assertion.verifyIsNotClickable) { 
+                    finalText += 'vnc,';
+                }
+                
+                finalText += `| ${component} | c,m,p,f\n`;
+        }
         })
-        setVerifyVisible(false);
-        setVerifyClickable(false);
-        setVerifyIsNotClickable(false);
-        setVerifyIsNotVisible(false);
         finalText += `${testCase.text}\n`
         setTestCase({text: finalText});
-        setArrComponents({ text: ''})
    }
 
     const exportToExcel = () => {
@@ -565,14 +568,8 @@ const Home = () => {
                 taskName={taskName}
                 setTaskName={setTaskName}
                 submitting={submitting}
-                verifyVisible={verifyVisible}
-                setVerifyVisible={setVerifyVisible}
-                verifyClickable={verifyClickable}
-                setVerifyClickable={setVerifyClickable}
-                verifyIsNotVisible={verifyIsNotVisible}
-                setVerifyIsNotVisible={setVerifyIsNotVisible}
-                verifyIsNotClickable={verifyIsNotClickable}
-                setVerifyIsNotClickable={setVerifyIsNotClickable}
+                assertion={assertion}
+                setAssertion={setAssertion}
                 handleSubmit={createMyTestCase}
                 onGenerateComponent={onGenerateComponent}
             />

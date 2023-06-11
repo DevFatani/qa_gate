@@ -15,9 +15,7 @@ const page = () => {
         scopeOut: '',
         testLevel: [],
         testType: [],
-        exitCriteria: '',
-        isAPI: 0,
-        isMobile: 0,
+        exitCriteria: ''
     });
 
     const [submitting, setSubmitting] = useState(false);
@@ -27,13 +25,12 @@ const page = () => {
         let text = `Tester Name: ${testPlan.testerName}\n
         Project Name: ${testPlan.projectName}\n
         URL: ${testPlan.url}\n
-        About:\n${testPlan.about}\n
-        Scope In:\n${testPlan.scopeIn}\n
-        Scope Out:\n${testPlan.scopeOut}\n
+        About:\n\t${testPlan.about}\n
+        Scope In:\n\t${testPlan.scopeIn}\n
+        Scope Out:\n\t${testPlan.scopeOut}\n
         Test Level: ${testPlan.testLevel}\n
         Test Type: ${testPlan.testType}\n
-        exit criteria:\n${testPlan.exitCriteria}\n
-        is API Test require: ${testPlan.isAPI === 1 ? "YES" : "NO"} \tis Mobile require: ${testPlan.isMobile === 1 ? "YES" : "NO"}
+        exit criteria:\n\t${testPlan.exitCriteria}\n
         `;
        
         var pageWidth = 8.5,
