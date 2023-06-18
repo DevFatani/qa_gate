@@ -351,6 +351,8 @@ const Home = () => {
     const [arrComponents, setArrComponents] = useState({  text: ''});
 
     const [assertion, setAssertion] = useState({ 
+            verifyFunctional: false,
+            verifyEnable: false,
             verifyVisible: false,
             verifyClickable: false,
             verifyIsNotVisible: false,
@@ -384,6 +386,12 @@ const Home = () => {
                     }
                     if (newV === 'vv') {
                         tcNewName = `Verify${objectToTest}is visible`;
+                    }
+                    if (newV === 've') {
+                        tcNewName = `Verify${objectToTest}is enabled`;
+                    }
+                    if (newV === 'vf') {
+                        tcNewName = `Verify${objectToTest}is functioning`;
                     }
                     if (newV === 'vnc') {
                         tcNewName = `Verify${objectToTest}is not clickable`;
@@ -532,6 +540,12 @@ const Home = () => {
                 if(assertion.verifyIsNotClickable) { 
                     finalText += 'vnc,';
                 }
+                if(assertion.verifyFunctional) { 
+                    finalText += 'vf,';
+                }
+                if(assertion.verifyEnable) { 
+                    finalText += 've,';
+                }
                 
                 finalText += `| ${component} | c,m,p,f\n`;
         }
@@ -555,10 +569,16 @@ const Home = () => {
             </h1>
             <p className='desc text-cener'>Your gate for next QA</p>
             <Link href='/test-plan' >
-                <button  style={{backgroundColor:"blue", border: "40px solid red", color: "cyan", fontSize: "100px"}}>Add your test plan</button>
+                <button  style={{backgroundColor:"blue", border: "20px solid red", color: "cyan", fontSize: "30px"}}>Add your test plan</button>
             </Link>
             <Link href='/test-report' >
-                <button  style={{backgroundColor:"blue", border: "40px solid red", color: "cyan", fontSize: "100px"}}>Add your test report </button>
+                <button  style={{backgroundColor:"blue", border: "20px solid red", color: "cyan", fontSize: "30px"}}>Add your test report </button>
+            </Link>
+            <Link href='/test-report-jira' >
+                <button  style={{backgroundColor:"blue", border: "20px solid red", color: "cyan", fontSize: "30px"}}>Add your test report (Jira) </button>
+            </Link>
+            <Link href='/learning-report' >
+                <button  style={{backgroundColor:"blue", border: "20px solid red", color: "cyan", fontSize: "30px"}}>Add your learning report</button>
             </Link>
             <Form
                 arrComponents ={arrComponents}

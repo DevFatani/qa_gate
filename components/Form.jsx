@@ -24,9 +24,13 @@ const Form = ({
           vc, vv | add new button | s,l,n,f
         </p>
         <p className='desc text-left max-w-md' style={{color: "red", fontSize: "20px"}}>
-          VC = Verify add new button is clickable 
+          VC = Verify add new button is Clickable 
           <br />
-          VV = Verify add new button is visible
+          VV = Verify add new button is Visible
+          <br />
+          VF = Verify add new button is Functioning
+          <br />
+          VE = Verify add new button is Enabled
         </p>
 
         <div className='desc text-left max-w-md'>
@@ -134,6 +138,10 @@ const Form = ({
                     onGenerateComponent();
                 }}
               >Generate </button><br />
+              <input type="checkbox" id="genComponentCheckboxAddVF" name="genComponentCheckboxAddVF" value={assertion.verifyFunctional} onClick ={(e)=> setAssertion({...assertion, verifyFunctional : e.target.checked})} />
+              <label for="genComponentCheckboxAddVF">Add VF to each component</label><br/>
+              <input type="checkbox" id="genComponentCheckboxAddVE" name="genComponentCheckboxAddVE" value={assertion.verifyEnable} onClick ={(e)=> setAssertion({...assertion, verifyEnable : e.target.checked})} />
+              <label for="genComponentCheckboxAddVE">Add VE to each component</label><br/>
               <input type="checkbox" id="genComponentCheckboxAddVV" name="genComponentCheckboxAddVV" value={assertion.verifyVisible} onClick ={(e)=> setAssertion({...assertion, verifyVisible : e.target.checked})} />
               <label for="genComponentCheckboxAddVV">Add VV to each component</label><br/>
               <input type="checkbox" id="genComponentCheckboxAddVC" name="genComponentCheckboxAddVC"  value={assertion.verifyClickable} onClick={(e)=> setAssertion({...assertion, verifyClickable : e.target.checked})}/>

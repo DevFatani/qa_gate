@@ -2,10 +2,13 @@
 
 import {useState, React, useEffect} from 'react';
 import { jsPDF } from "jspdf";
+import moment from 'moment/moment';
+import {useRouter} from 'next/navigation';
 
 import TestReportForm from '@components/TestReportForm';
 
 const page = () => {
+    const router = useRouter();
 
     const [testReport, setTestReport] = useState({
         testReportType: 0,
@@ -25,7 +28,8 @@ const page = () => {
         remark:'',
         noOfDefectBlock: 0,
         noOfDefectMajor: 0,
-        releaseDate: ''
+        releaseDate: '',
+        isTaskNeedToBackInProgress: 0
     });
 
     const [submitting, setSubmitting] = useState(false);
@@ -46,6 +50,7 @@ const page = () => {
         Is Requirmenet Changed ?: ${testReport.isRequirmenetChange == 1 ? "YES" : "NO"}\n
         Requirmenet Change Remark: ${testReport.requirmenetChangeRemark}\n
         Is the PRD file up to date?: ${testReport.isPRDUpdated == 1 ? "YES" : "NO"}\n
+        Is the task need to back (In-Progress) ?: ${testReport.isTaskNeedToBackInProgress == 1 ? "YES" : "NO"}\n
         PRD Remark: ${testReport.prdUpdatedRemark}\n
         Remark: ${testReport.remark}\n
         `;
@@ -75,13 +80,46 @@ const page = () => {
         doc.save(`${testReport.projectName}.pdf`);
     } 
     
-    const createTestReport = (e) => {
-        console.log("pDF")
+    const createTestReport = async (e) => {
         e.preventDefault();
         setSubmitting(true);
-        formatPDF()
-        setSubmitting(false);
+         formatPDF();
+        try {
+          const response = await fetch('api/create-test-report', {
+              method: 'POST',
+              body: JSON.stringify({
+                testReportType: testReport.testReportType == 1 ? "Live Environment": "Development Environment",
+                testerName: testReport.testerName ,
+                url: testReport.url ,
+                testRunURL: testReport.testRunURL ,
+                projectName: testReport.projectName ,
+                noDefectFound: testReport.noDefectFound,
+                noDefectSolved: testReport.noDefectSolved,
+                noOfTCExe: testReport.noOfTCExe,
+                noOfDefectInRequirement: testReport.noOfDefectInRequirement,
+                createdDate: moment().format(),
+                isRequirmenetChange: testReport.isRequirmenetChange == 1 ? "YES" : "NO",
+                requirmenetChangeRemark: testReport.requirmenetChangeRemark,
+                isPRDUpdated: testReport.isPRDUpdated == 1 ? "YES" : "NO",
+                prdUpdatedRemark: testReport.prdUpdatedRemark,
+                remark: testReport.remark,
+                noOfDefectBlock: testReport.noOfDefectBlock,
+                noOfDefectMajor: testReport.noOfDefectMajor,
+                releaseDate: testReport.releaseDate,
+                isTaskNeedToBackInProgress: testReport.isTaskNeedToBackInProgress == 1 ? "YES" : "NO"
+            })
+          });
+
+          if(response.ok) {
+              router.push('/');
+          }
+      }catch(error)  { 
+          console.log(error);
+      }finally {
+          setSubmitting(false);
       }
+    }
+
   return (
     <section className='w-full flex-center flex-col'>
             <h1 className='head_text text-center'>

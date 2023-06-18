@@ -14,7 +14,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                 <input type="radio" checked={testReport.testReportType == 0} id="testReportTypeDev" name="testReportType" value={0}  onChange={(e) => setTestReport({...testReport, testReportType: e.target.value})}/>
                 <label htmlFor="testReportTypeDev">Development Environment 🤖</label><br />  
                 <br />
-                <input type="radio"  checked={testReport.testReportType == 1} id="testReportTypeLive" name="testReportType" value={1}   onChange={(e) => setTestReport({...testReport, testReportType: e.target.value})}/>
+                <input type="radio"  checked={testReport.testReportType == 1} id="testReportTypeLive" name="testReportType" value={1} onChange={(e) => setTestReport({...testReport, testReportType: e.target.value})}/>
                 <label htmlFor="testReportTypeLive">Live Environment 🚀</label><br/>
           </label>
           <label>
@@ -60,7 +60,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                 />
           </label>
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Found</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Found (Today)</span>
                 <input 
                     className='search_input'
                     value={testReport.noDefectFound  === 0 ? '' : testReport.noDefectFound}
@@ -71,7 +71,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                 />
           </label>
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Solved</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Solved (Today)</span>
                 <input 
                     className='search_input'
                     value={testReport.noDefectSolved === 0 ? '' : testReport.noDefectSolved}
@@ -83,7 +83,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           </label>
 
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Test Case Executed</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Test Case Executed (Today)</span>
                 <input 
                     className='search_input'
                     value={testReport.noOfTCExe  === 0 ? '' : testReport.noOfTCExe}
@@ -95,7 +95,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           </label>
 
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect In Requirement</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect In Requirement (Today)</span>
                 <input 
                     className='search_input'
                     value={testReport.noOfDefectInRequirement  === 0 ? '' : testReport.noOfDefectInRequirement}
@@ -106,7 +106,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           </label>
 
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect In Block</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect In Block (Today)</span>
                 <input 
                     className='search_input'
                     value={testReport.noOfDefectBlock  === 0 ? '' : testReport.noOfDefectBlock}
@@ -117,7 +117,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           </label>
 
           <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of (Major) Defect</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of (Major) Defect (Today)</span>
                 <input 
                     className='search_input'
                     value={testReport.noOfDefectMajor  === 0 ? '' : testReport.noOfDefectMajor}
@@ -138,9 +138,17 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               />
           </label>
 
+          <label>
+            <span className='font-satoshi font-semibold text-base text-gray-700'>Is the task need to back (In-Progress) ?</span>
+            <br/>
+                <input type="radio" checked={testReport.isTaskNeedToBackInProgress == 0} id="testReportBackInProgressNO" name="backInProgress" value={0}  onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: e.target.value})}/>
+                <label htmlFor="testReportBackInProgressNO">NO</label><br />  
+                <input type="radio"  checked={testReport.isTaskNeedToBackInProgress == 1} id="testReportBackInProgressYES" name="backInProgress" value={1}   onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: e.target.value})}/>
+                <label htmlFor="testReportBackInProgressYES">YES</label><br/>
+          </label>
           
           <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>is Requirmenet Changed ?</span>
+            <span className='font-satoshi font-semibold text-base text-gray-700'>is Requirmenet Changed ? (Today)</span>
             <br/>
                 <input type="radio" id="isRequirmenetChangeYes" name="isRequirmenetChange"  value={1}   onChange={(e) => setTestReport({...testReport, isRequirmenetChange: 1})}/>
                 <label htmlFor="isRequirmenetChangeYes">Yes</label><br/>
@@ -165,7 +173,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
             />
       </label> : <div/ >}
           <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Is the PRD file up to date?</span>
+            <span className='font-satoshi font-semibold text-base text-gray-700'>Is the PRD file up to date? (Today)</span>
             <br/>
                 <input type="radio" id="isPRDUpdatedYes" name="isPRDUpdated" value={1}   onChange={(e) => setTestReport({...testReport, isPRDUpdated: 1})}/>
                 <label htmlFor="isPRDUpdatedYes">Yes</label><br/>
