@@ -11,7 +11,7 @@ const page = () => {
     const router = useRouter();
 
     const [testReport, setTestReport] = useState({
-        testReportType: 0,
+        isLiveReport: false,
         testerName: '',
         url: '',
         testRunURL: '',
@@ -21,22 +21,22 @@ const page = () => {
         noOfTCExe: 0,
         noOfDefectInRequirement: 0,
         createdDate: '',
-        isRequirmenetChange: 0,
+        isRequirmenetChange: false,
         requirmenetChangeRemark:'',
-        isPRDUpdated: 1,
+        isPRDUpdated: false,
         prdUpdatedRemark:'',
         remark:'',
         noOfDefectBlock: 0,
         noOfDefectMajor: 0,
         releaseDate: '',
-        isTaskNeedToBackInProgress: 0
+        isTaskNeedToBackInProgress: false
     });
 
     const [submitting, setSubmitting] = useState(false);
     
-    const formatPDF = () => { 
+    const formatPDF = () => {
         let text = `
-        Report Type: ${testReport.testReportType == 1 ? "Live Environment": "Development Environment"}\n
+        Report Type: ${testReport.isLiveReport ? "Live Environment": "Dev Environment"}\n
         Tester Name: ${testReport.testerName}\n
         Project Name: ${testReport.projectName}\n
         URL: ${testReport.url}\n
@@ -47,10 +47,10 @@ const page = () => {
         Number Of Test Case Executed: ${testReport.noOfTCExe}\n
         Number Of Defect In Requirement: ${testReport.noOfDefectInRequirement}\n
         Release Date: ${testReport.releaseDate}\n
-        Is Requirmenet Changed ?: ${testReport.isRequirmenetChange == 1 ? "YES" : "NO"}\n
+        Is Requirmenet Changed ?: ${testReport.isRequirmenetChange ? "YES" : "NO"}\n
         Requirmenet Change Remark: ${testReport.requirmenetChangeRemark}\n
-        Is the PRD file up to date?: ${testReport.isPRDUpdated == 1 ? "YES" : "NO"}\n
-        Is the task need to back (In-Progress) ?: ${testReport.isTaskNeedToBackInProgress == 1 ? "YES" : "NO"}\n
+        Is the PRD file up to date?: ${testReport.isPRDUpdated ? "YES" : "NO"}\n
+        Is the task need to back (In-Progress) ?: ${testReport.isTaskNeedToBackInProgress ? "YES" : "NO"}\n
         PRD Remark: ${testReport.prdUpdatedRemark}\n
         Remark: ${testReport.remark}\n
         `;
@@ -66,7 +66,7 @@ const page = () => {
         doc = new jsPDF({
           unit: "in",
           lineHeight: lineHeight
-        }).setProperties({ title: "String Splitting" });
+        }).setProperties({ title: testReport.projectName });
       
       // splitTextToSize takes your string and turns it in to an array of strings,
       // each of which can be displayed within the specified maxLineWidth.
@@ -77,18 +77,17 @@ const page = () => {
       
       // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
         doc.text(textLines, margin, margin + 2 * oneLineHeight);
-        doc.save(`${testReport.projectName}.pdf`);
+        doc.save(`${testReport.testerName}_${testReport.projectName}_${moment().format("LLL")}.pdf`);
     } 
     
-    const createTestReport = async (e) => {
-        e.preventDefault();
-        setSubmitting(true);
-         formatPDF();
-        try {
-          const response = await fetch('api/create-test-report', {
+    const submitOnlineReport = async () => {
+      try {
+        const currentDate = moment().format('LLL');
+        console.log("current %s", currentDate);
+        const response = await fetch('api/create-test-report', {
               method: 'POST',
               body: JSON.stringify({
-                testReportType: testReport.testReportType == 1 ? "Live Environment": "Development Environment",
+                testReportType: testReport.isLiveReport? "Live": "Dev",
                 testerName: testReport.testerName ,
                 url: testReport.url ,
                 testRunURL: testReport.testRunURL ,
@@ -97,27 +96,35 @@ const page = () => {
                 noDefectSolved: testReport.noDefectSolved,
                 noOfTCExe: testReport.noOfTCExe,
                 noOfDefectInRequirement: testReport.noOfDefectInRequirement,
-                createdDate: moment().format(),
-                isRequirmenetChange: testReport.isRequirmenetChange == 1 ? "YES" : "NO",
+                createdDate: currentDate,
+                isRequirmenetChange: testReport.isRequirmenetChange? "YES" : "NO",
                 requirmenetChangeRemark: testReport.requirmenetChangeRemark,
-                isPRDUpdated: testReport.isPRDUpdated == 1 ? "YES" : "NO",
+                isPRDUpdated: testReport.isPRDUpdated ? "YES" : "NO",
                 prdUpdatedRemark: testReport.prdUpdatedRemark,
                 remark: testReport.remark,
                 noOfDefectBlock: testReport.noOfDefectBlock,
                 noOfDefectMajor: testReport.noOfDefectMajor,
                 releaseDate: testReport.releaseDate,
-                isTaskNeedToBackInProgress: testReport.isTaskNeedToBackInProgress == 1 ? "YES" : "NO"
+                isTaskNeedToBackInProgress: testReport.isTaskNeedToBackInProgress ? "YES" : "NO"
             })
           });
 
-          if(response.ok) {
-              router.push('/');
-          }
+        if(response.ok) {
+          router.push('/');
+        }
       }catch(error)  { 
-          console.log(error);
+        console.log(error);
       }finally {
-          setSubmitting(false);
+        setSubmitting(false);
       }
+    }
+
+    const createTestReport = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        submitOnlineReport();
+        formatPDF();
+        
     }
 
   return (

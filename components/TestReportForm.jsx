@@ -11,10 +11,10 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>What type of test report?</span>
             <br/>
-                <input type="radio" checked={testReport.testReportType == 0} id="testReportTypeDev" name="testReportType" value={0}  onChange={(e) => setTestReport({...testReport, testReportType: e.target.value})}/>
+                <input type="radio" id="testReportTypeDev" name="testReportType" onChange={(e) => setTestReport({...testReport, isLiveReport: false})}/>
                 <label htmlFor="testReportTypeDev">Development Environment 🤖</label><br />  
                 <br />
-                <input type="radio"  checked={testReport.testReportType == 1} id="testReportTypeLive" name="testReportType" value={1} onChange={(e) => setTestReport({...testReport, testReportType: e.target.value})}/>
+                <input type="radio" id="testReportTypeLive" name="testReportType" onChange={(e) => setTestReport({...testReport, isLiveReport: true})}/>
                 <label htmlFor="testReportTypeLive">Live Environment 🚀</label><br/>
           </label>
           <label>
@@ -141,27 +141,26 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Is the task need to back (In-Progress) ?</span>
             <br/>
-                <input type="radio" checked={testReport.isTaskNeedToBackInProgress == 0} id="testReportBackInProgressNO" name="backInProgress" value={0}  onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: e.target.value})}/>
+                <input type="radio" id="testReportBackInProgressNO" name="backInProgress"  onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: false})}/>
                 <label htmlFor="testReportBackInProgressNO">NO</label><br />  
-                <input type="radio"  checked={testReport.isTaskNeedToBackInProgress == 1} id="testReportBackInProgressYES" name="backInProgress" value={1}   onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: e.target.value})}/>
+                <input type="radio" id="testReportBackInProgressYES" name="backInProgress" onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: true})}/>
                 <label htmlFor="testReportBackInProgressYES">YES</label><br/>
           </label>
           
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>is Requirmenet Changed ? (Today)</span>
             <br/>
-                <input type="radio" id="isRequirmenetChangeYes" name="isRequirmenetChange"  value={1}   onChange={(e) => setTestReport({...testReport, isRequirmenetChange: 1})}/>
+                <input type="radio" id="isRequirmenetChangeYes" name="isRequirmenetChange" onChange={(e) => setTestReport({...testReport, isRequirmenetChange: true})}/>
                 <label htmlFor="isRequirmenetChangeYes">Yes</label><br/>
                 <input
                     type="radio"
                     id="isRequirmenetChangeNo" 
                     name="isRequirmenetChange"
-                    value={0}
-                    onChange={(e) => setTestReport({...testReport, isRequirmenetChange: 0})}
+                    onChange={(e) => setTestReport({...testReport, isRequirmenetChange: false})}
                   />
                 <label htmlFor="isRequirmenetChangeNo">NO</label><br />  
           </label>
-          {testReport.isRequirmenetChange == 1 ? 
+          {testReport.isRequirmenetChange ? 
           <label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>Justify why requirement been changed</span>
             <textarea 
@@ -175,17 +174,17 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Is the PRD file up to date? (Today)</span>
             <br/>
-                <input type="radio" id="isPRDUpdatedYes" name="isPRDUpdated" value={1}   onChange={(e) => setTestReport({...testReport, isPRDUpdated: 1})}/>
+                <input type="radio" id="isPRDUpdatedYes" name="isPRDUpdated"   onChange={(e) => setTestReport({...testReport, isPRDUpdated: true})}/>
                 <label htmlFor="isPRDUpdatedYes">Yes</label><br/>
-                <input type="radio" id="isPRDUpdatedNo" name="isPRDUpdated" value={0}  onChange={(e) => setTestReport({...testReport, isPRDUpdated: 0})}/>
+                <input type="radio" id="isPRDUpdatedNo" name="isPRDUpdated"  onChange={(e) => setTestReport({...testReport, isPRDUpdated: false})}/>
                 <label htmlFor="isPRDUpdatedNo">NO</label><br />  
           </label>
-          {testReport.isPRDUpdated == 0 ? 
+          {testReport.isPRDUpdated == false? 
           <label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>Justify why PRD not up to date</span>
             <textarea 
               className='search_input'
-              required={testReport.isPRDUpdated == 0}
+              required={testReport.isPRDUpdated == false}
               value={testReport.prdUpdatedRemark}
               onChange={(e) => setTestReport({...testReport, prdUpdatedRemark: e.target.value})}
               placeholder='Justify why PRD not up to date?'
