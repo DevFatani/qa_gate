@@ -24,6 +24,19 @@ const TEST_TYPE_COMPATIBILITY = "Compatibility";
 const TEST_BEHAVIOR_POSITIVE = "Positive";
 const TEST_BEHAVIOR_NEGATIVE = "Negative";
 
+const CODE_KEYWORK = [
+    {code: 'vv', start: 'Verify', end: 'is visible'},
+    {code: 'vnv', start: 'Verify', end: 'is not visible'},
+    
+    {code: 'vc', start: 'Verify', end: 'is clickable'},
+    {code: 'vnc', start: 'Verify', end: 'is not clickable'},
+    
+    {code: 've', start: 'Verify', end: 'is enabled'},
+    {code: 'vne', start: 'Verify', end: 'is not enabled'},
+    
+    {code: 'vf', start: 'Verify', end: 'is functioning'},
+    {code: 'vnf', start: 'Verify', end: 'is not functioning'}
+]
 
   // vc, vv | add new button | s,l,n,f
 const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
@@ -381,24 +394,11 @@ const Home = () => {
                     let newV = v.trim().toLowerCase();
                     
                     let tcNewName = "";
-                    if(newV === 'vc') {
-                        tcNewName = `Verify${objectToTest}is clickable`;
-                    }
-                    if (newV === 'vv') {
-                        tcNewName = `Verify${objectToTest}is visible`;
-                    }
-                    if (newV === 've') {
-                        tcNewName = `Verify${objectToTest}is enabled`;
-                    }
-                    if (newV === 'vf') {
-                        tcNewName = `Verify${objectToTest}is functioning`;
-                    }
-                    if (newV === 'vnc') {
-                        tcNewName = `Verify${objectToTest}is not clickable`;
-                    }
-                    if (newV === 'vnv') {
-                        tcNewName = `Verify${objectToTest}is not visible`;
-                    }
+                    CODE_KEYWORK.forEach(item => {
+                        if(newV === item.code) {
+                            tcNewName = `${item.start}${objectToTest}${item.end}`
+                        }
+                    });
                     if (newV === '') {
                         console.log(index);
                         if(index  >= 1) return

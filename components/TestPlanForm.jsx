@@ -6,22 +6,16 @@ const TestPlanForm = ({
     handleSubmit,
     submitting}) => {
 
-      function handleTestTypeCheckboxChange(event) {
-        const value = event.target.value;
-        if (event.target.checked) {
-          setTestPlan({ ...testPlan, testType: [...testPlan.testType, value] });
-        } else {
-          setTestPlan({ ...testPlan, testType: [...testPlan.testType].filter(item => item != value) });
-        }
+      const handleTestTypeCheckboxChange = (index, event) => {
+        const newInputValues = [...testPlan.testType];
+        newInputValues[index].select = event.target.checked;
+        setTestPlan({...testPlan, testType: newInputValues});
       }
 
-      function handleTestLevelCheckboxChange(event) {
-        const value = event.target.value;
-        if (event.target.checked) {
-          setTestPlan({ ...testPlan, testLevel: [...testPlan.testLevel, value] });
-        } else {
-          setTestPlan({ ...testPlan, testType: [...testPlan.testLevel].filter(item => item != value) });
-        }
+      const handleTestLevelCheckboxChange = (index, event) => {
+        const newInputValues = [...testPlan.testLevel];
+        newInputValues[index].select = event.target.checked;
+        setTestPlan({...testPlan, testLevel: newInputValues});
       }
   
   return (
@@ -103,48 +97,33 @@ const TestPlanForm = ({
               />
           </label>
 
-
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Select Test Level</span>
-    
-              <br />
-              <input  className='input_checkbox_input' type="checkbox" id="testLevelUnit" name="testLevelUnit"  value="Unit" onChange={handleTestLevelCheckboxChange} />
-              <label   className='input_checbox_label' for="testLevelUnit">Unit</label><br/>
-          
-              <input  className='input_checkbox_input' type="checkbox" id="testLevelIntegration" name="testLevelIntegration"  value="Integration" onChange={handleTestLevelCheckboxChange}/>
-              <label className='input_checbox_label' for="testLevelIntegration">Integration</label><br/>
-             
-              <input className='input_checkbox_input'  type="checkbox" id="testLevelSystem" name="testLevelSystem" value="System" onChange={handleTestLevelCheckboxChange} />
-              <label  className='input_checbox_label' for="testLevelSystem">System</label><br/>
-          
-              <input className='input_checkbox_input'  type="checkbox" id="testLevelUAT" name="testLevelUAT"  value="UAT" onChange={handleTestLevelCheckboxChange} />
-              <label  className='input_checbox_label' for="testLevelUAT">UAT</label><br/>
+              {testPlan.testLevel.map((item, index ) => (
+                  <div key={index}>
+                    <input className='input_checkbox_input' type="checkbox" id={`testLevel${item.name}`} name={`testLevel${item.name}`}  value={item.name} onChange={ (e) => handleTestLevelCheckboxChange(index, e)} />
+                    <label className='input_checbox_label' htmlFor={`testLevel${item.name}`}>{item.name}</label><br/>
+                  </div>
+                  
+                ))
+              }
           </label>
           
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Select Test Type</span>
-          
-              <br />
-              <input  className='input_checkbox_input' type="checkbox" id="testTypeFunction" name="testTypeFunction" value="Function" onChange={handleTestTypeCheckboxChange} />
-              <label   className='input_checbox_label' for="testTypeFunction">Function</label><br/>
-          
-              <input  className='input_checkbox_input' type="checkbox" id="testTypeFunctionNonFunction" name="testTypeFunctionNonFunction"  value="Non-Function" onChange={handleTestTypeCheckboxChange}/>
-              <label className='input_checbox_label' for="testTypeFunctionNonFunction">Non-Function</label><br/>
-             
-              <input className='input_checkbox_input'  type="checkbox" id="testTypeAPI" name="testTypeAPI" value="API" onChange={handleTestTypeCheckboxChange} />
-              <label  className='input_checbox_label' for="testTypeAPI">Api</label><br/>
-          
-              <input className='input_checkbox_input'  type="checkbox" id="testTypeUsability" name="testTypeUsability"  value="Usability" onChange={handleTestTypeCheckboxChange} />
-              <label  className='input_checbox_label' for="testTypeUsability">Usability</label><br/>
-
-              <input className='input_checkbox_input'  type="checkbox" id="mobileTesting" name="mobileTesting"  value="Mobile Testing" onChange={handleTestTypeCheckboxChange} />
-              <label  className='input_checbox_label' for="mobileTesting">Mobile Testing</label><br/>
-
-              <input className='input_checkbox_input'  type="checkbox" id="smokeTesting" name="smokeTesting"  value="Smoke Testing" onChange={handleTestTypeCheckboxChange} />
-              <label  className='input_checbox_label' for="smokeTesting">Smoke Testing</label><br/>
-             
-              <input className='input_checkbox_input' type="checkbox" id="staticDynamicTesting" name="staticDynamicTesting"  value="Static and Dynamic Testing" onChange={handleTestTypeCheckboxChange} />
-              <label  className='input_checbox_label' for="staticDynamicTesting">Static and Dynamic Testing</label><br/><br/>
+              {testPlan.testType.map((item, index) => ( <div key={index}>
+                <input 
+                      className='input_checkbox_input'
+                      type="checkbox" 
+                      id={`testType${item.name}`}
+                      name={`testType${item.name}`}
+                      value={item.name}
+                      onChange={e => handleTestTypeCheckboxChange(index, e)}
+                  />
+                  <label  className='input_checbox_label' htmlFor={`testType${item.name}`}>{item.name}</label><br/>
+                </div>
+              ))
+              }
           </label>
 
           <label>

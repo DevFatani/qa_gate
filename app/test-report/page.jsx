@@ -83,7 +83,6 @@ const page = () => {
     const submitOnlineReport = async () => {
       try {
         const currentDate = moment().format('LLL');
-        console.log("current %s", currentDate);
         const response = await fetch('api/create-test-report', {
               method: 'POST',
               body: JSON.stringify({
@@ -124,7 +123,6 @@ const page = () => {
         setSubmitting(true);
         submitOnlineReport();
         formatPDF();
-        
     }
 
   return (

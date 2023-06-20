@@ -1,12 +1,11 @@
 "use client"
 
-import {useState, React, useEffect} from 'react';
+import {useState, React} from 'react';
 import { jsPDF } from "jspdf";
-import {useRouter} from 'next/navigation';
+import moment from 'moment';
 
 import TestPlanForm from '@components/TestPlanForm'
 const page = () => {
-    const router = useRouter();
 
     const [testPlan, setTestPlan] = useState({
         testerName: '',
@@ -15,23 +14,83 @@ const page = () => {
         about: '',
         scopeIn: '',
         scopeOut: '',
-        testLevel: [],
-        testType: [],
+        testLevel: [
+            {
+                'name': 'Unit', 
+                'select': false
+            },
+            {
+                'name': 'Integration',
+                'select': false
+            },
+            {
+                'name': 'System',
+                'select': false
+            },
+            {
+                'name': 'AT',
+                'select': false
+            },
+        ],
+        testType: [
+            {
+                'name': 'Function', 
+                'select': false
+            },
+            {
+                'name': 'Non-Function',
+                'select': false
+            },
+            {
+                'name': 'API',
+                'select': false
+            },
+            {
+                'name': 'Usability',
+                'select': false
+            },
+            {
+                'name': 'Mobile Testing',
+                'select': false
+            },
+            {
+                'name': 'Smoke Testing',
+                'select': false
+            },
+            {
+                'name': 'Security',
+                'select': false
+            },
+            {
+                'name': 'Static Test',
+                'select': false
+            },
+            {
+                'name': 'Compatibility',
+                'select': false
+            },
+        ],
         exitCriteria: ''
     });
 
     const [submitting, setSubmitting] = useState(false);
     
-     
+    function formatArrayOutput(arr) {
+        let selecteItem = '';
+        arr.map(item => item.select ? selecteItem += `\t\t${item.name}\n` : '');
+        return selecteItem;
+    }
     const formatPDF = () => { 
-        let text = `Tester Name: ${testPlan.testerName}\n
-        Project Name: ${testPlan.projectName}\n
+        let text = `
+        Create At: ${moment().format('LLL')}
+        Tester Name:\n\t${testPlan.testerName}\n
+        Project Name:\n\t${testPlan.projectName}\n
         URL: ${testPlan.url}\n
         About:\n\t${testPlan.about}\n
         Scope In:\n\t${testPlan.scopeIn}\n
         Scope Out:\n\t${testPlan.scopeOut}\n
-        Test Level: ${testPlan.testLevel}\n
-        Test Type: ${testPlan.testType}\n
+        Test Level: \n${formatArrayOutput(testPlan.testLevel)}\n
+        Test Type: \n${formatArrayOutput(testPlan.testType)}\n
         exit criteria:\n\t${testPlan.exitCriteria}\n
         `;
        
@@ -46,7 +105,7 @@ const page = () => {
         doc = new jsPDF({
           unit: "in",
           lineHeight: lineHeight
-        }).setProperties({ title: "String Splitting" });
+        }).setProperties({ title: `${testPlan.projectName}_${moment().format('LLL')}` });
       
       // splitTextToSize takes your string and turns it in to an array of strings,
       // each of which can be displayed within the specified maxLineWidth.
@@ -57,7 +116,7 @@ const page = () => {
       
       // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
         doc.text(textLines, margin, margin + 2 * oneLineHeight);
-        doc.save(`${testPlan.projectName}.pdf`);
+        doc.save(`${testPlan.projectName}_${moment().format('LLL')}.pdf`);
     }
 
     const createTestPlan = (e) => {
@@ -80,7 +139,7 @@ const page = () => {
                     setTestPlan={setTestPlan}
                     handleSubmit={createTestPlan}
                     submitting={submitting}
-                />
+            />
             </section>
     )
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import {useState, React, useEffect} from 'react';
+import {useState, React} from 'react';
 import { jsPDF } from "jspdf";
 import moment from 'moment/moment';
 import {useRouter} from 'next/navigation';
@@ -44,7 +44,7 @@ const page = () => {
         doc = new jsPDF({
           unit: "in",
           lineHeight: lineHeight
-        }).setProperties({ title: "String Splitting" });
+        }).setProperties({ title: `${learningReport.courseName}_${moment().format('LLL')}` });
       
       // splitTextToSize takes your string and turns it in to an array of strings,
       // each of which can be displayed within the specified maxLineWidth.
@@ -55,19 +55,16 @@ const page = () => {
       
       // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
         doc.text(textLines, margin, margin + 2 * oneLineHeight);
-        doc.save(`${learningReport.courseName}.pdf`);
+        doc.save(`${learningReport.courseName}_${moment().format('LLL')}.pdf`);
     }
 
-    const createLearningReport = async(e) => {
-        e.preventDefault();
-        setSubmitting(true);
-        formatPDF();
-
+    const submitOnlineReport = async () => {
+        const currentDate = moment().format('LLL');
         try {
             const response = await fetch('api/create-learning-report', {
                 method: 'POST',
                 body: JSON.stringify({
-                    createAt: moment().format(),
+                    createAt: currentDate,
                     testerName: learningReport.testerName,
                     courseName: learningReport.courseName,
                     whatDidYouLearnToday: learningReport.whatDidYouLearnToday,
@@ -86,6 +83,13 @@ const page = () => {
             setSubmitting(false);
         }
     }
+
+    const createLearningReport = async(e) => {
+        e.preventDefault();
+        setSubmitting(true);
+        submitOnlineReport();
+        formatPDF();
+    }
     
     return (
         <section className='w-full flex-center flex-col'>
@@ -94,13 +98,13 @@ const page = () => {
                     <br className='max-md:hidden'/>
                     <span className='orange_gradient text-center'>QA Power</span>
                 </h1>
-                <p className='desc text-cener' style={{fontSize:"50px", color:"blue"}}>Fill down your learning progress 📝</p>
+                <p className='desc text-cener' style={{fontSize:"50px", color:"blue"}}>Fill down your learning progress</p>
             <LearningReportForm
                 learningReport={learningReport}
                 setLearningReport={setLearningReport}
                 handleSubmit={createLearningReport}
                 submitting={submitting}
-                />
+            />
             </section>
     )
 }
