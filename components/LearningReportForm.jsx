@@ -22,7 +22,6 @@ const LearningReportForm = ({
                   onChange={(e) => setLearningReport({...learningReport, testerName: e.target.value})}
                   placeholder='Write down your name'
                   required
-                
                 />
           </label>
           <label>

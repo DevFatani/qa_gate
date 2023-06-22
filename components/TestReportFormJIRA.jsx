@@ -90,6 +90,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                     onChange={(e) => setTestReport({...testReport, noOfTCExe: e.target.value})}
                     placeholder='Number Of Test Case Executed (Today)'
                     required
+                    min={0}
                     type='number'
                 />
           </label>

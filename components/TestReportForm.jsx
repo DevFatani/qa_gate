@@ -63,6 +63,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Found (Today)</span>
                 <input 
                     className='search_input'
+                    min={0}
                     value={testReport.noDefectFound  === 0 ? '' : testReport.noDefectFound}
                     onChange={(e) => setTestReport({...testReport, noDefectFound: e.target.value})}
                     placeholder='Number Of Defect Found Today or overall'
@@ -74,6 +75,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Solved (Today)</span>
                 <input 
                     className='search_input'
+                    min={0}
                     value={testReport.noDefectSolved === 0 ? '' : testReport.noDefectSolved}
                     onChange={(e) => setTestReport({...testReport, noDefectSolved: e.target.value})}
                     placeholder='Number Of Defect Solved'
@@ -91,6 +93,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                     placeholder='Number Of Test Case Executed'
                     required
                     type='number'
+                    min={0}
                 />
           </label>
 
@@ -102,6 +105,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                     onChange={(e) => setTestReport({...testReport, noOfDefectInRequirement: e.target.value})}
                     placeholder='Number Of Defect In Requirement'
                     type='number'
+                    min={0}
                 />
           </label>
 
@@ -113,6 +117,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                     onChange={(e) => setTestReport({...testReport, noOfDefectBlock: e.target.value})}
                     placeholder='Number Of Defect In Block'
                     type='number'
+                    min={0}
                 />
           </label>
 
@@ -124,6 +129,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
                     onChange={(e) => setTestReport({...testReport, noOfDefectMajor: e.target.value})}
                     placeholder='Number Of (Major) Defect'
                     type='number'
+                    min={0}
                 />
           </label>
 

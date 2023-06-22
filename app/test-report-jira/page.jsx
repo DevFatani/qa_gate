@@ -81,12 +81,13 @@ const page = () => {
     const createTestReport = async (e) => {
         e.preventDefault();
         setSubmitting(!true);
-         formatPDF();
+        formatPDF();
         try {
+          const currentDate = moment().format('LLL');
           const response = await fetch('api/create-test-report-jira', {
               method: 'POST',
               body: JSON.stringify({
-                createAt: moment().format(),
+                createAt: currentDate,
                 testerName: testReport.testerName,
                 projectName: testReport.projectName,
                 testRunURL: testReport.testRunURL,
