@@ -1,19 +1,21 @@
 import React from 'react'
 import Link from 'next/link';
 const Form = ({ 
-    taskName,
-    setTaskName,
     testCase,
     setTestCase,
     arrComponents,
     setArrComponents,
     handleSubmit,
     onGenerateComponent,
-    assertion,
-    setAssertion,
     submitting
   }) => {
   
+    const handleCheckboxChange = (index, event) => {
+      const newInputValues = [...arrComponents.keywords];
+      newInputValues[index].select = event.target.checked;
+      setArrComponents({...arrComponents, keywords: newInputValues});
+  }
+
   return (
     <section className='w-full max-w-full flex-start flex-col'>
         <h1 className='head_text text-left'><span className='blue_gradient'>Create your Test Case</span></h1>
@@ -112,14 +114,13 @@ const Form = ({
           onSubmit={handleSubmit}
           className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
         >
-
             <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Task Name</span>
+              <span className='font-satoshi font-semibold text-base text-gray-700'>Test Case Title</span>
               <input 
                 className='search_input'
-                value={taskName.text}
-                onChange={(e) => setTaskName({text: e.target.value})}
-                placeholder='write your task name'
+                value={testCase.fileName}
+                onChange={(e) => setTestCase({...testCase, fileName: e.target.value})}
+                placeholder='Write down you test case title'
                 required
               />
           </label>
@@ -128,8 +129,7 @@ const Form = ({
               <textarea 
                 className='search_input'
                 value={arrComponents.text}
-                
-                onChange={(e) => setArrComponents({ text: e.target.value})}
+                onChange={(e) => setArrComponents({ ...arrComponents, text: e.target.value})}
                 placeholder='Add your components here'
               />
               <button className='random_button' type='button'
@@ -138,25 +138,25 @@ const Form = ({
                     onGenerateComponent();
                 }}
               >Generate </button><br />
-              <input type="checkbox" id="genComponentCheckboxAddVF" name="genComponentCheckboxAddVF" value={assertion.verifyFunctional} onClick ={(e)=> setAssertion({...assertion, verifyFunctional : e.target.checked})} />
-              <label for="genComponentCheckboxAddVF">Add VF to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVE" name="genComponentCheckboxAddVE" value={assertion.verifyEnable} onClick ={(e)=> setAssertion({...assertion, verifyEnable : e.target.checked})} />
-              <label for="genComponentCheckboxAddVE">Add VE to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVV" name="genComponentCheckboxAddVV" value={assertion.verifyVisible} onClick ={(e)=> setAssertion({...assertion, verifyVisible : e.target.checked})} />
-              <label for="genComponentCheckboxAddVV">Add VV to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVC" name="genComponentCheckboxAddVC"  value={assertion.verifyClickable} onClick={(e)=> setAssertion({...assertion, verifyClickable : e.target.checked})}/>
-              <label for="genComponentCheckboxAddVC">Add VC to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVNV" name="genComponentCheckboxAddVNV" value={assertion.verifyIsNotVisible}  onClick={(e)=> setAssertion({...assertion, verifyIsNotVisible : e.target.checked})}/>
-              <label for="genComponentCheckboxAddVNV">Add VNV to each component</label><br/>
-              <input type="checkbox" id="genComponentCheckboxAddVNC" name="genComponentCheckboxAddVNC"  value={assertion.verifyIsNotClickable} onClick={(e)=> setAssertion({...assertion, verifyIsNotClickable : e.target.checked})}/>
-              <label for="genComponentCheckboxAddVNC">Add VNC to each component</label><br/><br/>
+
+              {arrComponents.keywords.map((item, index) => (<div key={index}>
+                  <input
+                    type="checkbox"
+                    id={`genComponentsKeyword${index}`}
+                    name={`genComponentsKeyword${index}`}
+                    value={item.select}
+                    onClick ={(e)=> handleCheckboxChange(index, e)} />
+                  <label htmlFor={`genComponentsKeyword${index}`}>
+                    Add <span style={{color:"red"}}>{item.code.toUpperCase()}</span> to each component
+                  </label><br/>
+              </div>))}
           </label>
 
           <label>
             <span className='font-satoshi font-semibold text-base text-gray-700'>Your Test cases here</span>
             <textarea 
               value={testCase.text}
-              onChange={(e) => setTestCase({...testCase, text: e.target.value})}
+              onChange={(e) => setTestCase({ ...testCase, text: e.target.value})}
               placeholder='write your qa test case here'
               className='form_textarea numbered'
               cols="50"
@@ -171,11 +171,10 @@ const Form = ({
                 cols="50"
                 rows="10"
                 value={testCase.steps}
-                onChange={(e) => setTestCase({...testCase , steps: e.target.value})}
+                onChange={(e) => setTestCase({ ...testCase, steps: e.target.value})}
                 placeholder='General Steps (Steps will be in all the test cases)'
               />
           </label>
-  
 
           <div className='flex-end mx-3 mb-5 gap-4'>
             <Link href='/' className='text-gray-500 text-sm'>Cancel</Link>
@@ -188,7 +187,7 @@ const Form = ({
         </form>
 
     </section>
-  )
+  );
 }
 
 export default Form;

@@ -25,25 +25,47 @@ const TEST_BEHAVIOR_POSITIVE = "Positive";
 const TEST_BEHAVIOR_NEGATIVE = "Negative";
 
 const CODE_KEYWORK = [
-    {code: 'vv', start: 'Verify', end: 'is visible'},
-    {code: 'vnv', start: 'Verify', end: 'is not visible'},
+    {code: 'vv', start: 'Verify', end: 'is visible', select: false},
+    {code: 'vnv', start: 'Verify', end: 'is not visible', select: false},
     
-    {code: 'vc', start: 'Verify', end: 'is clickable'},
-    {code: 'vnc', start: 'Verify', end: 'is not clickable'},
+    {code: 'vc', start: 'Verify', end: 'is clickable', select: false},
+    {code: 'vnc', start: 'Verify', end: 'is not clickable', select: false},
     
-    {code: 've', start: 'Verify', end: 'is enabled'},
-    {code: 'vne', start: 'Verify', end: 'is not enabled'},
+    {code: 've', start: 'Verify', end: 'is enabled', select: false},
+    {code: 'vne', start: 'Verify', end: 'is not enabled', select: false},
     
-    {code: 'vf', start: 'Verify', end: 'is functioning'},
-    {code: 'vnf', start: 'Verify', end: 'is not functioning'}
-]
+    {code: 'vf', start: 'Verify', end: 'is functioning', select: false},
+    {code: 'vnf', start: 'Verify', end: 'is not functioning', select: false}
+];
+
+const CODE_TEST_TYPE = [
+    {
+        code: "f", 
+        text: TEST_TYPE_FUNCTIONAL
+    },
+    {
+        code: "un", 
+        text: TEST_TYPE_NONFUNCTIONAL
+    },
+    {
+        code: "r", 
+        text: TEST_TYPE_REGRESSION
+    },
+    {
+        code: "us", 
+        text: TEST_TYPE_USABILITY
+    },
+    {
+        code: "com", 
+        text: TEST_TYPE_COMPATIBILITY
+    }];
 
   // vc, vv | add new button | s,l,n,f
-const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
+const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
 
-    const handleInputNameChange = (index, event) => {
+    const handleInputTitleChange = (index, event) => {
         const newInputValues = [...data];
-        newInputValues[index].name = event.target.value;
+        newInputValues[index].title = event.target.value;
         setTcs(newInputValues);
     };
 
@@ -52,7 +74,6 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
         newInputValues[index].steps = event.target.value;
         setTcs(newInputValues);
     };
-
 
     const handleInputInputDataChange = (index, event, text) => {
         const newInputValues = [...data];
@@ -65,8 +86,6 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
         newInputValues[index].inputData = '';
         setTcs(newInputValues);
     };
-
-    
 
     const handleInputExpectedResultChange = (index, event) => {
         const newInputValues = [...data];
@@ -115,18 +134,17 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                <td className='table_h-text_id'>{item.id}</td>
                <td className='table_h-text table_name'>
                     <textarea
-                        
                         className='form_textarea'
-                        value={item.name}
-                        onChange={(e) => handleInputNameChange(index, e)}
+                        value={item.title}
+                        onChange={(e) => handleInputTitleChange(index, e)}
                     />
                </td>
                <td className='table_h-text_selection'>
                     <span className='select_span_text'>Select Test Level</span>
                     <br />
                     <select
-                        name="testLvl"
-                        id="testLvl"
+                        name={`name_testLvl_${index}`}
+                        id={`id_testLvl_${index}`}
                         onChange={(e) => { item.testLvl = e.target.value;}}
                         className='select_box'   
                     >
@@ -138,14 +156,12 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
 
                </td>
                
-               
-               
                <td className='table_h-text_selection'>
                     <span className='select_span_text'>Select Test Type</span>
                     <br />
                     <select 
-                        name="testType"
-                        id="testType"
+                        name={`name_testType_${index}`}
+                        id={`id_testType_${index}`}
                         onChange={(e) => {item.testType = e.target.value;}}
                         className='select_box'       
                     >
@@ -157,15 +173,13 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                     </select>
 
                </td>
-              
-              
-              
+
                <td className='table_h-text_selection'>
                     <span className='select_span_text'>Select Test Behavior</span>
                     <br />
                     <select 
-                        name="isPostive"
-                        id="isPostive"
+                        name={`name_isPostive_${index}`}
+                        id={`id_isPostive_${index}`}
                         onChange={(e) => {item.isPostive = e.target.value;}}
                         className='select_box'       
                     >
@@ -175,12 +189,12 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                 </td>
                
                <td  className='table_h-text_selection'>
-                    <span className='select_span_text'>Select Test Type</span>
+                    <span className='select_span_text'>Select Priority</span>
                     <br />
                     <select
-                        name="priority" 
-                        id="priority" 
-                        onChange={(e) => {item.priority = e.target.value;}}
+                        name={`name_priority_${index}`}
+                        id={`id_priority_${index}`}
+                        onChange={(e) => item.priority = e.target.value}
                         className='select_box' 
                     >
                         <option value={PRIORITY_HIGH} selected={item.priority === PRIORITY_HIGH}>{PRIORITY_HIGH}</option>
@@ -280,7 +294,7 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                         className='form_textarea'
                         value={item.expectedResult}
                         onChange={(e) => handleInputExpectedResultChange(index, e)}
-                        placeholder='add expected result Data 🤖'
+                        placeholder='Add expected result Data 🤖'
                     />
                </td>
 
@@ -289,15 +303,16 @@ const TestCaseTable = ({ data,setTcs, handelRowClick , exportToExcel}) => {
                         className='form_textarea'
                         value={item.actualResult}
                         onChange={(e) => handleInputActualResultChange(index, e)}
-                        placeholder='add actual result 🤖'
+                        placeholder='Add actual result 🤖'
                     />
                 </td>
            </tr>
-           ))}
+           ))
+        }
        </tbody>
        </table>
        </div>
-    )
+    );
   }
 
 
@@ -356,25 +371,18 @@ const TestStatistic = ( { data }) => {
 
 
 const Home = () => {
-    const [testCase, setTestCase] = useState({ 
+    const [testCase, setTestCase] = useState({
+        fileName: '',
         text: '',
-        steps: ''
+        steps: '',
     });
    
-    const [arrComponents, setArrComponents] = useState({  text: ''});
-
-    const [assertion, setAssertion] = useState({ 
-            verifyFunctional: false,
-            verifyEnable: false,
-            verifyVisible: false,
-            verifyClickable: false,
-            verifyIsNotVisible: false,
-            verifyIsNotClickable: false
+    const [arrComponents, setArrComponents] = useState({ 
+        text: '',
+        keywords: [...CODE_KEYWORK]
     });
 
     const [tcs, setTcs] = useState([]);
-
-    const [taskName, setTaskName] = useState({text: ''});
 
     const [submitting, setSubmitting] = useState(false);
 
@@ -393,27 +401,26 @@ const Home = () => {
                 verifyAndCheck.map((v, index) => {
                     let newV = v.trim().toLowerCase();
                     
-                    let tcNewName = "";
+                    let tcNewTitle = "";
                     CODE_KEYWORK.forEach(item => {
                         if(newV === item.code) {
-                            tcNewName = `${item.start}${objectToTest}${item.end}`
+                            tcNewTitle = `${item.start}${objectToTest}${item.end}`
                         }
                     });
                     if (newV === '') {
                         console.log(index);
                         if(index  >= 1) return
-                        else tcNewName = objectToTest;
+                        else tcNewTitle = objectToTest;
                     }
                     
                     newTCS.push(
                         {
                             id: counter + 1,
-                            name: tcNewName,
+                            title: tcNewTitle,
                             testLvl: findTestLevel(testCategory),
                             testType: findTestType(testCategory),
                             isPostive: testBehavior(testCategory),
                             priority: findTestPriority(testCategory),
-                            steps: '',
                             inputData: '',
                             expectedResult: '',
                             actualResult: '',
@@ -448,22 +455,12 @@ const Home = () => {
     const findTestType =  (text) => {
         let newTestDetails = TEST_TYPE_FUNCTIONAL;
         text.map((cat) => {
-            let newCat = cat.trim().toLowerCase();
-            if(newCat === "f") {
-                newTestDetails = TEST_TYPE_FUNCTIONAL;
-            }
-            if(newCat === "un") {
-                newTestDetails = TEST_TYPE_NONFUNCTIONAL;
-            }
-            if(newCat === "r") {
-                newTestDetails = TEST_TYPE_REGRESSION;
-            }
-            if(newCat === "us") {
-                newTestDetails = TEST_TYPE_USABILITY;
-            }
-            if(newCat === "com") {
-                newTestDetails = TEST_TYPE_COMPATIBILITY;
-            }
+            const newCat = cat.trim().toLowerCase();
+            CODE_TEST_TYPE.map(item => {
+                if(newCat === item.code) {
+                    newTestDetails = item.text;      
+                }
+            });
         });
         return newTestDetails;
     }
@@ -510,7 +507,7 @@ const Home = () => {
         tcs.map((tc) => {
             newTcsFormat.push({
                 id: tc.id,
-                title: tc.name,
+                title: tc.title,
                 layer: tc.testLvl,
                 type: tc.testType,
                 behavior: tc.isPostive,
@@ -528,40 +525,30 @@ const Home = () => {
         let finalText = '';
         arrComponents.text.trim().split(',').map((component) => {
             if(component) {
-                if(assertion.verifyVisible) { 
-                    finalText += 'vv,';
-                }
-                if(assertion.verifyClickable) { 
-                    finalText += 'vc,';
-                }
-                if(assertion.verifyIsNotVisible) { 
-                    finalText += 'vnv,';
-                }
-                if(assertion.verifyIsNotClickable) { 
-                    finalText += 'vnc,';
-                }
-                if(assertion.verifyFunctional) { 
-                    finalText += 'vf,';
-                }
-                if(assertion.verifyEnable) { 
-                    finalText += 've,';
-                }
-                
+                arrComponents.keywords.map(item => {
+                    if(item.select) {
+                        finalText += `${item.code},`;
+                    }
+                });
                 finalText += `| ${component} | c,m,p,f\n`;
         }
-        })
+        });
         finalText += `${testCase.text}\n`
-        setTestCase({text: finalText});
+        setTestCase({...testCase, text: finalText});
    }
 
     const exportToExcel = () => {
         const worksheet = XLSX.utils.json_to_sheet(formatOutputDataForQASE());
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-        XLSX.writeFile(workbook, `${taskName.text}.csv`);
-      };
+        XLSX.writeFile(workbook, `${testCase.fileName}.csv`);
+    };
+
     return (
-        <section className='w-full flex-center flex-col'>
+        <section >
+            <div class="navbar bg-base-100">
+                <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+            </div>
             <h1 className='head_text text-center'>
                 QA GATE
                 <br className='max-md:hidden'/>
@@ -585,11 +572,7 @@ const Home = () => {
                 setArrComponents={setArrComponents}
                 testCase={testCase}
                 setTestCase={setTestCase}
-                taskName={taskName}
-                setTaskName={setTaskName}
                 submitting={submitting}
-                assertion={assertion}
-                setAssertion={setAssertion}
                 handleSubmit={createMyTestCase}
                 onGenerateComponent={onGenerateComponent}
             />
@@ -599,11 +582,10 @@ const Home = () => {
                 data={tcs}
                 setTcs={setTcs}
                 exportToExcel={exportToExcel}
-                handelRowClick={() => {}}
            />
            
         </section>
-      )
+      );
 }
 
-export default Home
+export default Home;
