@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
+import Image from 'next/image'
+
 import CustomInput from './daisyui/CustomInput';
 import CustomTextarea from './daisyui/CustomTextarea';
 import CustomCheckbox from './daisyui/CustomCheckbox';
@@ -27,6 +29,7 @@ const TestCaseForm = ({
       }}
       className="card place-items-center"
     >
+        
         <form
         style={{
           // backgroundColor: "brown",
@@ -37,6 +40,154 @@ const TestCaseForm = ({
           // className="form-control w-full max-w-xs"
           className="form-control "
         >
+          <div className="collapse bg-base-200">
+            <input type="checkbox" /> 
+            <div className="collapse-title text-xl font-medium">
+              How to write test case with code format?
+            </div>
+            <div className="collapse-content"> 
+                <Image
+                  src='/assets/images/test-case-builder2.png' 
+                  alt='logo'
+                  width={16130}
+                  height={11130}
+                  // className='object-contain'
+                />
+                
+            </div>
+          </div>
+          <div className="collapse bg-base-200">
+            <input type="checkbox" /> 
+            <div className="collapse-title text-xl font-medium">
+            What to write in left side of the test case code?
+            </div>
+            <div className="collapse-content"> 
+                <table className="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Expression</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {arrComponents.keywords.map((item, index) => (<tr key={index}>
+                      <td>
+                        <p>{item.code.toUpperCase()}</p>
+                      </td>
+                      <td>
+                        {item.start} (Test Component) {item.end}
+                      </td>
+                    </tr>
+                ))}
+                  </tbody>
+                </table>
+                
+            </div>
+          </div>
+          <div className="collapse bg-base-200">
+            <input type="checkbox" /> 
+            <div className="collapse-title text-xl font-medium">
+            What to write in right side of the test case code?
+            </div>
+            <div className="collapse-content"> 
+            <div className="overflow-x-auto h-96">
+                <table className="table table-md table-pin-rows">
+                <thead>
+                  <tr>
+                    <th className='text-primary'>TEST LEVEL</th>
+                    <th>Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Unit Test</td>
+                    <td>C</td>
+                  </tr>
+                  <tr>
+                    <td>Integration Test</td>
+                    <td>I</td>
+                  </tr>
+                  <tr>
+                    <td>System Test</td>
+                    <td>S</td>
+                  </tr>
+                  <tr>
+                    <td>UAT Test</td>
+                    <td>U</td>
+                  </tr>
+                </tbody>
+                
+                <thead>
+                  <tr>
+                    <th className='text-info'>Test Priority</th>
+                    <th>Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Low Proirity</td>
+                    <td>L</td>
+                  </tr>
+                  <tr>
+                    <td>Medium Proirity</td>
+                    <td>M</td>
+                  </tr>
+                  <tr>
+                    <td>High Proirity</td>
+                    <td>H</td>
+                  </tr> 
+                </tbody>
+
+                <thead>
+                  <tr>
+                    <th className='text-warning'>Test Type</th>
+                    <th>Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Functional</td>
+                    <td>F</td>
+                  </tr>
+                  <tr>
+                    <td>Non-Functional</td>
+                    <td>UN</td>
+                  </tr>
+                  <tr>
+                    <td>Regression</td>
+                    <td>R</td>
+                  </tr>
+                  <tr>
+                    <td>Usability</td>
+                    <td>US</td>
+                  </tr>
+                  <tr>
+                    <td>Compatibility</td>
+                    <td>COM</td>
+                  </tr>
+                </tbody>
+
+                <thead>
+                  <tr>
+                    <th className='text-accent-focus'>Test Behavior</th>
+                    <th>Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Positive</td>
+                    <td>P</td>
+                  </tr>
+                  <tr>
+                    <td>Negative</td>
+                    <td>N</td>
+                  </tr>
+                </tbody>
+                </table>
+              </div>
+                
+            </div>
+          </div>
           <div
             style={{
               // backgroundColor: "rebeccapurple",
@@ -99,11 +250,11 @@ const TestCaseForm = ({
               numbered={true}
           />
           <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href='/' className='text-gray-500 text-sm'>
+            {/* <Link href='/' className='text-gray-500 text-sm'>
               <button className="btn btn-active btn-ghost">
                 Cancel
               </button>
-            </Link>
+            </Link> */}
             <button
               type='submit'
               disabled={submitting}
