@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  daisyui: {
+    themes: ["light", "dark", "pastel", "dracula", "business", "emerald", "pastel", "synthwave",
+      "fantasy","wireframe", "cmyk", "night"
+  ],
+  },
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     extend: {
@@ -16,5 +22,8 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require("daisyui"),
+    require('flowbite/plugin')
+  ],
 }
