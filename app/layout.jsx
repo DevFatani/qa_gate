@@ -24,6 +24,9 @@ const RootLayout = ({ children }) => {
                     <Link href='/test-plan' >
                       <button className="btn btn-ghost normal-case text-md">Create Test Plan</button>
                     </Link>
+                    <Link href='/test-case' >
+                      <button className="btn btn-ghost normal-case text-md">Create Test Case</button>
+                    </Link>
                     <Link href='/test-report' >
                       <button className="btn btn-ghost normal-case text-md">Create Test Report</button>
                     </Link>
