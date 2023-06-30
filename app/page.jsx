@@ -295,6 +295,7 @@ const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
                             <td>
                                 <CustomTextarea
                                     cols={120}
+                                    size='textarea-md'
                                     rows={2}
                                     value={item.steps}
                                     label={'Steps'}
@@ -321,6 +322,7 @@ const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
                                     <CustomTextarea
                                         cols={90}
                                         rows={2}
+                                        size='textarea-md'
                                         value={item.inputData}
                                         placeholder={'Add your Input Data 🤖'}
                                         onChange={(e) => handleInputInputDataChange(index, e, null)}
@@ -338,6 +340,7 @@ const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
                                     rows={0}
                                     label={"Expected Result"}
                                     value={item.expectedResult}
+                                    size='textarea-md'
                                     placeholder={'Add expected result Data 🤖'}
                                     onChange={(e) => handleInputExpectedResultChange(index, e)}
                                 />
@@ -347,6 +350,7 @@ const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
                                 <CustomTextarea
                                     cols={0}
                                     rows={0}
+                                    size='textarea-md'
                                     value={item.actualResult}
                                     label={"Actual Result"}
                                     placeholder={'Add actual result 🤖'}

@@ -60,7 +60,7 @@ const TestPlanForm = ({
           <CustomTextarea
               require={true}
               marginTop={'10px'}
-              size='max-w-lg input-md'
+              size='textarea-md'
               label='Overview'
               value={testPlan.about}
               onChange={(e) => setTestPlan({...testPlan, about: e.target.value})}
@@ -71,18 +71,20 @@ const TestPlanForm = ({
               require={true}
               marginTop={'10px'}
               label='Scope In'
-              cols={50}
-              rows={4}
+              cols={15}
+              rows={2}
+              size='textarea-md'
               value={testPlan.scopeIn}
               onChange={(e) => setTestPlan({...testPlan, scopeIn: e.target.value})}
               placeholder='Write down project scope in'
           />
 
           <CustomTextarea
+              size='textarea-md'
               require={true}
               marginTop={'10px'}
               label='Scope Out'
-              cols={50}
+              cols={15}
               rows={2}
               value={testPlan.scopeOut}
               onChange={(e) => setTestPlan({...testPlan, scopeOut: e.target.value})}
@@ -92,14 +94,15 @@ const TestPlanForm = ({
               require={true}
               marginTop={'10px'}
               label='Exit Criteria'
-              cols={50}
+              size='textarea-md'
+              cols={15}
               rows={2}
               value={testPlan.exitCriteria}
               onChange={(e) => setTestPlan({ ...testPlan, exitCriteria: e.target.value})}
               placeholder='Write down project exit criteria'
           />
           <table 
-            className="table table-md table-pin-rows"
+            className="table table-sm table-pin-rows"
             style={{
               marginTop: "25px"
             }}

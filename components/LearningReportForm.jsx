@@ -61,6 +61,7 @@ const LearningReportForm = ({
                 marginTop={'10px'}
                 size='max-w-lg input-md'
                 label={'When You Can Finish?'}
+                type='date'
                 value={learningReport.whenYouCanFinish}
                 onChange={(e) => setLearningReport({...learningReport, whenYouCanFinish: e.target.value})}
                 placeholder='When You Can Finish?'

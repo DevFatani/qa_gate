@@ -100,7 +100,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               min={0}
               value={testReport.noDefectFound  === 0 ? '' : testReport.noDefectFound}
               onChange={(e) => setTestReport({...testReport, noDefectFound: e.target.value})}
-              placeholder='Number Of Defect Found Today or overall'
+              placeholder='Number Of Defect Found Today'
               type='number'
               label='Number Of Defect Found (Today)'
           />
