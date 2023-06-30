@@ -36,10 +36,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
             // backgroundColor: "brown",
             width: "30%"
           }}
-
-            // className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
-            // className="form-control w-full max-w-xs"
-            className="form-control"
+          className="form-control"
         >
           <CustomInput
                 require={true}
