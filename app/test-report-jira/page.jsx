@@ -22,7 +22,9 @@ const page = () => {
 
       noOfTCExe: 0, // how many test cases did u execute ?
 
-      isPMbeenAsked: false, // did you follow up the PM or PO about the last update today?
+      isPMbeenAsked: true, // did you follow up the PM or PO about the last update today?
+      communicatePMRemark: '',
+
       isRequirmenetChange: false,
       requirmenetChangeRemark:'',
 
@@ -46,6 +48,7 @@ const page = () => {
         How many tickets did you move to Block status?:\n${testReport.blockedTicketsNumber}\n
         Number Of Test Case Executed (Today):\n${testReport.noOfTCExe}\n
         Did you follow up the PM or PO about the last update today?:\n${testReport.isPMbeenAsked ? 'YES':'NO'}\n
+        Why there is no communication?:\n${testReport.communicatePMRemark}\n
         Is Requirmenet Changed? (Today):\n${testReport.isRequirmenetChange ? 'YES':'NO'}\n
         Justify why requirement been changed:\n${testReport.requirmenetChangeRemark}\n
         Is the PRD file up to date? (Today):\n${testReport.isPRDUpdated ? 'YES':'NO'}\n
@@ -97,6 +100,7 @@ const page = () => {
                 blockedTicketsNumber: testReport.blockedTicketsNumber,
                 noOfTCExe: testReport.noOfTCExe,
                 isPMbeenAsked: testReport.isPMbeenAsked ? 'YES':'NO',
+                communicatePMRemark: testReport.communicatePMRemark,
                 isRequirmenetChange: testReport.isRequirmenetChange ? 'YES':'NO',
                 requirmenetChangeRemark: testReport.requirmenetChangeRemark,
                 isPRDUpdated: testReport.isPRDUpdated ? 'YES':'NO',

@@ -7,7 +7,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
   
   function customRadioButton(title, data, onChange) {
     return (
-      <div>
+      <div style={{marginTop: '10px'}}>
         <span className='text-base-content'>{title}</span>
         {data.map((item, index) => (
           <div key={index} className="form-control">
@@ -17,7 +17,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                 type="radio" 
                 name={item.id}
                 value={item.value}
-                className="radio radio-lg	 checked:bg-red-500" 
+                className="radio radio-md" 
                 onChange={onChange}
               />
             </label>
@@ -42,56 +42,72 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
             className="form-control "
         >
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 placeholder='Write your name'
                 value={testReport.testerName}
                 onChange={(e) => setTestReport({...testReport, testerName: e.target.value})}
                 label='Tester Name'
           />
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 placeholder='write the project name'
                 value={testReport.projectName}
                 onChange={(e) => setTestReport({...testReport, projectName: e.target.value})}
                 label='Project Name'
           />
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 value={testReport.testRunURL}
                 onChange={(e) => setTestReport({...testReport, testRunURL: e.target.value})}
                 placeholder='Share your Test Run url'
                 label='Test Run URL'
           />
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 value={testReport.openTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, openTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
                 label='How many tickets did you open today?'
           />
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 value={testReport.backInProgressTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, backInProgressTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
                 label='How many tickets did you move back to InProgress?'
           />
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 value={testReport.closedTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, closedTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
                 label='How many tickets did you close today?'
           />
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 value={testReport.blockedTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, blockedTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
                 label='How many tickets did you move to Block status?'
           />
           <CustomInput
-                size='max-w-lg input-lg'
+                require={true}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
                 value={testReport.noOfTCExe  === 0 ? '' : testReport.noOfTCExe}
                 onChange={(e) => setTestReport({...testReport, noOfTCExe: e.target.value})}
                 placeholder='Number Of Test Case Executed (Today)'
@@ -106,6 +122,14 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
               [{"id": "communicatePM", "title": "YES", "value": true}, {"id": "communicatePM", "title": "NO", "value": false}],
               (e) => setTestReport({...testReport, isPMbeenAsked: JSON.parse(e.target.value)}))
           }
+          {testReport.isPMbeenAsked == false? 
+            <CustomTextarea
+              value={testReport.communicatePMRemark}
+              onChange={(e) => setTestReport({...testReport, communicatePMRemark: e.target.value})}
+              placeholder='Justify your resion'
+              label='Why there is no communication with the PM or PO?'
+              require={testReport.isPMbeenAsked == false}
+            /> : <div/ >}
 
           {
             customRadioButton(

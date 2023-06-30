@@ -25,7 +25,7 @@ export const POST = async(req) => {
 
             const response =  await sheets.spreadsheets.values.append( {
                 spreadsheetId: process.env.GOOGLE_SHEET_JIRA_ID,
-                range: 'A1:O1',
+                range: 'A1:P1',
                 valueInputOption: "USER_ENTERED",
                 requestBody: {
                     values: [
@@ -40,6 +40,7 @@ export const POST = async(req) => {
                             testReport.blockedTicketsNumber,
                             testReport.noOfTCExe,
                             testReport.isPMbeenAsked,
+                            testReport.communicatePMRemark,
                             testReport.isRequirmenetChange ,
                             testReport.requirmenetChangeRemark,
                             testReport.isPRDUpdated,
