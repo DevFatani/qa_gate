@@ -10,7 +10,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
       <div style={{marginTop: '10px'}}>
         <span className='text-base-content'>{title}</span>
         {data.map((item, index) => (
-          <div key={index} className="form-control">
+          <div key={index}>
             <label className="label cursor-pointer">
               <span className="label-text">{item.title}</span> 
               <input 
@@ -36,7 +36,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
             // backgroundColor: "brown",
             width: "30%"
           }}
-          className="form-control"
+            className="form-control"
         >
           <CustomInput
                 require={true}

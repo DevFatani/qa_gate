@@ -9,7 +9,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
       <div style={{marginTop: '10px'}}>
         <span className='text-base-content'>{title}</span>
         {data.map((item, index) => (
-          <div key={index} className="form-control">
+          <div key={index}>
             <label className="label cursor-pointer">
               <span className="label-text">{item.title}</span> 
               <input 
