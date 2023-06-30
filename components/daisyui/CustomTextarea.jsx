@@ -1,7 +1,9 @@
 import React from 'react'
 
-const CustomTextarea = ({label, placeholder, type, require, value, onChange, numbered, cols, rows}) =>  (
-    <div>
+const CustomTextarea = ({label, placeholder, type, require, value, onChange, numbered, cols, rows, marginTop}) =>  (
+    <div
+        style={{marginTop: marginTop}}
+    >
         <label className="label">
             <span className="label-text">{label}</span>
         </label>

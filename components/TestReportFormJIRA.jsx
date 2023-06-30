@@ -39,7 +39,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
 
             // className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
             // className="form-control w-full max-w-xs"
-            className="form-control "
+            className="form-control"
         >
           <CustomInput
                 require={true}
@@ -171,7 +171,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                   label='Remark'
                 />
           <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href='/' className='text-gray-500 text-sm'>Cancel</Link>
+            <Link href='/' className="btn btn-ghost">Cancel</Link>
           
             <button
               type='submit'

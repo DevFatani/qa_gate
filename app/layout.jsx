@@ -14,9 +14,11 @@ const RootLayout = ({ children }) => {
             <Provider >
               <div className="navbar bg-base-100">
                 <div className="navbar-start">
-                  <h1 className='head_text blue_gradient text-center'>
-                      QA GATE
-                  </h1>
+                 <Link href='/'>
+                    <h1 className='head_text blue_gradient text-center'>
+                        QA GATE
+                    </h1>
+                 </Link>
                 </div>
                   <div className="navbar-center">
                     <Link href='/test-plan' >
