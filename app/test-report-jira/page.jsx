@@ -26,7 +26,7 @@ const page = () => {
       isRequirmenetChange: false,
       requirmenetChangeRemark:'',
 
-      isPRDUpdated: false,
+      isPRDUpdated: true,
       prdUpdatedRemark:'',
 
       remark:''
@@ -116,13 +116,11 @@ const page = () => {
     }
 
   return (
-    <section className='w-full flex-center flex-col'>
-            <h1 className='head_text text-center'>
-                QA GATE
-                <br className='max-md:hidden'/>
-                <span className='orange_gradient text-center'>QA Power</span>
-            </h1>
-            <p className='desc text-cener' style={{fontSize:"50px", color:"blue"}}>Create Test Report JIRA📜</p>
+    <section style={{
+      // backgroundColor: "blue",
+      width: "100%"
+    }}>
+
            <TestReportFormJIRA
                 testReport={testReport}
                 setTestReport={setTestReport}
