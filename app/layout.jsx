@@ -22,16 +22,16 @@ const RootLayout = ({ children }) => {
                 </div>
                   <div className="navbar-center">
                     <Link href='/test-plan' >
-                      <button className="btn btn-ghost normal-case text-xl">Create Test Plan</button>
+                      <button className="btn btn-ghost normal-case text-md">Create Test Plan</button>
                     </Link>
                     <Link href='/test-report' >
-                      <button className="btn btn-ghost normal-case text-xl">Create Test Report</button>
+                      <button className="btn btn-ghost normal-case text-md">Create Test Report</button>
                     </Link>
                     <Link href='/test-report-jira' >
-                      <button className="btn btn-ghost normal-case text-xl">Create Jira Test Report</button>
+                      <button className="btn btn-ghost normal-case text-md">Create Jira Test Report</button>
                     </Link>
                     <Link href='/learning-report' >
-                      <button className="btn btn-ghost normal-case text-xl">Create Learn Report</button>
+                      <button className="btn btn-ghost normal-case text-md">Create Learn Report</button>
                     </Link>
                   </div>
                 <div className="navbar-end"></div>

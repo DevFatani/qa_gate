@@ -1,5 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
+import CustomInput from './daisyui/CustomInput';
+import CustomTextarea from './daisyui/CustomTextarea';
 const TestPlanForm = ({ 
     testPlan,
     setTestPlan,
@@ -19,133 +21,137 @@ const TestPlanForm = ({
       }
   
   return (
-    <section className='w-full max-w-full flex-start flex-col'>
+    <section className="card place-items-center">
         <form
           onSubmit={handleSubmit}
-          className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
+          style={{
+            marginTop: "15px",
+            // backgroundColor: "brown",
+            width: "30%"
+          }}
+          className="form-control"
         >
+          <CustomInput
+              value={testPlan.testerName}
+              onChange={(e) => setTestPlan({...testPlan, testerName: e.target.value})}
+              placeholder='Write your name'
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              label='Tester Name'
+          />
+          <CustomInput
+              value={testPlan.projectName}
+              onChange={(e) => setTestPlan({...testPlan, projectName: e.target.value})}
+              placeholder='Project Name'
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              label='Project Name'
+          />
+          <CustomInput
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              label='Project URL'
+              value={testPlan.url}
+              onChange={(e) => setTestPlan({...testPlan, url: e.target.value})}
+              placeholder='Provide Project URL'
+          />
+          <CustomTextarea
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              label='Overview'
+              value={testPlan.about}
+              onChange={(e) => setTestPlan({...testPlan, about: e.target.value})}
+              placeholder='Write down a brief idea of the project'
+          />
 
-        <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Tester Name</span>
-                <input 
-                  className='search_input'
-                  value={testPlan.testerName}
-                  onChange={(e) => setTestPlan({...testPlan, testerName: e.target.value})}
-                  placeholder='write your  name'
-                  required
-                
-                />
-          </label>
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Project Name</span>
-                <input 
-                  className='search_input'
-                  value={testPlan.projectName}
-                  onChange={(e) => setTestPlan({...testPlan, projectName: e.target.value})}
-                  placeholder='write your task name'
-                  required
-                
-                />
-          </label>
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Project URL</span>
-              <input 
-                className='search_input'
-                value={testPlan.url}
-                onChange={(e) => setTestPlan({...testPlan, url: e.target.value})}
-                placeholder='write your task name'
-                required
-               
-              />
-          </label>
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Overview</span>
-              <input 
-                className='search_input'
-                value={testPlan.about}
-                onChange={(e) => setTestPlan({...testPlan, about: e.target.value})}
-                placeholder='write your task name'
-                required
-               
-              />
-          </label>
+          <CustomTextarea
+              require={true}
+              marginTop={'10px'}
+              label='Scope In'
+              cols={50}
+              rows={4}
+              value={testPlan.scopeIn}
+              onChange={(e) => setTestPlan({...testPlan, scopeIn: e.target.value})}
+              placeholder='Write down project scope in'
+          />
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Scope In</span>
-              <textarea 
-                className='form_textarea numbered'
-                cols="50"
-                rows="10"
-                value={testPlan.scopeIn}
-                onChange={(e) => setTestPlan({...testPlan, scopeIn: e.target.value})}
-                placeholder='write your task name'
-                required
-               
-              />
-          </label>
+          <CustomTextarea
+              require={true}
+              marginTop={'10px'}
+              label='Scope Out'
+              cols={50}
+              rows={2}
+              value={testPlan.scopeOut}
+              onChange={(e) => setTestPlan({...testPlan, scopeOut: e.target.value})}
+              placeholder='Write down project scope out'
+          />
+          <CustomTextarea
+              require={true}
+              marginTop={'10px'}
+              label='Exit Criteria'
+              cols={50}
+              rows={2}
+              value={testPlan.exitCriteria}
+              onChange={(e) => setTestPlan({ ...testPlan, exitCriteria: e.target.value})}
+              placeholder='Write down project exit criteria'
+          />
+          <table 
+            className="table table-md table-pin-rows"
+            style={{
+              marginTop: "25px"
+            }}
+          >
+                  <thead>
+                    <tr>
+                      <th className='text-primary'>TEST LEVEL</th>
+                      <th>Select</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {testPlan.testLevel.map((item, index ) => (
+                        <tr key={index}>
+                          <td>{item.name}</td>
+                          <td>
+                            <input type="checkbox" class="checkbox" value={item.name} onChange={ (e) => handleTestLevelCheckboxChange(index, e)}/>
+                          </td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Scope Out</span>
-              <textarea 
-                className='form_textarea numbered'
-                cols="50"
-                rows="10"
-                value={testPlan.scopeOut}
-                onChange={(e) => setTestPlan({...testPlan, scopeOut: e.target.value})}
-                placeholder='write your task name'
-                required
-              />
-          </label>
-
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Select Test Level</span>
-              {testPlan.testLevel.map((item, index ) => (
-                  <div key={index}>
-                    <input className='input_checkbox_input' type="checkbox" id={`testLevel${item.name}`} name={`testLevel${item.name}`}  value={item.name} onChange={ (e) => handleTestLevelCheckboxChange(index, e)} />
-                    <label className='input_checbox_label' htmlFor={`testLevel${item.name}`}>{item.name}</label><br/>
-                  </div>
-                  
-                ))
-              }
-          </label>
+                  <thead>
+                    <tr>
+                      <th className='text-secondary'>TEST TYPE</th>
+                      <th>Select</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {testPlan.testType.map((item, index ) => (
+                        <tr key={index}>
+                          <td>{item.name}</td>
+                          <td>
+                            <input type="checkbox" class="checkbox" value={item.name} onChange={ (e) => handleTestTypeCheckboxChange(index, e)}/>
+                          </td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+          </table>
           
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Select Test Type</span>
-              {testPlan.testType.map((item, index) => ( <div key={index}>
-                <input 
-                      className='input_checkbox_input'
-                      type="checkbox" 
-                      id={`testType${item.name}`}
-                      name={`testType${item.name}`}
-                      value={item.name}
-                      onChange={e => handleTestTypeCheckboxChange(index, e)}
-                  />
-                  <label  className='input_checbox_label' htmlFor={`testType${item.name}`}>{item.name}</label><br/>
-                </div>
-              ))
-              }
-          </label>
-
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Exit Criteria</span>
-              <textarea 
-                className='form_textarea numbered'
-                cols="50"
-                rows="10"
-                value={testPlan.exitCriteria}
-                onChange={(e) => setTestPlan({ ...testPlan, exitCriteria: e.target.value})}
-                placeholder='write your Exit Criteria'
-                required
-              />
-          </label>
-
- 
-          <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href='/' className='text-gray-500 text-sm'>Cancel</Link>
+          <div
+            className='flex-end mx-3 mb-5 gap-4' 
+            style={{
+              marginTop: "15px"
+            }}
+          >
+            <Link href='/' className="btn btn-ghost">Cancel</Link>
             <button
               type='submit'
               disabled={submitting}
-              className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+              className="btn btn-accent"
             >Create</button>
           </div>
         </form>
