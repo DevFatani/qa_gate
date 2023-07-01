@@ -118,7 +118,7 @@ const TestPlanForm = ({
                         <tr key={index}>
                           <td>{item.name}</td>
                           <td>
-                            <input type="checkbox" class="checkbox" value={item.name} onChange={ (e) => handleTestLevelCheckboxChange(index, e)}/>
+                            <input type="checkbox" className="checkbox" value={item.name} onChange={ (e) => handleTestLevelCheckboxChange(index, e)}/>
                           </td>
                         </tr>
                       ))
@@ -136,7 +136,7 @@ const TestPlanForm = ({
                         <tr key={index}>
                           <td>{item.name}</td>
                           <td>
-                            <input type="checkbox" class="checkbox" value={item.name} onChange={ (e) => handleTestTypeCheckboxChange(index, e)}/>
+                            <input type="checkbox" className="checkbox" value={item.name} onChange={ (e) => handleTestTypeCheckboxChange(index, e)}/>
                           </td>
                         </tr>
                       ))
