@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link';
 import Image from 'next/image'
 
@@ -12,14 +12,109 @@ const TestCaseForm = ({
     setArrComponents,
     handleSubmit,
     onGenerateComponent,
+    decisionTable, 
+    setDecisionTable,
+    onGenerateDecisionTable,
     submitting
   }) => {
-  
+    const [toggleState, setToggleState] = useState(1);
+    const toggleTab = (index) => setToggleState(index);
+    
+    const Tabs =() => (
+      <div  >
+          <div className="card place-items-center">
+            <div className="tabs tab-lifted">
+              <a className={`${toggleState === 1 ? "tab-active" : ""} tab tab-lifted`} onClick={() => toggleTab(1)}>
+                Add By Components
+              </a> 
+              <a className={`${toggleState === 2 ? "tab-active" : ""} tab tab-lifted`} onClick={() => toggleTab(2)}>
+                Create By Decision Table
+              </a> 
+            </div>
+          </div>
+              
+          <div className={`${toggleState === 1 ? "active-content" : "content"} flex flex-col w-full lg:flex-row`}>
+            <div className="grid flex-grow">
+              <CustomTextarea
+                placeholder={'Add Your Components Here like (button, input, form, etc ..)'}
+                value={arrComponents.text}
+                rows={5}
+                onChange={(e) => setArrComponents({ ...arrComponents, text: e.target.value})}
+                label='Add your compoenets'
+              />
+              <button 
+                className="btn btn-outline btn-primary"
+                type='button'
+                onClick={() => { if(arrComponents.text) onGenerateComponent();}}
+              >Generate </button><br />
+            </div>
+            <div className="divider divider-horizontal"></div>
+            <div className="grid flex-grow">
+              {arrComponents.keywords.map((item, index) => (<CustomCheckbox
+                      key={index}
+                      value={item.select}
+                      id={`genComponentsKeyword${index}`}
+                      name={`genComponentsKeyword${index}`}
+                      onClick ={(e)=> handleCheckboxChange(index, e)}
+                      title={`Add ${item.code.toUpperCase()} to each component`}
+                    />
+                ))}
+            </div>
+          </div>
+
+          <div className={`${toggleState === 2 ? "active-content" : "content"} flex flex-col w-full lg:flex-row`}>
+            <div className="grid flex-grow">
+              <div className="text-xl font-medium" style={{marginTop: "15px"}}>
+                 Create Your test cases by Decision Table
+              </div>
+              <CustomInput
+                marginTop={'10px'}
+                label={'Add Test Condition'}
+                size='max-w-lg input-md'
+                value={decisionTable.testCondition}
+                onChange={(e) => setDecisionTable({ ...decisionTable, testCondition: e.target.value})}
+                placeholder='Test Condition by like (email, password, etc ..)'
+              />
+              <div className="flex w-full" style={{marginTop: "15px"}}>
+                <div className="flex-grow card">
+                  <CustomInput
+                    value={decisionTable.testRole1}
+                    onChange={(e) => setDecisionTable({ ...decisionTable, testRole1: e.target.value})}
+                    label={'Add Test Role 1'}
+                    placeholder='Test Role 1 ex: (valid, invalid)'
+                    marginTop={'5px'}
+                    size='max-w-xs input-sm'
+                  />
+                </div>
+                <div className=" divider-horizontal" />
+                <div className="flex-grow card">
+                  <CustomInput
+                    value={decisionTable.testRole2}
+                    onChange={(e) => setDecisionTable({ ...decisionTable, testRole2: e.target.value})}
+                    label={'Add Test Role 2'}
+                    placeholder='Test Role 2 ex: (valid, invalid)'
+                    marginTop={'5px'}
+                    size='max-w-xs input-sm'
+                  />
+                </div>
+              </div>
+              <button
+                style={{marginTop: "15px"}}
+                className="btn btn-outline btn-primary"
+                type='button'
+                onClick={() => { if(decisionTable.testCondition && decisionTable.testRole1 && decisionTable.testRole2) onGenerateDecisionTable();}}
+              >Generate </button><br />
+            </div>
+          </div>
+      </div>
+    );
+
     const handleCheckboxChange = (index, event) => {
       const newInputValues = [...arrComponents.keywords];
       newInputValues[index].select = event.target.checked;
       setArrComponents({...arrComponents, keywords: newInputValues});
-  }
+    }
+  
 
   return (
     <section
@@ -204,37 +299,10 @@ const TestCaseForm = ({
             />
           </div>
           
-
-          <div className="flex flex-col w-full lg:flex-row">
-            <div className="grid flex-grow">
-              <CustomTextarea
-                placeholder={'Add Your Components Here like (button, input, form, etc ..)'}
-                value={arrComponents.text}
-                rows={5}
-                onChange={(e) => setArrComponents({ ...arrComponents, text: e.target.value})}
-                label='Add your compoenets'
-              />
-              <button 
-                className="btn btn-outline btn-primary"
-                type='button'
-                onClick={() => { if(arrComponents.text) onGenerateComponent();}}
-              >Generate </button><br />
-            </div>
-            <div className="divider divider-horizontal"></div>
-            <div className="grid flex-grow ">
-              {arrComponents.keywords.map((item, index) => (<CustomCheckbox
-                      key={index}
-                      value={item.select}
-                      id={`genComponentsKeyword${index}`}
-                      name={`genComponentsKeyword${index}`}
-                      onClick ={(e)=> handleCheckboxChange(index, e)}
-                      title={`Add ${item.code.toUpperCase()} to each component`}
-                    />
-                ))}
-            </div>
-          </div>
+          {Tabs()}
 
           <CustomTextarea
+              marginTop={'20px'}
               value={testCase.text}
               onChange={(e) => setTestCase({ ...testCase, text: e.target.value})}
               label='Your Test cases here'

@@ -467,6 +467,12 @@ const TestCase = () => {
         keywords: [...CODE_KEYWORK]
     });
 
+    const [decisionTable, setDecisionTable] = useState({
+        testCondition: '',
+        testRole1: '',
+        testRole2: '',
+    })
+
     const [tcs, setTcs] = useState([]);
 
     const [submitting, setSubmitting] = useState(false);
@@ -622,6 +628,39 @@ const TestCase = () => {
         setTestCase({...testCase, text: finalText});
    }
 
+   function generateOutput(size) {
+        const output = [];
+    
+        for (let i = 0; i < Math.pow(2, size); i++) {
+            const subArray = [];
+            for (let j = 0; j < size; j++) {
+                if ((i >> j) & 1) {
+                    subArray.push(false);
+                } else {
+                    subArray.push(true);
+                }
+            }
+            output.push(subArray);
+        }
+        return output;
+    }
+   const onGenerateDecisionTable = (e) => {
+    
+    const testConditions =  decisionTable.testCondition.trim().split(',');
+    const testConditionsLength = testConditions.length;
+    let finalTestCase = '';
+    generateOutput(testConditionsLength).map(items => {
+        let finalText = '';
+        items.forEach((item, index)=> {
+            if(index == testConditionsLength - 1) finalText += 'and ';
+            finalText += `${item ? decisionTable.testRole1 : decisionTable.testRole2} ${testConditions[index]}${(index < testConditionsLength -1) ? ", " : ""}`
+        });
+        finalTestCase += `| ${finalText} | c,m,p,f\n`;
+    });
+    finalTestCase += `${testCase.text}\n`
+    setTestCase({...testCase, text: finalTestCase});
+}
+
     const exportToExcel = () => {
         const worksheet = XLSX.utils.json_to_sheet(formatOutputDataForQASE());
         const workbook = XLSX.utils.book_new();
@@ -644,6 +683,9 @@ const TestCase = () => {
                 submitting={submitting}
                 handleSubmit={createMyTestCase}
                 onGenerateComponent={onGenerateComponent}
+                decisionTable={decisionTable}
+                onGenerateDecisionTable={onGenerateDecisionTable}
+                setDecisionTable={setDecisionTable}
             />
 
            <TestStatistic data={tcs} />
