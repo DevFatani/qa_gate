@@ -80,8 +80,8 @@ const TestCaseForm = ({
                   <CustomInput
                     value={decisionTable.testRole1}
                     onChange={(e) => setDecisionTable({ ...decisionTable, testRole1: e.target.value})}
-                    label={'Add Test Role 1'}
-                    placeholder='Test Role 1 ex: (valid, invalid)'
+                    label={'Add Test Rule 1'}
+                    placeholder='Test Rule 1 ex: (valid, invalid)'
                     marginTop={'5px'}
                     size='max-w-xs input-sm'
                   />
@@ -91,8 +91,8 @@ const TestCaseForm = ({
                   <CustomInput
                     value={decisionTable.testRole2}
                     onChange={(e) => setDecisionTable({ ...decisionTable, testRole2: e.target.value})}
-                    label={'Add Test Role 2'}
-                    placeholder='Test Role 2 ex: (valid, invalid)'
+                    label={'Add Test Rule 2'}
+                    placeholder='Test Rule 2 ex: (valid, invalid)'
                     marginTop={'5px'}
                     size='max-w-xs input-sm'
                   />

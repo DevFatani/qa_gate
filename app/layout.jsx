@@ -1,15 +1,21 @@
+'use client'
 import '@styles/globals.css'
 import Provider from '@components/Provider'
 import Link from 'next/link'
+import { useState } from 'react'
+import { FiSun} from 'react-icons/fi'
 
-export const metadata = { 
-    title: 'QA Gate',
-    description: 'Your gate for next QA'
-}
+// export const metadata = { 
+//     title: 'QA Gate',
+//     description: 'Your gate for next QA'
+// }
 
 const RootLayout = ({ children }) => {
+
+  let [darkMode, setDarkMode] = useState(true);
+
   return (
-    <html lang='en' data-theme="dracula">
+    <html lang='en' data-theme={darkMode ? "dracula" : "emerald"}>
         <body>
             <Provider >
               <div className="navbar bg-base-100">
@@ -37,7 +43,11 @@ const RootLayout = ({ children }) => {
                       <button className="btn btn-ghost normal-case text-md">Create Learn Report</button>
                     </Link>
                   </div>
-                <div className="navbar-end"></div>
+                  <div className="navbar-end">
+                    <button className="btn" onClick={() => setDarkMode((pre) => darkMode = !pre)}>
+                      <FiSun/>
+                    </button>
+                  </div>
               </div>
               <main className="hero min-h-screen bg-base-200">
                 {children}
