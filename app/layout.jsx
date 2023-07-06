@@ -1,5 +1,6 @@
 import '@styles/globals.css'
 import Provider from '@components/Provider'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata = { 
@@ -14,9 +15,13 @@ const RootLayout = ({ children }) => {
             <Provider >
               <div className="navbar bg-base-100">
                 <div className="navbar-start">
-                  <h1 className='head_text blue_gradient text-center'>
-                      QA GATE
-                  </h1>
+                  <Image
+                    src='/assets/images/White logo - no background.svg' 
+                    alt='logo'
+                    width={230}
+                    height={200}
+                    className="ml-8"
+                  />
                 </div>
                   <div className="navbar-center">
                     <Link href='/test-plan' >
