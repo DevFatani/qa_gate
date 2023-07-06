@@ -69,6 +69,10 @@ const page = () => {
                 'name': 'Compatibility',
                 'select': false
             },
+            {
+                'name': 'Automation Test',
+                'select': false
+            },
         ],
         exitCriteria: ''
     });
@@ -82,10 +86,10 @@ const page = () => {
     }
     const formatPDF = () => { 
         let text = `
-        Create At: ${moment().format('LLL')}
-        Tester Name:\n\t${testPlan.testerName}\n
-        Project Name:\n\t${testPlan.projectName}\n
-        URL: ${testPlan.url}\n
+        Create At:\t${moment().format('LLL')}
+        Tester Name:\t${testPlan.testerName}\n
+        Project Name:\t${testPlan.projectName}\n
+        URL:\t${testPlan.url}\n
         About:\n\t${testPlan.about}\n
         Scope In:\n\t${testPlan.scopeIn}\n
         Scope Out:\n\t${testPlan.scopeOut}\n
@@ -127,13 +131,12 @@ const page = () => {
     }
     
     return (
-        <section className='w-full flex-center flex-col'>
-                <h1 className='head_text text-center'>
-                    QA GATE
-                    <br className='max-md:hidden'/>
-                    <span className='orange_gradient text-center'>QA Power</span>
-                </h1>
-                <p className='desc text-cener' style={{fontSize:"50px", color:"blue"}}>Create Test Plan Now 📝</p>
+        <section
+        style={{
+            // backgroundColor: "blue",
+            width: "100%"
+          }}
+        >
             <TestPlanForm
                     testPlan={testPlan}
                     setTestPlan={setTestPlan}

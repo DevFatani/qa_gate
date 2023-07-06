@@ -1,7 +1,19 @@
 import React from 'react'
 
-const CustomInput = ({label, placeholder, type, require, value, onChange, min, size = 'max-w-xs'}) =>  (
-    <div>
+const CustomInput = ({
+    label,
+    placeholder,
+    type,
+    require = false,
+    value,
+    onChange,
+    min,
+    size = 'max-w-xs',
+    marginTop
+}) =>  (
+    <div
+        style={{marginTop: marginTop}}
+    >
         <label className="label">
             <span className="label-text">{label}</span>
         </label>
@@ -9,7 +21,7 @@ const CustomInput = ({label, placeholder, type, require, value, onChange, min, s
             type={type}
             placeholder={placeholder}
             className={`input input-bordered w-full ${size}`}
-            required
+            required={require}
             value={value}
             onChange={onChange}
             min={min}

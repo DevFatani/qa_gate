@@ -1,7 +1,9 @@
 import React from 'react'
 
-const CustomTextarea = ({label, placeholder, type, require, value, onChange, numbered, cols, rows}) =>  (
-    <div>
+const CustomTextarea = ({label, placeholder, type, require, value, onChange, numbered, cols, rows, marginTop, size='textarea-lg'}) =>  (
+    <div
+        style={{marginTop: marginTop}}
+    >
         <label className="label">
             <span className="label-text">{label}</span>
         </label>
@@ -9,7 +11,7 @@ const CustomTextarea = ({label, placeholder, type, require, value, onChange, num
         
             type={type}
             placeholder={placeholder}
-            className={`textarea textarea-bordered textarea-lg w-full ${numbered ? 'numbered': ''}`}
+            className={`textarea textarea-bordered ${size} w-full ${numbered ? 'numbered': ''}`}
             // className={`expandable-textarea textarea textarea-bordered textarea-lg w-full ${numbered ? 'numbered': ''}`}
             required={require}
             value={value}

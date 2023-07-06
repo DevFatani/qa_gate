@@ -1,222 +1,271 @@
 import React from 'react'
 import Link from 'next/link';
+import CustomInput from './daisyui/CustomInput';
+import CustomTextarea from './daisyui/CustomTextarea';
 const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting}) => {
   
+  function customRadioButton(title, data, onChange) {
+    return (
+      <div style={{marginTop: '10px'}}>
+        <span className='text-base-content'>{title}</span>
+        {data.map((item, index) => (
+          <div key={index}>
+            <label className="label cursor-pointer">
+              <span className="label-text">{item.title}</span> 
+              <input 
+                type="radio" 
+                name={item.id}
+                value={item.value}
+                className="radio radio-md" 
+                onChange={onChange}
+              />
+            </label>
+        </div>))}
+      </div>
+    );
+  }
+
   return (
-    <section className='w-full max-w-full flex-start flex-col'>
+    <section className="card place-items-center">
         <form
           onSubmit={handleSubmit}
-          className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
+          style={{
+            marginTop: "15px",
+            // backgroundColor: "brown",
+            width: "30%"
+          }}
+          className="form-control"
         >
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>What type of test report?</span>
-            <br/>
-                <input type="radio" id="testReportTypeDev" name="testReportType" onChange={(e) => setTestReport({...testReport, isLiveReport: false})}/>
-                <label htmlFor="testReportTypeDev">Development Environment 🤖</label><br />  
-                <br />
-                <input type="radio" id="testReportTypeLive" name="testReportType" onChange={(e) => setTestReport({...testReport, isLiveReport: true})}/>
-                <label htmlFor="testReportTypeLive">Live Environment 🚀</label><br/>
-          </label>
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Tester Name</span>
-                <input 
-                  className='search_input'
-                  value={testReport.testerName}
-                  onChange={(e) => setTestReport({...testReport, testerName: e.target.value})}
-                  placeholder='write your  name'
-                  required
-                />
-          </label>
+          {
+            customRadioButton(
+              'What type of test report?', 
+              [
+                {
+                  "id": "testReportType",
+                  "title": "Development Environment", 
+                  "value": false
+                }, 
+                {
+                  "id": "testReportType",
+                  "title": "Live Environment", 
+                  "value": true
+                }
+              ],
+              (e) => setTestReport({...testReport, isLiveReport: JSON.parse(e.target.value)}))
+          }
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              value={testReport.testerName}
+              onChange={(e) => setTestReport({...testReport, testerName: e.target.value})}
+              placeholder='Write your name'
+              label='Tester Name'
+          />
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Project Name</span>
-                <input 
-                  className='search_input'
-                  value={testReport.projectName}
-                  onChange={(e) => setTestReport({...testReport, projectName: e.target.value})}
-                  placeholder='write the project name'
-                  required
-                />
-          </label>
-     
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Project URL</span>
-                <input 
-                  className='search_input'
-                  value={testReport.url}
-                  onChange={(e) => setTestReport({...testReport, url: e.target.value})}
-                  placeholder='write your task name'
-                  required
-                />
-          </label>
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Test Run URL</span>
-                <input 
-                  className='search_input'
-                  value={testReport.testRunURL}
-                  onChange={(e) => setTestReport({...testReport, testRunURL: e.target.value})}
-                  placeholder='Share your Test Run url'
-                  required
-                />
-          </label>
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Found (Today)</span>
-                <input 
-                    className='search_input'
-                    min={0}
-                    value={testReport.noDefectFound  === 0 ? '' : testReport.noDefectFound}
-                    onChange={(e) => setTestReport({...testReport, noDefectFound: e.target.value})}
-                    placeholder='Number Of Defect Found Today or overall'
-                    required
-                    type='number'
-                />
-          </label>
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect Solved (Today)</span>
-                <input 
-                    className='search_input'
-                    min={0}
-                    value={testReport.noDefectSolved === 0 ? '' : testReport.noDefectSolved}
-                    onChange={(e) => setTestReport({...testReport, noDefectSolved: e.target.value})}
-                    placeholder='Number Of Defect Solved'
-                    required
-                    type='number'
-                />
-          </label>
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              value={testReport.projectName}
+              onChange={(e) => setTestReport({...testReport, projectName: e.target.value})}
+              placeholder='Write the project name'
+              label='Project Name'
+          />
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Test Case Executed (Today)</span>
-                <input 
-                    className='search_input'
-                    value={testReport.noOfTCExe  === 0 ? '' : testReport.noOfTCExe}
-                    onChange={(e) => setTestReport({...testReport, noOfTCExe: e.target.value})}
-                    placeholder='Number Of Test Case Executed'
-                    required
-                    type='number'
-                    min={0}
-                />
-          </label>
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              value={testReport.url}
+              onChange={(e) => setTestReport({...testReport, url: e.target.value})}
+              placeholder='Project or Task URL'
+              label='Project URL'
+          />
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect In Requirement (Today)</span>
-                <input 
-                    className='search_input'
-                    value={testReport.noOfDefectInRequirement  === 0 ? '' : testReport.noOfDefectInRequirement}
-                    onChange={(e) => setTestReport({...testReport, noOfDefectInRequirement: e.target.value})}
-                    placeholder='Number Of Defect In Requirement'
-                    type='number'
-                    min={0}
-                />
-          </label>
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              value={testReport.testRunURL}
+              onChange={(e) => setTestReport({...testReport, testRunURL: e.target.value})}
+              placeholder='Share your Test Run url'
+              label='Test Run URL'
+          />
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of Defect In Block (Today)</span>
-                <input 
-                    className='search_input'
-                    value={testReport.noOfDefectBlock  === 0 ? '' : testReport.noOfDefectBlock}
-                    onChange={(e) => setTestReport({...testReport, noOfDefectBlock: e.target.value})}
-                    placeholder='Number Of Defect In Block'
-                    type='number'
-                    min={0}
-                />
-          </label>
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              min={0}
+              value={testReport.noDefectFound  === 0 ? '' : testReport.noDefectFound}
+              onChange={(e) => setTestReport({...testReport, noDefectFound: e.target.value})}
+              placeholder='Number Of Defect Found Today'
+              type='number'
+              label='Number Of Defect Found (Today)'
+          />
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Number Of (Major) Defect (Today)</span>
-                <input 
-                    className='search_input'
-                    value={testReport.noOfDefectMajor  === 0 ? '' : testReport.noOfDefectMajor}
-                    onChange={(e) => setTestReport({...testReport, noOfDefectMajor: e.target.value})}
-                    placeholder='Number Of (Major) Defect'
-                    type='number'
-                    min={0}
-                />
-          </label>
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              min={0}
+              value={testReport.noDefectSolved === 0 ? '' : testReport.noDefectSolved}
+              onChange={(e) => setTestReport({...testReport, noDefectSolved: e.target.value})}
+              placeholder='Number Of Defect Solved'
+              type='number'
+              label='Number Of Defect Solved (Today)'
+          />
 
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Release Date</span>
-              <input 
-                className='search_input'
-                value={testReport.releaseDate}
-                onChange={(e) => setTestReport({...testReport, releaseDate: e.target.value})}
-                placeholder='write your task name'
-                type='datetime-local'
-              />
-          </label>
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              min={0}
+              value={testReport.noOfTCExe  === 0 ? '' : testReport.noOfTCExe}
+              onChange={(e) => setTestReport({...testReport, noOfTCExe: e.target.value})}
+              placeholder='Number Of Test Case Executed'
+              type='number'
+              label='Number Of Test Case Executed (Today)'
+          />
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              min={0}
+              value={testReport.noOfDefectInRequirement  === 0 ? '' : testReport.noOfDefectInRequirement}
+              onChange={(e) => setTestReport({...testReport, noOfDefectInRequirement: e.target.value})}
+              placeholder='Number Of Defect In Requirement'
+              type='number'
+              label='Number Of Defect In Requirement (Today)'
+          />
 
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Is the task need to back (In-Progress) ?</span>
-            <br/>
-                <input type="radio" id="testReportBackInProgressNO" name="backInProgress"  onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: false})}/>
-                <label htmlFor="testReportBackInProgressNO">NO</label><br />  
-                <input type="radio" id="testReportBackInProgressYES" name="backInProgress" onChange={(e) => setTestReport({...testReport, isTaskNeedToBackInProgress: true})}/>
-                <label htmlFor="testReportBackInProgressYES">YES</label><br/>
-          </label>
-          
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>is Requirmenet Changed ? (Today)</span>
-            <br/>
-                <input type="radio" id="isRequirmenetChangeYes" name="isRequirmenetChange" onChange={(e) => setTestReport({...testReport, isRequirmenetChange: true})}/>
-                <label htmlFor="isRequirmenetChangeYes">Yes</label><br/>
-                <input
-                    type="radio"
-                    id="isRequirmenetChangeNo" 
-                    name="isRequirmenetChange"
-                    onChange={(e) => setTestReport({...testReport, isRequirmenetChange: false})}
-                  />
-                <label htmlFor="isRequirmenetChangeNo">NO</label><br />  
-          </label>
-          {testReport.isRequirmenetChange ? 
-          <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>Justify why requirement been changed</span>
-            <textarea 
-              className='search_input'
-              required={testReport.isRequirmenetChange}
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              min={0}
+              value={testReport.noOfDefectBlock  === 0 ? '' : testReport.noOfDefectBlock}
+              onChange={(e) => setTestReport({...testReport, noOfDefectBlock: e.target.value})}
+              placeholder='Number Of Defect In Block'
+              type='number'
+              label='Number Of Defect In Block (Today)'
+          />
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              min={0}
+              value={testReport.noOfDefectMajor  === 0 ? '' : testReport.noOfDefectMajor}
+              onChange={(e) => setTestReport({...testReport, noOfDefectMajor: e.target.value})}
+              placeholder='Number Of (Major) Defect'
+              type='number'
+              label='Number Of (Major) Defect (Today)'
+          />
+
+          <CustomInput
+              require={true}
+              marginTop={'10px'}
+              size='max-w-lg input-md'
+              min={0}
+              value={testReport.releaseDate}
+              onChange={(e) => setTestReport({...testReport, releaseDate: e.target.value})}
+              placeholder='write your task name'
+              type='datetime-local'
+              label='Release Date'
+          />
+
+          {
+            customRadioButton(
+              'Is the task need to back (In-Progress) ?', 
+              [
+                {
+                  "id": "backInProgress",
+                  "title": "NO", 
+                  "value": false
+                }, 
+                {
+                  "id": "backInProgress",
+                  "title": "YES", 
+                  "value": true
+                }
+              ],
+              (e) => setTestReport({...testReport, isTaskNeedToBackInProgress: JSON.parse(e.target.value)}))
+          }
+
+          {
+            customRadioButton(
+              'Is Requirmenet Changed ? (Today)', 
+              [
+                {
+                  "id": "isRequirmenetChange",
+                  "title": "NO", 
+                  "value": false
+                },
+                {
+                  "id": "isRequirmenetChange",
+                  "title": "YES", 
+                  "value": true
+                }
+              ],
+              (e) => setTestReport({...testReport, isRequirmenetChange: JSON.parse(e.target.value)}))
+          }
+
+          {testReport.isRequirmenetChange? 
+            <CustomTextarea
+              require={testReport.isRequirmenetChange}
               value={testReport.requirmenetChangeRemark}
               onChange={(e) => setTestReport({...testReport, requirmenetChangeRemark: e.target.value})}
               placeholder='Justify why requirement been changed'
-            />
-      </label> : <div/ >}
-          <label>
-            <span className='font-satoshi font-semibold text-base text-gray-700'>Is the PRD file up to date? (Today)</span>
-            <br/>
-                <input type="radio" id="isPRDUpdatedYes" name="isPRDUpdated"   onChange={(e) => setTestReport({...testReport, isPRDUpdated: true})}/>
-                <label htmlFor="isPRDUpdatedYes">Yes</label><br/>
-                <input type="radio" id="isPRDUpdatedNo" name="isPRDUpdated"  onChange={(e) => setTestReport({...testReport, isPRDUpdated: false})}/>
-                <label htmlFor="isPRDUpdatedNo">NO</label><br />  
-          </label>
+              label='Justify why requirement been changed'
+            /> : <div/ >}
+          
+          {
+            customRadioButton(
+              'Is the PRD file up to date? (Today)', 
+              [
+                {
+                  "id": "isPRDUpdated",
+                  "title": "NO", 
+                  "value": false
+                }, 
+                {
+                  "id": "isPRDUpdated",
+                  "title": "YES", 
+                  "value": true
+                }
+              ],
+              (e) => setTestReport({...testReport, isPRDUpdated: JSON.parse(e.target.value)}))
+          }
+
           {testReport.isPRDUpdated == false? 
-          <label>
-          <span className='font-satoshi font-semibold text-base text-gray-700'>Justify why PRD not up to date</span>
-            <textarea 
-              className='search_input'
-              required={testReport.isPRDUpdated == false}
+            <CustomTextarea
+              require={testReport.isPRDUpdated == false}
               value={testReport.prdUpdatedRemark}
               onChange={(e) => setTestReport({...testReport, prdUpdatedRemark: e.target.value})}
               placeholder='Justify why PRD not up to date?'
-            />
-      </label> : <div/ >}
-          <label>
-              <span className='font-satoshi font-semibold text-base text-gray-700'>Remark</span>
-                <textarea 
-                  className='search_input'
-                  value={testReport.remark}
-                  onChange={(e) => setTestReport({...testReport, remark: e.target.value})}
-                  placeholder='Remark'
-                />
-          </label>
+              label='Justify why PRD not up to date?'
+            /> : <div/ >}
+
+          <CustomTextarea
+              className='search_input'
+              value={testReport.remark}
+              onChange={(e) => setTestReport({...testReport, remark: e.target.value})}
+              placeholder='Remark'
+              label='Remark'
+          />
+
           <div className='flex-end mx-3 mb-5 gap-4'>
-            <Link href='/' className='text-gray-500 text-sm'>Cancel</Link>
+            <Link href='/' className="btn btn-ghost">Cancel</Link>
             <button
               type='submit'
               disabled={submitting}
-              className='px-5 py-1.5 text-sm bg-primary-orange rounded-full text-white'
+              className="btn btn-accent"
             >Create</button>
           </div>
         </form>
-
     </section>
-  )
+  );
 }
 
 export default TestReportForm;
