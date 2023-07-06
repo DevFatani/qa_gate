@@ -164,7 +164,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
           />
 
           <CustomInput
-              require={true}
+              require={false}
               marginTop={'10px'}
               size='max-w-lg input-md'
               min={0}
