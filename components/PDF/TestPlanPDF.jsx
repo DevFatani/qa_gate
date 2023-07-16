@@ -1,95 +1,110 @@
 import React from 'react'
-import { Page, Text, View, Document, StyleSheet, Link, Image } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Link, Image, PDFViewer, Font, PDFDownloadLink, usePDF, pdf } from '@react-pdf/renderer';
 import moment from 'moment';
+import { FiDownloadCloud, FiXCircle } from 'react-icons/fi';
 
+Font.register({
+  family: "Roboto",
+  fonts: [
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf", fontWeight: 300 },
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf", fontWeight: 400 },
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf", fontWeight: 500 },
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf", fontWeight: 600 },
+  ],
+});
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: 'row',
-    backgroundColor: '#E4E4E4'
+    backgroundColor: '#E4E4E4',
+    fontFamily: "Roboto",
+    border: '2px',
+    borderColor: 'black'
   },
   section: {
     margin: 10,
     padding: 10,
     flexGrow: 1
+  },
+  view: {
+    marginTop: 10,
+    marginHorizontal: 15,
+    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },  
+  textLeft: {
+    fontSize: 12,
+    flex: 0.4,
+    fontWeight: 600
+  },
+  textRight: {
+    fontSize: 14,
+    flex: 1.6,
+    fontFamily: "Roboto",
   }
 });
-// const formatPDF = () => { 
-//   let text = `
-//   Create At:\t${moment().format('LLL')}
-//   Tester Name:\t${testPlan.testerName}\n
-//   Project Name:\t${testPlan.projectName}\n
-//   URL:\t${testPlan.url}\n
-//   About:\n\t${testPlan.about}\n
-//   Scope In:\n\t${testPlan.scopeIn}\n
-//   Scope Out:\n\t${testPlan.scopeOut}\n
-//   Test Level: \n${formatArrayOutput(testPlan.testLevel)}\n
-//   Test Type: \n${formatArrayOutput(testPlan.testType)}\n
-//   exit criteria:\n\t${testPlan.exitCriteria}\n
-//   `;
- 
-//   var pageWidth = 8.5,
-//   lineHeight = 1.2,
-//   margin = 0.11,
-//   maxLineWidth = pageWidth - margin * 2,
-//   fontSize = 12,
-//   ptsPerInch = 72,
-//   oneLineHeight = (fontSize * lineHeight) / ptsPerInch,
-
-//   doc = new jsPDF({
-//     unit: "in",
-//     lineHeight: lineHeight
-//   }).setProperties({ title: `${testPlan.projectName}_${moment().format('LLL')}` });
-
-// // splitTextToSize takes your string and turns it in to an array of strings,
-// // each of which can be displayed within the specified maxLineWidth.
-// var textLines = doc
-//   .setFont("helvetica")
-//   .setFontSize(fontSize)
-//   .splitTextToSize(text, maxLineWidth);
-
-// // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
-//   doc.text(textLines, margin, margin + 2 * oneLineHeight);
-//   doc.save(`${testPlan.projectName}_${moment().format('LLL')}.pdf`);
-// }
 
 
-const TestPlanPDF = ({ testPlan }) => <Document title={testPlan.projectName} author={testPlan.testerName} >
-  <Page  size="A4" style={{ border: '2px', borderColor: 'black'}}  >
-    <View style={{ color: 'red', margin: 30, position: 'center'}}>
-      <Image style={{height: 80, width: 180}} src='/assets/images/Color logo with background.png' />
-    </View>
-    <View style={{ margin: 5,  flexDirection: 'row', justifyContent: 'space-evenly'}}>
-      <Text style={{fontSize: 30}}>Create At:</Text>
-      <Text style={{fontSize: 30}}>{moment().format('LLL')}</Text>
-    </View>
-    
-    <View style={{ margin: 5,  flexDirection: 'row', justifyContent: 'space-evenly'}}>
-      <Text style={{fontSize: 30}}>Tester Name:</Text>
-      <Text style={{fontSize: 30}}>{testPlan.testerName}</Text>
+
+const  TestPlanPDF = ({ testPlan, onClose }) => {
+
+  function formatArrayOutput(arr) {
+    let selecteItem = '';
+    arr.map(item => item.select ? selecteItem += `${item.name}\n` : '');
+    return selecteItem;
+  }
+  const renderView = (title, data) => 
+    <View style={styles.view}>
+      <Text style={styles.textLeft}>{title}:</Text>
+      <Text style={styles.textRight}>{data}</Text>
     </View>
 
-    <View style={{ margin: 5,  flexDirection: 'row', justifyContent: 'space-evenly'}}>
-      <Text style={{fontSize: 30}}>Project URL:</Text>
-      <Link src={'https://google.com'}>
-          <Text style={{fontSize: 30}}>{testPlan.url}</Text>
-      </Link>
-    </View>
-    
+  const PDFdoc = () => 
+      <Document  title={testPlan.projectName} author={testPlan.testerName} >
+        <Page size="A4" style={styles.page}  >
+          <View style={{ margin: 30, position: 'center'}}>
+            <Image style={{height: 55, width: 160}} src='/assets/images/Color logo with background.png' />
+          </View>
+          {renderView('Create At', moment().format('LLL'))}
+          {renderView('Tester Name', testPlan.testerName)}
+          {renderView('Project Name', testPlan.projectName)}
 
-    <View>
-      <Text wrap={true} style={{color: 'purple', marginLeft: '15px', marginRight: '15px', fontSize: 20}}>
-        Early naval submarines were typically fitted with a small watertight protrusion on top of their hulls, from which the boat's crew could observe their surroundings through a number of viewports.
-        Early naval submarines were typically fitted with a small watertight protrusion on top of their hulls, from which the boat's crew could observe their surroundings through a number of viewports.
-        Early naval submarines were typically fitted with a small watertight protrusion on top of their hulls, from which the boat's crew could observe their surroundings through a number of viewports.
-        Early naval submarines were typically fitted with a small watertight protrusion on top of their hulls, from which the boat's crew could observe their surroundings through a number of viewports.
-      </Text>
-    </View>
+          <View style={styles.view}>
+            <Text style={styles.textLeft}>Project URL:</Text>
+            <Link src={'https://google.com'} style={styles.textRight}>
+              <Text style={{fontSize: 16}}>{testPlan.url}</Text>
+            </Link>
+          </View>
+          {renderView('Project Overview', testPlan.about)}
+          {renderView('Scope In', testPlan.scopeIn)}
+          {renderView('Scope Out', testPlan.scopeOut)}
+          {renderView('Test Level', formatArrayOutput(testPlan.testLevel))}
+          {renderView('Test Type', formatArrayOutput(testPlan.testType))}
+          {renderView('Exit criteria', testPlan.exitCriteria)}
+        </Page>
+      </Document>
 
-  </Page>
-</Document>;
 
-
-    
+  return(
+    <div className='flex flex-col h-screen'>
+      <div className="flex-none mb-10">
+        <div className='flex justify-between'>
+            <PDFDownloadLink document={PDFdoc()} fileName={`${testPlan.projectName}.pdf`}>
+              {({ blob, url, loading, error }) => (
+              <button className="btn btn-outline btn-secondary btn-wide">
+                  <FiDownloadCloud/> {loading ? 'Loading document...' : 'Downalod'}
+                </button>
+                )
+              }        
+            </PDFDownloadLink>
+            <button className='btn btn-outline btn-error' onClick={() => onClose()}><FiXCircle className='font-xl'/></button>
+        </div>
+      </div>
+      <div className="grow h-80 disabled:fixed">
+        <PDFViewer height={'100%'} width={'100%'}><PDFdoc/></PDFViewer>
+      </div>
+    </div>
+  );
+}
 
 export default TestPlanPDF;
