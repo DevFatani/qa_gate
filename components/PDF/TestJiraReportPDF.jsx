@@ -58,8 +58,9 @@ const TestJiraReportPDF = ({ testReport, onClose }) => {
   const PDFdoc = () => 
       <Document  title={testReport.projectName} author={testReport.testerName} >
         <Page size="A4" style={styles.page}  >
-          <View style={{ margin: 30, position: 'center'}}>
+          <View style={{ margin: 30, position: 'center'}} fixed>
             <Image style={{height: 55, width: 160}} src='/assets/images/Color logo with background.png' />
+            <View style={{backgroundColor: "#25272C", height: "1px"}}/>
           </View>
           {renderView('Create At', moment().format('LLL'))}
           {renderView('Report Type', testReport.isLiveReport ? 'Live' : 'Dev')}
@@ -80,10 +81,10 @@ const TestJiraReportPDF = ({ testReport, onClose }) => {
           {testReport.isPMbeenAsked == false ? renderView('Why there is no communication?', testReport.communicatePMRemark) : <View />}
           
           {renderView('Is Requirmenet Changed? (Today)', testReport.isRequirmenetChange ? 'YES' : 'NO')}
-          {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed', testReport.communicatePMRemark) : <View />}
+          {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed', testReport.requirmenetChangeRemark) : <View />}
           
           {renderView('Is the PRD file up to date? (Today)', testReport.isPRDUpdated ? 'YES' : 'NO')}
-          {testReport.isRequirmenetChange ? renderView('Justify why PRD not up to date', testReport.prdUpdatedRemark) : <View />}
+          {testReport.isPRDUpdated == false ? renderView('Justify why PRD not up to date', testReport.prdUpdatedRemark) : <View />}
           
           {renderView('Release Date', testReport.releaseDate)}
           {renderView('Remark', testReport.remark)}

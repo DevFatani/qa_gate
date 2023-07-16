@@ -1,15 +1,17 @@
 "use client"
 
-import {useState, React, useEffect} from 'react';
-import { jsPDF } from "jspdf";
+import {useState, React, Suspense, lazy} from 'react';
+
 import moment from 'moment/moment';
 import {useRouter} from 'next/navigation';
 
 import TestReportForm from '@components/TestReportForm';
+const TestReportPDF = lazy(() => import('@components/PDF/TestReportPDF'));
+
 
 const page = () => {
     const router = useRouter();
-
+    const [displayModal, setDisplayModal] = useState(false);
     const [testReport, setTestReport] = useState({
         isLiveReport: false,
         testerName: '',
@@ -109,7 +111,8 @@ const page = () => {
           });
 
         if(response.ok) {
-          router.push('/');
+           //   router.push('/');
+           console.log('success !!!');
         }
       }catch(error)  { 
         console.log(error);
@@ -121,17 +124,27 @@ const page = () => {
     const createTestReport = async (e) => {
         e.preventDefault();
         setSubmitting(true);
+        setDisplayModal(true);
+        document.querySelector("[data-modal]").showModal();
         submitOnlineReport();
-        formatPDF();
     }
 
   return (
-    <section
-      style={{
-        // backgroundColor: "blue",
-        width: "100%"
-      }}
-    >
+    <section className='w-screen'>
+        <dialog data-modal className='w-3/5 h-3/6'>
+            <Suspense fallback={<h1 className='w-screen h-screen text-lg'>Loading  ...</h1>}>
+                {
+                    displayModal ?  
+                        <TestReportPDF 
+                            testReport={testReport}
+                            onClose={() => {
+                                document.querySelector("[data-modal]").close();
+                                setDisplayModal(false);
+                            }}
+                        /> : <></>
+                }
+            </Suspense>
+        </dialog>
            <TestReportForm
                 testReport={testReport}
                 setTestReport={setTestReport}
