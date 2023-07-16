@@ -255,7 +255,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               label='Remark'
           />
 
-          <div className='flex-end mx-3 mb-5 gap-4'>
+          <div className='flex-end mx-3 mb-5 gap-4 mt-5'>
             <Link href='/' className="btn btn-ghost">Cancel</Link>
             <button
               type='submit'

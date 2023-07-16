@@ -1,16 +1,16 @@
 "use client"
 
-import {useState, React, useEffect} from 'react';
-import { jsPDF } from "jspdf";
-import moment from 'moment/moment';
-import {useRouter} from 'next/navigation';
+import {useState, React, Suspense, lazy} from 'react';
+import moment from 'moment';
 
 import TestReportFormJIRA from '@components/TestReportFormJIRA';
+const TestJiraReportPDF = lazy(() => import('@components/PDF/TestJiraReportPDF'));
 
 const page = () => {
-    const router = useRouter();
-
+    // const router = useRouter();
+    const [displayModal, setDisplayModal] = useState(false);
     const [testReport, setTestReport] = useState({
+      isLiveReport: false,
       createdDate: '',
       testerName: '',
       projectName:  '',
@@ -31,60 +31,18 @@ const page = () => {
       isPRDUpdated: true,
       prdUpdatedRemark:'',
 
-      remark:''
+      remark:'',
+      releaseDate: ''
     });
 
     const [submitting, setSubmitting] = useState(false);
     
-    const formatPDF = () => { 
-        let text = `
-        Created Date:\n${new Date()}\n
-        Tester Name:\n${testReport.testerName}\n
-        Project Name:\n${testReport.projectName}\n
-        Test Run URL:\n${testReport.testRunURL}\n
-        How many tickets did you open today?:\n${testReport.openTicketsNumber}\n
-        How many tickets did you move back to InProgress?:\n${testReport.backInProgressTicketsNumber}\n
-        How many tickets did you close today?:\n${testReport.closedTicketsNumber}\n
-        How many tickets did you move to Block status?:\n${testReport.blockedTicketsNumber}\n
-        Number Of Test Case Executed (Today):\n${testReport.noOfTCExe}\n
-        Did you follow up the PM or PO about the last update today?:\n${testReport.isPMbeenAsked ? 'YES':'NO'}\n
-        Why there is no communication?:\n${testReport.communicatePMRemark}\n
-        Is Requirmenet Changed? (Today):\n${testReport.isRequirmenetChange ? 'YES':'NO'}\n
-        Justify why requirement been changed:\n${testReport.requirmenetChangeRemark}\n
-        Is the PRD file up to date? (Today):\n${testReport.isPRDUpdated ? 'YES':'NO'}\n
-        Justify why PRD not up to date:\n${testReport.prdUpdatedRemark}\n
-        Remark:\n${testReport.remark}\n
-        `;
-       
-        var pageWidth = 8.5,
-        lineHeight = 1.2,
-        margin = 0.11,
-        maxLineWidth = pageWidth - margin * 2,
-        fontSize = 8,
-        ptsPerInch = 72,
-        oneLineHeight = (fontSize * lineHeight) / ptsPerInch,
-
-        doc = new jsPDF({
-          unit: "in",
-          lineHeight: lineHeight
-        }).setProperties({ title: testReport.projectName });
-      
-      // splitTextToSize takes your string and turns it in to an array of strings,
-      // each of which can be displayed within the specified maxLineWidth.
-      var textLines = doc
-        .setFont("helvetica")
-        .setFontSize(fontSize)
-        .splitTextToSize(text, maxLineWidth);
-      
-      // doc.text can now add those lines easily; otherwise, it would have run text off the screen!
-        doc.text(textLines, margin, margin + 2 * oneLineHeight);
-        doc.save(`${testReport.projectName}.pdf`);
-    } 
-    
     const createTestReport = async (e) => {
         e.preventDefault();
         setSubmitting(!true);
-        formatPDF();
+        setDisplayModal(true);
+        document.querySelector("[data-modal]").showModal();
+
         try {
           const currentDate = moment().format('LLL');
           const response = await fetch('api/create-test-report-jira', {
@@ -105,12 +63,15 @@ const page = () => {
                 requirmenetChangeRemark: testReport.requirmenetChangeRemark,
                 isPRDUpdated: testReport.isPRDUpdated ? 'YES':'NO',
                 prdUpdatedRemark: testReport.prdUpdatedRemark,
-                remark: testReport.remark
+                remark: testReport.remark,
+                isLiveReport: testReport.isLiveReport ? "Live" : "Dev",
+                releaseDate: testReport.releaseDate
             })
           });
 
           if(response.ok) {
-              router.push('/');
+            //   router.push('/');
+            console.log('success !!!');
           }
       }catch(error)  { 
           console.log(error);
@@ -120,17 +81,27 @@ const page = () => {
     }
 
   return (
-    <section style={{
-      // backgroundColor: "blue",
-      width: "100%"
-    }}>
-
-           <TestReportFormJIRA
-                testReport={testReport}
-                setTestReport={setTestReport}
-                handleSubmit={createTestReport}
-                submitting={submitting}
-            />
+    <section className='w-screen'>
+        <dialog data-modal className='w-3/5 h-3/6'>
+            <Suspense fallback={<h1 className='w-screen h-screen text-lg'>Loading  ...</h1>}>
+                {
+                    displayModal ?  
+                        <TestJiraReportPDF 
+                            testReport={testReport}
+                            onClose={() => {
+                                document.querySelector("[data-modal]").close();
+                                setDisplayModal(false);
+                            }}
+                        /> : <></>
+                }
+            </Suspense>
+        </dialog>
+        <TestReportFormJIRA
+            testReport={testReport}
+            setTestReport={setTestReport}
+            handleSubmit={createTestReport}
+            submitting={submitting}
+        />
         </section>
   )
 }
