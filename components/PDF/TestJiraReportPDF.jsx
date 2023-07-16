@@ -33,26 +33,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly'
   },  
   textLeft: {
-    fontSize: 12,
-    flex: 0.4,
-    fontWeight: 600
+    fontSize: 10,
+    flex: 1,
+    fontWeight: 600,
+    marginRight: 4
   },
   textRight: {
-    fontSize: 14,
-    flex: 1.6,
+    fontSize: 12,
+    flex: 1,
     fontFamily: "Roboto",
   }
 });
 
 
 
-const  TestPlanPDF = ({ testPlan, onClose }) => {
+const TestJiraReportPDF = ({ testReport, onClose }) => {
 
-  function formatArrayOutput(arr) {
-    let selecteItem = '';
-    arr.map(item => item.select ? selecteItem += `${item.name}\n` : '');
-    return selecteItem;
-  }
   const renderView = (title, data) => 
     <View style={styles.view}>
       <Text style={styles.textLeft}>{title}:</Text>
@@ -60,27 +56,37 @@ const  TestPlanPDF = ({ testPlan, onClose }) => {
     </View>
 
   const PDFdoc = () => 
-      <Document  title={testPlan.projectName} author={testPlan.testerName} >
+      <Document  title={testReport.projectName} author={testReport.testerName} >
         <Page size="A4" style={styles.page}  >
           <View style={{ margin: 30, position: 'center'}}>
             <Image style={{height: 55, width: 160}} src='/assets/images/Color logo with background.png' />
           </View>
           {renderView('Create At', moment().format('LLL'))}
-          {renderView('Tester Name', testPlan.testerName)}
-          {renderView('Project Name', testPlan.projectName)}
+          {renderView('Report Type', testReport.isLiveReport ? 'Live' : 'Dev')}
+          {renderView('Tester Name', testReport.testerName)}
+          {renderView('Project Name', testReport.projectName)}
 
           <View style={styles.view}>
-            <Text style={styles.textLeft}>Project URL:</Text>
-            <Link src={testPlan.url} style={styles.textRight}>
-              <Text style={{fontSize: 16}}>{testPlan.url}</Text>
-            </Link>
+            <Text style={styles.textLeft}>Test Run:</Text>
+            <Text style={styles.textRight}>{testReport.testRunURL}</Text>
           </View>
-          {renderView('Project Overview', testPlan.about)}
-          {renderView('Scope In', testPlan.scopeIn)}
-          {renderView('Scope Out', testPlan.scopeOut)}
-          {renderView('Test Level', formatArrayOutput(testPlan.testLevel))}
-          {renderView('Test Type', formatArrayOutput(testPlan.testType))}
-          {renderView('Exit criteria', testPlan.exitCriteria)}
+          {renderView('How many tickets did you open today?', testReport.openTicketsNumber)}
+          {renderView('How many tickets did you move back to InProgress?', testReport.backInProgressTicketsNumber)}
+          {renderView('How many tickets did you close today?', testReport.closedTicketsNumber)}
+          {renderView('How many tickets did you move to Block status?', testReport.blockedTicketsNumber)}
+          {renderView('Number Of Test Case Executed (Today)', testReport.noOfTCExe)}
+          
+          {renderView('Did you follow up the PM or PO about the last update (Today)?', testReport.isPMbeenAsked ? 'YES' : 'NO')}
+          {testReport.isPMbeenAsked == false ? renderView('Why there is no communication?', testReport.communicatePMRemark) : <View />}
+          
+          {renderView('Is Requirmenet Changed? (Today)', testReport.isRequirmenetChange ? 'YES' : 'NO')}
+          {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed', testReport.communicatePMRemark) : <View />}
+          
+          {renderView('Is the PRD file up to date? (Today)', testReport.isPRDUpdated ? 'YES' : 'NO')}
+          {testReport.isRequirmenetChange ? renderView('Justify why PRD not up to date', testReport.prdUpdatedRemark) : <View />}
+          
+          {renderView('Release Date', testReport.releaseDate)}
+          {renderView('Remark', testReport.remark)}
         </Page>
       </Document>
 
@@ -89,7 +95,7 @@ const  TestPlanPDF = ({ testPlan, onClose }) => {
     <div className='flex flex-col h-screen'>
       <div className="flex-none mb-10">
         <div className='flex justify-between'>
-            <PDFDownloadLink document={PDFdoc()} fileName={`${testPlan.projectName}.pdf`}>
+            <PDFDownloadLink document={PDFdoc()} fileName={`${testReport.projectName}.pdf`}>
               {({ blob, url, loading, error }) => (
               <button className="btn btn-outline btn-secondary btn-wide">
                   <FiDownloadCloud/> {loading ? 'Loading document...' : 'Downalod'}
@@ -107,4 +113,4 @@ const  TestPlanPDF = ({ testPlan, onClose }) => {
   );
 }
 
-export default TestPlanPDF;
+export default TestJiraReportPDF;

@@ -38,6 +38,23 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
           }}
             className="form-control"
         >
+          {
+            customRadioButton(
+              'What type of test report?', 
+              [
+                {
+                  "id": "testReportType",
+                  "title": "Development Environment", 
+                  "value": false
+                }, 
+                {
+                  "id": "testReportType",
+                  "title": "Live Environment", 
+                  "value": true
+                }
+              ],
+              (e) => setTestReport({...testReport, isLiveReport: JSON.parse(e.target.value)}))
+          }
           <CustomInput
                 require={true}
                 marginTop={'10px'}
@@ -167,9 +184,19 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                   placeholder='Remark'
                   label='Remark'
                 />
-          <div className='flex-end mx-3 mb-5 gap-4'>
+            <CustomInput
+                require={false}
+                marginTop={'10px'}
+                size='max-w-lg input-md'
+                min={0}
+                value={testReport.releaseDate}
+                onChange={(e) => setTestReport({...testReport, releaseDate: e.target.value})}
+                type='datetime-local'
+                label='Release Date'
+            />
+
+          <div className='flex-end mx-3 mb-5 gap-4 mt-5'>
             <Link href='/' className="btn btn-ghost">Cancel</Link>
-          
             <button
               type='submit'
               disabled={submitting}
