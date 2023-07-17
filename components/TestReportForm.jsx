@@ -77,6 +77,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               require={true}
               marginTop={'10px'}
               size='max-w-lg input-md'
+              type={'url'}
               value={testReport.url}
               onChange={(e) => setTestReport({...testReport, url: e.target.value})}
               placeholder='Project or Task URL'
@@ -88,6 +89,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               marginTop={'10px'}
               size='max-w-lg input-md'
               value={testReport.testRunURL}
+              type={'url'}
               onChange={(e) => setTestReport({...testReport, testRunURL: e.target.value})}
               placeholder='Share your Test Run url'
               label='Test Run URL'
