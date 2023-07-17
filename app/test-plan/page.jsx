@@ -13,6 +13,8 @@ export default () => {
         about: '',
         scopeIn: '',
         scopeOut: '',
+        teamwork: '',
+        sources: '',
         testLevel: [
             {
                 'name': 'Unit', 

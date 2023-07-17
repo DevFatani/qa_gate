@@ -79,6 +79,8 @@ const  TestPlanPDF = ({ testPlan, onClose }) => {
           {renderView('Project Overview', testPlan.about)}
           {renderView('Scope In', testPlan.scopeIn)}
           {renderView('Scope Out', testPlan.scopeOut)}
+          {renderView('Team Work', testPlan.teamwork)}
+          {renderView('Project sources', testPlan.sources)}
           {renderView('Test Level', formatArrayOutput(testPlan.testLevel))}
           {renderView('Test Type', formatArrayOutput(testPlan.testType))}
           {renderView('Exit criteria', testPlan.exitCriteria)}

@@ -54,6 +54,7 @@ const TestPlanForm = ({
               size='max-w-lg input-md'
               label='Project URL'
               value={testPlan.url}
+              type={'url'}
               onChange={(e) => setTestPlan({...testPlan, url: e.target.value})}
               placeholder='Provide Project URL'
           />
@@ -89,6 +90,28 @@ const TestPlanForm = ({
               value={testPlan.scopeOut}
               onChange={(e) => setTestPlan({...testPlan, scopeOut: e.target.value})}
               placeholder='Write down project scope out'
+          />
+          <CustomTextarea
+              size='textarea-md'
+              require={true}
+              marginTop={'10px'}
+              label='Team Work'
+              cols={15}
+              rows={2}
+              value={testPlan.teamwork}
+              onChange={(e) => setTestPlan({...testPlan, teamwork: e.target.value})}
+              placeholder='ex: QA - xxxx, FE- xxxx'
+          />
+          <CustomTextarea
+              size='textarea-md'
+              require={true}
+              marginTop={'10px'}
+              label='Project Sources'
+              cols={15}
+              rows={2}
+              value={testPlan.sources}
+              onChange={(e) => setTestPlan({...testPlan, sources: e.target.value})}
+              placeholder='Figma url or wireframe url'
           />
           <CustomTextarea
               require={true}
