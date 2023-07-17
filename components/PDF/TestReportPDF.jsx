@@ -91,7 +91,7 @@ const TestReportPDF = ({ testReport, onClose }) => {
           {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed', testReport.requirmenetChangeRemark) : <View />}
 
           {renderView('Is the PRD file up to date? (Today)', testReport.isPRDUpdated ? 'YES' : 'NO')}
-          {testReport.isPRDUpdated ? renderView('Justify why PRD not up to date', testReport.prdUpdatedRemark) : <View />}
+          {testReport.isPRDUpdated == false ? renderView('Justify why PRD not up to date', testReport.prdUpdatedRemark) : <View />}
           
           {renderView('Is the task need to back (In-Progress) ?', testReport.isTaskNeedToBackInProgress ? 'YES' : 'NO')}
           
