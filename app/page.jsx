@@ -1,8 +1,8 @@
 'use client';
-import {useState, React, useEffect} from 'react';
+import {React} from 'react';
 import Image from 'next/image';
 
-const Home = () => {
+export default () => {
    return (
     <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row">
@@ -22,5 +22,3 @@ const Home = () => {
       </div>
       );
 }
-
-export default Home;

@@ -1,7 +1,8 @@
 import React from 'react'
-import { Page, Text, View, Document, StyleSheet, Link, Image, PDFViewer, Font, PDFDownloadLink } from '@react-pdf/renderer';
-import moment from 'moment';
+import { Page, Text, View, Document, StyleSheet, Link, PDFViewer, Font, PDFDownloadLink } from '@react-pdf/renderer';
+
 import { FiDownloadCloud, FiXCircle } from 'react-icons/fi';
+import Header from './PDFComponents/Header';
 
 Font.register({
   family: "Roboto",
@@ -57,11 +58,7 @@ export default ({ learningReport, onClose }) => {
   const PDFdoc = () => 
       <Document  title={learningReport.courseName} author={learningReport.testerName} >
         <Page size="A4" style={styles.page}  >
-          <View style={{ margin: 30, position: 'center'}}>
-            <Image style={{height: 55, width: 160}} src='/assets/images/Color logo with background.png' />
-            <View style={{backgroundColor: "#25272C", height: "1px"}}/>
-          </View>
-          {renderView('Create At', moment().format('LLL'))}
+          <Header title={'Learning Report'}/>
           {renderView('Tester Name', learningReport.testerName)}
           {renderView('Course Name', learningReport.courseName)}
           {renderView('What Did You Learn Today?', learningReport.whatDidYouLearnToday)}

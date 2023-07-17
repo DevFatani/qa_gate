@@ -1,7 +1,7 @@
 import React from 'react'
-import { Page, Text, View, Document, StyleSheet, Link, Image, PDFViewer, Font, PDFDownloadLink, usePDF, pdf } from '@react-pdf/renderer';
-import moment from 'moment';
+import { Page, Text, View, Document, StyleSheet,PDFViewer, Font, PDFDownloadLink} from '@react-pdf/renderer';
 import { FiDownloadCloud, FiXCircle } from 'react-icons/fi';
+import Header from './PDFComponents/Header';
 
 Font.register({
   family: "Roboto",
@@ -58,11 +58,7 @@ const TestJiraReportPDF = ({ testReport, onClose }) => {
   const PDFdoc = () => 
       <Document  title={testReport.projectName} author={testReport.testerName} >
         <Page size="A4" style={styles.page}  >
-          <View style={{ margin: 30, position: 'center'}} fixed>
-            <Image style={{height: 55, width: 160}} src='/assets/images/Color logo with background.png' />
-            <View style={{backgroundColor: "#25272C", height: "1px"}}/>
-          </View>
-          {renderView('Create At', moment().format('LLL'))}
+          <Header title={'Test Report'}/>
           {renderView('Report Type', testReport.isLiveReport ? 'Live' : 'Dev')}
           {renderView('Tester Name', testReport.testerName)}
           {renderView('Project Name', testReport.projectName)}

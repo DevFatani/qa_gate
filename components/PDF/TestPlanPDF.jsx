@@ -1,7 +1,8 @@
 import React from 'react'
-import { Page, Text, View, Document, StyleSheet, Link, Image, PDFViewer, Font, PDFDownloadLink, usePDF, pdf } from '@react-pdf/renderer';
-import moment from 'moment';
+import { Page, Text, View, Document, StyleSheet, Link, PDFViewer, Font, PDFDownloadLink } from '@react-pdf/renderer';
+
 import { FiDownloadCloud, FiXCircle } from 'react-icons/fi';
+import Header from './PDFComponents/Header';
 
 Font.register({
   family: "Roboto",
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
 
 
 
-const  TestPlanPDF = ({ testPlan, onClose }) => {
+export default ({ testPlan, onClose }) => {
 
   function formatArrayOutput(arr) {
     let selecteItem = '';
@@ -62,14 +63,9 @@ const  TestPlanPDF = ({ testPlan, onClose }) => {
   const PDFdoc = () => 
       <Document  title={testPlan.projectName} author={testPlan.testerName} >
         <Page size="A4" style={styles.page}  >
-          <View style={{ margin: 30, position: 'center'}}>
-            <Image style={{height: 55, width: 160}} src='/assets/images/Color logo with background.png' />
-            <View style={{backgroundColor: "#25272C", height: "1px"}}/>
-          </View>
-          {renderView('Create At', moment().format('LLL'))}
+          <Header title={'Test Plan'}/>
           {renderView('Tester Name', testPlan.testerName)}
           {renderView('Project Name', testPlan.projectName)}
-
           <View style={styles.view}>
             <Text style={styles.textLeft}>Project URL:</Text>
             <Link src={testPlan.url} style={styles.textRight}>
@@ -109,5 +105,3 @@ const  TestPlanPDF = ({ testPlan, onClose }) => {
     </div>
   );
 }
-
-export default TestPlanPDF;
