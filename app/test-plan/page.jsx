@@ -43,7 +43,11 @@ export default () => {
                 'select': false
             },
             {
-                'name': 'API',
+                'name': 'API Test',
+                'select': false
+            },
+            {
+                'name': 'API Automation Test',
                 'select': false
             },
             {
@@ -71,9 +75,9 @@ export default () => {
                 'select': false
             },
             {
-                'name': 'Automation Test',
+                'name': 'UI Automation Test',
                 'select': false
-            },
+            }
         ],
         exitCriteria: ''
     });    
