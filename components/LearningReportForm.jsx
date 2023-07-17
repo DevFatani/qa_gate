@@ -52,6 +52,7 @@ const LearningReportForm = ({
                 size='max-w-lg input-md'
                 label={'URL Soruce'}
                 marginTop={'10px'}
+                type={'url'}
                 value={learningReport.urlSoruce}
                 onChange={(e) => setLearningReport({...learningReport, urlSoruce: e.target.value})}
                 placeholder='URL Soruce (Youtube, PDF, etc ...)'
