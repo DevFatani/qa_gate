@@ -1,17 +1,17 @@
 "use client"
 
-import {useState, React, Suspense, lazy} from 'react';
+import {useState, React, lazy} from 'react';
 import moment from 'moment';
 
 import TestReportFormJIRA from '@components/TestReportFormJIRA';
+import PopupDialog from '@components/PDF/PopupDialog';
 const TestJiraReportPDF = lazy(() => import('@components/PDF/TestJiraReportPDF'));
 
-const page = () => {
+export default () => {
     // const router = useRouter();
     const [displayModal, setDisplayModal] = useState(false);
     const [testReport, setTestReport] = useState({
       isLiveReport: false,
-      createdDate: '',
       testerName: '',
       projectName:  '',
       testRunURL: '',
@@ -39,7 +39,7 @@ const page = () => {
     
     const createTestReport = async (e) => {
         e.preventDefault();
-        setSubmitting(!true);
+        setSubmitting(true);
         setDisplayModal(true);
         document.querySelector("[data-modal]").showModal();
 
@@ -80,12 +80,10 @@ const page = () => {
       }
     }
 
-  return (
-    <section className='w-screen'>
-        <dialog data-modal className='w-3/5 h-3/6'>
-            <Suspense fallback={<h1 className='w-screen h-screen text-lg'>Loading  ...</h1>}>
-                {
-                    displayModal ?  
+    return (
+        <section className='w-screen'>
+            <PopupDialog>
+                {   displayModal ?  
                         <TestJiraReportPDF 
                             testReport={testReport}
                             onClose={() => {
@@ -94,16 +92,14 @@ const page = () => {
                             }}
                         /> : <></>
                 }
-            </Suspense>
-        </dialog>
-        <TestReportFormJIRA
-            testReport={testReport}
-            setTestReport={setTestReport}
-            handleSubmit={createTestReport}
-            submitting={submitting}
-        />
+            </PopupDialog>
+        
+            <TestReportFormJIRA
+                testReport={testReport}
+                setTestReport={setTestReport}
+                handleSubmit={createTestReport}
+                submitting={submitting}
+            />
         </section>
-  )
+  ) ;
 }
-
-export default page

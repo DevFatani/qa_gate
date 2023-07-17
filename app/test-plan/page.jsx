@@ -1,12 +1,11 @@
 "use client"
-import {useState, React, lazy, Suspense} from 'react'
-import {useRouter} from 'next/navigation';
+import {useState, React, lazy } from 'react'
 import TestPlanForm from '@components/TestPlanForm';
+import PopupDialog from '@components/PDF/PopupDialog';
 const TestPlanPDF = lazy(() => import('@components/PDF/TestPlanPDF'));
 
-const page = () => {
+export default () => {
     const [displayModal, setDisplayModal] = useState(false);
-    const router = useRouter();
     const [testPlan, setTestPlan] = useState({
         testerName: '',
         projectName:'',
@@ -87,22 +86,18 @@ const page = () => {
     }
 
     return (
-        <section className='w-screen'>
-            <dialog data-modal className='w-3/5 h-3/6'>
-                <Suspense fallback={<h1 className='w-screen h-screen text-lg'>Loading  ...</h1>}>
-                    {
-                        displayModal ?  
-                            <TestPlanPDF 
-                                testPlan={testPlan}
-                                onClose={() => {
-                                    document.querySelector("[data-modal]").close();
-                                    setDisplayModal(false);
-                                    router.push('/');
-                                }}
-                            /> : <></>
-                    }
-                </Suspense>
-            </dialog>
+        <section className='w-full'>
+            <PopupDialog>
+                {   displayModal ?  
+                        <TestPlanPDF 
+                            testPlan={testPlan}
+                            onClose={() => {
+                                document.querySelector("[data-modal]").close();
+                                setDisplayModal(false);
+                            }}
+                        /> : <></>
+                }
+            </PopupDialog>
             <TestPlanForm
                 testPlan={testPlan}
                 setTestPlan={setTestPlan}
@@ -112,5 +107,3 @@ const page = () => {
         </section>
     );
 }
-
-export default page;

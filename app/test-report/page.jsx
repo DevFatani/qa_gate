@@ -5,6 +5,7 @@ import {useState, React, Suspense, lazy} from 'react';
 import moment from 'moment/moment';
 
 import TestReportForm from '@components/TestReportForm';
+import PopupDialog from '@components/PDF/PopupDialog';
 const TestReportPDF = lazy(() => import('@components/PDF/TestReportPDF'));
 
 
@@ -81,27 +82,24 @@ export default () => {
     }
 
   return (
-    <section className='w-screen'>
-        <dialog data-modal className='w-3/5 h-3/6'>
-            <Suspense fallback={<h1 className='w-screen h-screen text-lg'>Loading  ...</h1>}>
-                {
-                    displayModal ?  
-                        <TestReportPDF 
-                            testReport={testReport}
-                            onClose={() => {
-                                document.querySelector("[data-modal]").close();
-                                setDisplayModal(false);
-                            }}
-                        /> : <></>
-                }
-            </Suspense>
-        </dialog>
-           <TestReportForm
-                testReport={testReport}
-                setTestReport={setTestReport}
-                handleSubmit={createTestReport}
-                submitting={submitting}
-            />
-        </section>
-  )
+    <section className='w-full'>
+        <PopupDialog>
+            {   displayModal ?
+                    <TestReportPDF 
+                        testReport={testReport}
+                        onClose={() => {
+                            document.querySelector("[data-modal]").close();
+                            setDisplayModal(false);
+                        }}
+                    /> : <></>
+            }
+        </PopupDialog>
+        <TestReportForm
+            testReport={testReport}
+            setTestReport={setTestReport}
+            handleSubmit={createTestReport}
+            submitting={submitting}
+        />
+    </section>
+  );
 }

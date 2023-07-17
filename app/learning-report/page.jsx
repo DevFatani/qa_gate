@@ -3,6 +3,7 @@
 import {useState, React, lazy, Suspense} from 'react';
 import moment from 'moment/moment';
 import LearningReportForm from '@components/LearningReportForm';
+import PopupDialog from '@components/PDF/PopupDialog';
 const LearnReportPDF = lazy(() => import('@components/PDF/LearnReportPDF'));
 
 export default () => {
@@ -55,24 +56,17 @@ export default () => {
     
     return (
         <section className='w-full'>
-            <dialog data-modal className='w-3/5 h-3/6 rounded-lg bg-base-100'>
-                <Suspense fallback={
-                    <div className='h-full w-full flex justify-center items-center'>
-                        <span className="loading loading-infinity loading-lg" />
-                        <span className='text-primary text-2xl'>Loading ...</span>
-                    </div>}>
-                    {
-                        displayModal ?  
-                            <LearnReportPDF
-                                learningReport={learningReport}
-                                onClose={() => {
-                                    document.querySelector("[data-modal]").close();
-                                    setDisplayModal(false);
-                                }}
-                            /> : <></>
-                    }
-                </Suspense>
-            </dialog>
+            <PopupDialog>
+                {   displayModal ?  
+                        <LearnReportPDF
+                            learningReport={learningReport}
+                            onClose={() => {
+                                document.querySelector("[data-modal]").close();
+                                setDisplayModal(false);
+                            }}
+                        /> : <></>
+                }
+            </PopupDialog>
             <LearningReportForm
                 learningReport={learningReport}
                 setLearningReport={setLearningReport}
