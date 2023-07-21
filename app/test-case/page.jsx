@@ -154,13 +154,7 @@ const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
     }
 
     return(
-      <div 
-            style={{
-                // backgroundColor: "blueviolet",
-                width:"100%"
-            }} 
-            className='card place-items-center'
-        >
+      <div className='card place-items-center w-screen'>
         <div>
            <button className="btn btn-outline btn-secondary" onClick={exportToExcel} style={{margin:"15px"}}>
                 <svg class="svg-icon" viewBox="0 0 20 20">
@@ -171,12 +165,7 @@ const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
                 Export to Excel
             </button>
         </div>
-        <div  
-            style={{
-                // backgroundColor: "orangered", 
-                width:"100%"
-                }}
-        >
+        <div className='w-screen'>
             <table className="table table-lg">
                 <thead>
                     <tr >
@@ -668,12 +657,7 @@ const TestCase = () => {
     };
 
     return (
-        <section
-            style={{
-                // backgroundColor: "lightcoral",
-                width: "100%"
-            }}
-        >
+        <section className='w-screen'>
             <TestCaseForm
                 arrComponents ={arrComponents}
                 setArrComponents={setArrComponents}

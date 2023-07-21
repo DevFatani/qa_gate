@@ -82,7 +82,7 @@ export default () => {
     }
 
   return (
-    <section className='w-full'>
+    <section className='w-screen'>
         <PopupDialog>
             {   displayModal ?
                     <TestReportPDF 
