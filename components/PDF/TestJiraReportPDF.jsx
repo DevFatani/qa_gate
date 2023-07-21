@@ -79,7 +79,7 @@ const TestJiraReportPDF = ({ testReport, onClose }) => {
           {renderView('What are the tickets opened today?', false, testReport.openTicketsNumber)}
           {renderView('What are the tickets moved to (In Progress) today?', false, testReport.backInProgressTicketsNumber)}
           {renderView('What are the tickets moved to (Close) today?',false, testReport.closedTicketsNumber)}
-          {testReport.blockedTicketsNumber ? renderView('What are the tickets moved to (Blocked) today?', true, testReport.blockedTicketsNumber) : <View />}
+          {testReport.blockedTicketsNumber != '0' ? renderView('What are the tickets moved to (Blocked) today?', true, testReport.blockedTicketsNumber) : <View />}
           {renderView('Number Of Test Case Executed (Today)',false, testReport.noOfTCExe)}
           
           {renderView('Did you follow up with the PM or PO about the last update today?',false, testReport.isPMbeenAsked ? 'YES' : 'NO')}
@@ -90,8 +90,7 @@ const TestJiraReportPDF = ({ testReport, onClose }) => {
           
           {renderView('Is the PRD file up to date? (Today)',false, testReport.isPRDUpdated ? 'YES' : 'NO')}
           {testReport.isPRDUpdated == false ? renderView('Justify why PRD not up to date',true, testReport.prdUpdatedRemark) : <View />}
-          
-          {renderView('Release Date',false, testReport.releaseDate)}
+          {testReport.releaseDate ? renderView('Release Date',false, testReport.releaseDate) : <View />}
           {renderView('Remark',false, testReport.remark)}
         </Page>
       </Document>

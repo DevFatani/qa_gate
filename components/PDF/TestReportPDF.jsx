@@ -31,6 +31,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexDirection: 'row',
     justifyContent: 'space-evenly'
+  },
+  viewHighlight: {
+    marginTop: 10,
+    marginHorizontal: 15,
+    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'red',
+    color: 'white'
   },  
   textLeft: {
     fontSize: 10,
@@ -49,8 +58,8 @@ const styles = StyleSheet.create({
 
 const TestReportPDF = ({ testReport, onClose }) => {
 
-  const renderView = (title, data) => 
-    <View style={styles.view}>
+  const renderView = (title, highlight = false, data) => 
+    <View style={highlight ? styles.viewHighlight : styles.view}>
       <Text style={styles.textLeft}>{title}:</Text>
       <Text style={styles.textRight}>{data}</Text>
     </View>
@@ -59,9 +68,9 @@ const TestReportPDF = ({ testReport, onClose }) => {
       <Document  title={testReport.projectName} author={testReport.testerName} >
         <Page size="A4" style={styles.page}  >
           <Header title={'Test Report'}/>
-          {renderView('Report Type', testReport.isLiveReport ? 'Live' : 'Dev')}
-          {renderView('Tester Name', testReport.testerName)}
-          {renderView('Project Name', testReport.projectName)}
+          {renderView('Report Type',false , testReport.isLiveReport ? 'Live' : 'Dev')}
+          {renderView('Tester Name',false , testReport.testerName)}
+          {renderView('Project Name',false, testReport.projectName)}
 
           <View style={styles.view}>
             <Text style={styles.textLeft}>Project Url:</Text>
@@ -75,23 +84,23 @@ const TestReportPDF = ({ testReport, onClose }) => {
               <Text style={{fontSize: 10}}>{testReport.testRunURL}</Text>
             </Link>
           </View>
-          {renderView('No Defect Found', testReport.noDefectFound)}
-          {renderView('No Defect Solved', testReport.noDefectSolved)}
-          {renderView('Number Of Defect In Block', testReport.noOfDefectBlock)}
-          {renderView('Number Of (Major) Defect', testReport.noOfDefectMajor)}
-          {renderView('Number Of Test Case Executed', testReport.noOfTCExe)}
-          {renderView('Number Of Defect In Requirement:', testReport.noOfDefectInRequirement)}
-          {renderView('Release Date', testReport.releaseDate)}
+          {renderView('No. Defects Found', false, testReport.noDefectFound)}
+          {renderView('No. Defects Solved', false,testReport.noDefectSolved)}
+          {testReport.noOfDefectBlock != 0 ? renderView('No. Defect In Block', true,testReport.noOfDefectBlock): <View />}
+          {testReport.noOfDefectBlock != 0 ? renderView('No. Defect (Major)', true,testReport.noOfDefectMajor): <View />}
+          {renderView('No. Test Case Executed', false,testReport.noOfTCExe)}
+          {renderView('No. Defects In Requirements:', false,testReport.noOfDefectInRequirement)}
+          {testReport.releaseDate ? renderView('Release Date', false, testReport.releaseDate) : <View />}
 
-          {renderView('Is Requirmenet Changed? (Today)', testReport.isRequirmenetChange ? 'YES' : 'NO')}
-          {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed', testReport.requirmenetChangeRemark) : <View />}
+          {renderView('Is Requirements Changed? (Today)',false, testReport.isRequirmenetChange ? 'YES' : 'NO')}
+          {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed', true,testReport.requirmenetChangeRemark) : <View />}
 
-          {renderView('Is the PRD file up to date? (Today)', testReport.isPRDUpdated ? 'YES' : 'NO')}
-          {testReport.isPRDUpdated == false ? renderView('Justify why PRD not up to date', testReport.prdUpdatedRemark) : <View />}
+          {renderView('Is the PRD file up to date? (Today)', false, testReport.isPRDUpdated ? 'YES' : 'NO')}
+          {testReport.isPRDUpdated == false ? renderView('Justify why PRD not up to date', true, testReport.prdUpdatedRemark) : <View />}
           
-          {renderView('Is the task need to back (In-Progress) ?', testReport.isTaskNeedToBackInProgress ? 'YES' : 'NO')}
+          {renderView('Is the task need to back (In-Progress) ?', false, testReport.isTaskNeedToBackInProgress ? 'YES' : 'NO')}
           
-          {renderView('Remark', testReport.remark)}
+          {renderView('Remark', false, testReport.remark)}
         </Page>
       </Document>
 

@@ -102,9 +102,9 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               min={0}
               value={testReport.noDefectFound  === 0 ? '' : testReport.noDefectFound}
               onChange={(e) => setTestReport({...testReport, noDefectFound: e.target.value})}
-              placeholder='Number Of Defect Found Today'
+              placeholder='Number Of Defects Found Today'
               type='number'
-              label='Number Of Defect Found (Today)'
+              label='Number Of Defects Found (Today)'
           />
 
           <CustomInput
@@ -114,9 +114,9 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               min={0}
               value={testReport.noDefectSolved === 0 ? '' : testReport.noDefectSolved}
               onChange={(e) => setTestReport({...testReport, noDefectSolved: e.target.value})}
-              placeholder='Number Of Defect Solved'
+              placeholder='Number Of Defects Solved'
               type='number'
-              label='Number Of Defect Solved (Today)'
+              label='Number Of Defects Solved (Today)'
           />
 
           <CustomInput
@@ -137,9 +137,9 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               min={0}
               value={testReport.noOfDefectInRequirement  === 0 ? '' : testReport.noOfDefectInRequirement}
               onChange={(e) => setTestReport({...testReport, noOfDefectInRequirement: e.target.value})}
-              placeholder='Number Of Defect In Requirement'
+              placeholder='Number Of Defects In Requirement'
               type='number'
-              label='Number Of Defect In Requirement (Today)'
+              label='Number Of Defects In Requirement (Today)'
           />
 
           <CustomInput
@@ -149,9 +149,9 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               min={0}
               value={testReport.noOfDefectBlock  === 0 ? '' : testReport.noOfDefectBlock}
               onChange={(e) => setTestReport({...testReport, noOfDefectBlock: e.target.value})}
-              placeholder='Number Of Defect In Block'
+              placeholder='Number Of Defects In Block'
               type='number'
-              label='Number Of Defect In Block (Today)'
+              label='Number Of Defects In Block (Today)'
           />
           <CustomInput
               require={true}
@@ -162,7 +162,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               onChange={(e) => setTestReport({...testReport, noOfDefectMajor: e.target.value})}
               placeholder='Number Of (Major) Defect'
               type='number'
-              label='Number Of (Major) Defect (Today)'
+              label='Number Of (Major) Defects (Today)'
           />
 
           <CustomInput
@@ -172,14 +172,13 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               min={0}
               value={testReport.releaseDate}
               onChange={(e) => setTestReport({...testReport, releaseDate: e.target.value})}
-              placeholder='write your task name'
               type='datetime-local'
               label='Release Date'
           />
 
           {
             customRadioButton(
-              'Is the task need to back (In-Progress) ?', 
+              'Is the task need to be back (In-Progress)?', 
               [
                 {
                   "id": "backInProgress",
@@ -197,7 +196,7 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
 
           {
             customRadioButton(
-              'Is Requirmenet Changed ? (Today)', 
+              'Is Requirement Changes? (Today)', 
               [
                 {
                   "id": "isRequirmenetChange",
@@ -218,8 +217,8 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               require={testReport.isRequirmenetChange}
               value={testReport.requirmenetChangeRemark}
               onChange={(e) => setTestReport({...testReport, requirmenetChangeRemark: e.target.value})}
-              placeholder='Justify why requirement been changed'
-              label='Justify why requirement been changed'
+              placeholder='Justify why the requirement has been changed'
+              label='Justify why the requirement has been changed'
             /> : <div/ >}
           
           {
@@ -245,8 +244,8 @@ const TestReportForm = ({  testReport, setTestReport, handleSubmit, submitting})
               require={testReport.isPRDUpdated == false}
               value={testReport.prdUpdatedRemark}
               onChange={(e) => setTestReport({...testReport, prdUpdatedRemark: e.target.value})}
-              placeholder='Justify why PRD not up to date?'
-              label='Justify why PRD not up to date?'
+              placeholder='Justify why PRD is not up to date'
+              label='Justify why PRD is not up to date'
             /> : <div/ >}
 
           <CustomTextarea
