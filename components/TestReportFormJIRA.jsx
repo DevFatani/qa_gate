@@ -68,7 +68,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                 require={true}
                 marginTop={'10px'}
                 size='max-w-lg input-md'
-                placeholder='write the project name'
+                placeholder='Write the project name'
                 value={testReport.projectName}
                 onChange={(e) => setTestReport({...testReport, projectName: e.target.value})}
                 label='Project Name'
@@ -89,7 +89,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                 value={testReport.openTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, openTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
-                label='How many tickets did you open today?'
+                label='What are the tickets opened today?'
           />
           <CustomInput
                 require={true}
@@ -98,7 +98,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                 value={testReport.backInProgressTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, backInProgressTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
-                label='How many tickets did you move back to InProgress?'
+                label='What are the tickets moved to (In Progress) today?'
           />
           <CustomInput
                 require={true}
@@ -107,7 +107,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                 value={testReport.closedTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, closedTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
-                label='How many tickets did you close today?'
+                label='What are the tickets moved to (Close) today?'
           />
           <CustomInput
                 require={true}
@@ -116,7 +116,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                 value={testReport.blockedTicketsNumber}
                 onChange={(e) => setTestReport({...testReport, blockedTicketsNumber: e.target.value})}
                 placeholder='Write down the ticket numbers (ex: aa56, aa35, etc ...)'
-                label='How many tickets did you move to Block status?'
+                label='What are the tickets moved to (Blocked) today?'
           />
           <CustomInput
                 require={true}
@@ -132,7 +132,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
     
           {
             customRadioButton(
-              'Did you follow up the PM or PO about the last update today?', 
+              'Did you follow up with the PM or PO about the last update today?', 
               [{"id": "communicatePM", "title": "YES", "value": true}, {"id": "communicatePM", "title": "NO", "value": false}],
               (e) => setTestReport({...testReport, isPMbeenAsked: JSON.parse(e.target.value)}))
           }
@@ -147,7 +147,7 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
 
           {
             customRadioButton(
-              'Is Requirmenet Changed? (Today)', 
+              'Is the requirement changed?', 
               [{"id": "reqChanage","title": "YES", "value": true}, {"id": "reqChanage","title": "NO", "value": false}], 
               (e) => setTestReport({...testReport, isRequirmenetChange: JSON.parse(e.target.value) }))
           }
@@ -156,8 +156,8 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
             <CustomTextarea
               value={testReport.requirmenetChangeRemark}
               onChange={(e) => setTestReport({...testReport, requirmenetChangeRemark: e.target.value})}
-              placeholder='Justify why requirement been changed'
-              label='Justify why requirement been changed'
+              placeholder='Justify why the requirement has been changed'
+              label='Justify why the requirement has been changed'
               require={testReport.isRequirmenetChange}
             /> : <div/ >}
 
@@ -173,8 +173,8 @@ const TestReportFormJIRA = ({  testReport, setTestReport, handleSubmit, submitti
                 require={testReport.isPRDUpdated == false}
                 value={testReport.prdUpdatedRemark}
                 onChange={(e) => setTestReport({...testReport, prdUpdatedRemark: e.target.value})}
-                placeholder='Justify why PRD not up to date?'
-                label='Justify why PRD not up to date'
+                placeholder='Justify why PRD is not up to date?'
+                label='Justify why PRD is not up to date?'
               />:<div /> 
               
           }

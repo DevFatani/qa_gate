@@ -31,6 +31,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     flexDirection: 'row',
     justifyContent: 'space-evenly'
+  },
+  viewHighlight: {
+    marginTop: 10,
+    marginHorizontal: 15,
+    marginBottom: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    backgroundColor: 'red',
+    color: 'white'
   },  
   textLeft: {
     fontSize: 10,
@@ -49,8 +58,8 @@ const styles = StyleSheet.create({
 
 const TestJiraReportPDF = ({ testReport, onClose }) => {
 
-  const renderView = (title, data) => 
-    <View style={styles.view}>
+  const renderView = (title, highlight = false, data) => 
+    <View style={highlight ? styles.viewHighlight : styles.view}>
       <Text style={styles.textLeft}>{title}:</Text>
       <Text style={styles.textRight}>{data}</Text>
     </View>
@@ -59,31 +68,31 @@ const TestJiraReportPDF = ({ testReport, onClose }) => {
       <Document  title={testReport.projectName} author={testReport.testerName} >
         <Page size="A4" style={styles.page}  >
           <Header title={'Test Report'}/>
-          {renderView('Report Type', testReport.isLiveReport ? 'Live' : 'Dev')}
-          {renderView('Tester Name', testReport.testerName)}
-          {renderView('Project Name', testReport.projectName)}
+          {renderView('Report Type',false, testReport.isLiveReport ? 'Live' : 'Dev')}
+          {renderView('Tester Name',false, testReport.testerName)}
+          {renderView('Project Name',false, testReport.projectName)}
 
           <View style={styles.view}>
             <Text style={styles.textLeft}>Test Run:</Text>
             <Text style={styles.textRight}>{testReport.testRunURL}</Text>
           </View>
-          {renderView('How many tickets did you open today?', testReport.openTicketsNumber)}
-          {renderView('How many tickets did you move back to InProgress?', testReport.backInProgressTicketsNumber)}
-          {renderView('How many tickets did you close today?', testReport.closedTicketsNumber)}
-          {renderView('How many tickets did you move to Block status?', testReport.blockedTicketsNumber)}
-          {renderView('Number Of Test Case Executed (Today)', testReport.noOfTCExe)}
+          {renderView('What are the tickets opened today?', false, testReport.openTicketsNumber)}
+          {renderView('What are the tickets moved to (In Progress) today?', false, testReport.backInProgressTicketsNumber)}
+          {renderView('What are the tickets moved to (Close) today?',false, testReport.closedTicketsNumber)}
+          {testReport.blockedTicketsNumber ? renderView('What are the tickets moved to (Blocked) today?', true, testReport.blockedTicketsNumber) : <View />}
+          {renderView('Number Of Test Case Executed (Today)',false, testReport.noOfTCExe)}
           
-          {renderView('Did you follow up the PM or PO about the last update (Today)?', testReport.isPMbeenAsked ? 'YES' : 'NO')}
-          {testReport.isPMbeenAsked == false ? renderView('Why there is no communication?', testReport.communicatePMRemark) : <View />}
+          {renderView('Did you follow up with the PM or PO about the last update today?',false, testReport.isPMbeenAsked ? 'YES' : 'NO')}
+          {testReport.isPMbeenAsked == false ? renderView('Why there is no communication?',true, testReport.communicatePMRemark) : <View />}
           
-          {renderView('Is Requirmenet Changed? (Today)', testReport.isRequirmenetChange ? 'YES' : 'NO')}
-          {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed', testReport.requirmenetChangeRemark) : <View />}
+          {renderView('Is Requirmenet Changed? (Today)',false, testReport.isRequirmenetChange ? 'YES' : 'NO')}
+          {testReport.isRequirmenetChange ? renderView('Justify why requirement been changed',true, testReport.requirmenetChangeRemark) : <View />}
           
-          {renderView('Is the PRD file up to date? (Today)', testReport.isPRDUpdated ? 'YES' : 'NO')}
-          {testReport.isPRDUpdated == false ? renderView('Justify why PRD not up to date', testReport.prdUpdatedRemark) : <View />}
+          {renderView('Is the PRD file up to date? (Today)',false, testReport.isPRDUpdated ? 'YES' : 'NO')}
+          {testReport.isPRDUpdated == false ? renderView('Justify why PRD not up to date',true, testReport.prdUpdatedRemark) : <View />}
           
-          {renderView('Release Date', testReport.releaseDate)}
-          {renderView('Remark', testReport.remark)}
+          {renderView('Release Date',false, testReport.releaseDate)}
+          {renderView('Remark',false, testReport.remark)}
         </Page>
       </Document>
 
