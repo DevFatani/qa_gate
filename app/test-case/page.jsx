@@ -293,7 +293,6 @@ const TestCaseTable = ({ data,setTcs , exportToExcel}) => {
                             </td>
                             <td>
                                 <div>
-                                    
                                     <details open={false}>
                                         <summary>GR Data</summary>
                                         <ul>
